@@ -21,4 +21,3 @@ d3.csv('carbon-emissions.csv')
   .then((data) => {
     console.log('Dynamically loaded CSV data', data);
   })
-
