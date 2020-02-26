@@ -31,7 +31,7 @@ var personData = [
   { "id": "Y", "prefs": ["A", "B", "C", "D"] },
   { "id": "Z", "prefs": ["A", "B", "C", "D"] }]
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#solution").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -52,12 +52,10 @@ for (var i = 1; i <= 4; i++) {
 		.attr("stroke", "#003366")
 		
 	//Add the SVG Text Element to the svgContainer
-	var prefText = svg.selectAll("texts")
+	var prefText = svg.selectAll("prefText")
 		.data(circleData)
 		.enter()
-		.append("text");		
-		
-	
+		.append("text");	
 	
 	//Add the text attributes
 	var prefLabels = prefText
@@ -87,7 +85,7 @@ var circleAttributes = personCircles
     .style("fill", function(d) { return d.color; });
 	
 //Add the SVG Text Element to the svgContainer
-prefText = svg.selectAll("prefText")
+prefText = svg.selectAll("personText")
 	.data(circleData)
 	.enter()
 	.append("text");	
@@ -100,6 +98,7 @@ var personLabels = prefText
     .attr("font-family", "sans-serif")
     .attr("font-size", "40px")
     .attr("fill", "red");
+
 
 // You can include local JS files:
 // const MyClass = require('./my-class');
