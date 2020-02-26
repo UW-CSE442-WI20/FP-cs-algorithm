@@ -19,7 +19,7 @@ var circleData = [
   { "x_axis": 400, "y_axis": 150, "radius": personRadius, "color" : femColor, "person_id": "X"},
   { "x_axis": 400, "y_axis": 250, "radius": personRadius, "color" : femColor, "person_id": "Y"},
   { "x_axis": 400, "y_axis": 350, "radius": personRadius, "color" : femColor, "person_id": "Z"}];
-  
+
 // todo fill more as needed
 var personData = [
   { "id": "A", "prefs": ["W", "X", "Y", "Z"] },
@@ -40,8 +40,8 @@ for (var i = 1; i <= 4; i++) {
 		.data(circleData)
 		.enter()
 		.append("rect")
-		
-		
+
+
 	var rectAttributes = prefSquares
 		.attr("x", function (d) { return d.x_axis + 40 * i - 5; })
 		.attr("y", function (d) { return d.y_axis - 20; })
@@ -50,22 +50,22 @@ for (var i = 1; i <= 4; i++) {
 		.attr("fill", function(d) { return "#b0e0e6"; })
 		.attr("stroke-width", 1)
 		.attr("stroke", "#003366")
-		
+
 	//Add the SVG Text Element to the svgContainer
 	var prefText = svg.selectAll("prefText")
 		.data(circleData)
 		.enter()
-		.append("text");	
-	
+		.append("text");
+
 	//Add the text attributes
 	var prefLabels = prefText
 		.attr("x", function(d) { return d.x_axis + 40 * i + 4; })
 		.attr("y", function(d) { return d.y_axis + 8; })
-		.text( function (d) { 
+		.text( function (d) {
 			// get pref from personData
 			var index = personData.findIndex(p => p.id == d.person_id);
 			console.log(index);
-			return personData[index].prefs[i-1]; 
+			return personData[index].prefs[i-1];
 		})
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "30px")
@@ -83,12 +83,12 @@ var circleAttributes = personCircles
     .attr("cy", function (d) { return d.y_axis; })
     .attr("r", function (d) { return d.radius; })
     .style("fill", function(d) { return d.color; });
-	
+
 //Add the SVG Text Element to the svgContainer
 prefText = svg.selectAll("personText")
 	.data(circleData)
 	.enter()
-	.append("text");	
+	.append("text");
 
 //Add the text attributes
 var personLabels = prefText
