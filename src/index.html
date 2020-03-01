@@ -6,7 +6,32 @@
   </head>
   <body>
     <h2>The Problem</h2>
-	<div id="problem"></div>
+	<div>
+		<h3>Perfect Matching:</h3>
+		<div>A perfect matching is a matching of men and weomen in which everyone is matched
+	monogamously. Each man gets exactly one woman and each woman gets exactly one man.</div>
+
+		<h3>Unstable Pairs:</h3>
+		<div>In a matching A, an unmatched pair M-W is unstable if man M and woman W prefer
+		each other to their current partners.
+		For example consider the following matching with the pairs M1-W1 and M2-W2:</div>
+		<div id="problem-explanation1"></div> <!-- svg appended in explanation.js -->
+		
+		<div>The green lines above represent the current pairs in the matching A.<br>
+		Suppose:<br>
+		  1) M1 prefers W2 to W1 and<br>
+		  2) W2 prefers M1 to M2<br>
+		Then the pair M1-W2 (represented by the red line above) is an unstable pair
+		because both M1 and W2 prefer each other to their current partners.</div>
+
+		<h3>Stable Matching:</h3>
+		<div>A perfect matching with no unstable pairs is called a stable matching.</div>
+
+		<h3>Stable Matching Problem:</h3>
+		<div>Given the preference lists of n men and n women, find a stable matching if one
+		exists.</div>
+	</div>
+	
 	<h2>The Solution</h2>
 	<div id="solution"></div>
 	<h1>Try it yourself</h1>

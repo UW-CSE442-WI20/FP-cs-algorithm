@@ -16,7 +16,7 @@ var circleData = [
   { "x_axis": 400, "y_axis": 50, "radius": personRadius, "color" : femColor, "person_id": "W1" },
   { "x_axis": 400, "y_axis": 150, "radius": personRadius, "color" : femColor, "person_id": "W2"}];
 
-var svg = d3.select("#problem").append("svg")
+var svg = d3.select("#problem-explanation1").append("svg")
     .attr("width", width)
     .attr("height", height);
 
