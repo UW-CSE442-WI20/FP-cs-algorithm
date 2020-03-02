@@ -19,7 +19,18 @@ var genderLabelData = [
 	{ "x_axis": 50, "y_axis": 350, "text": "F:" }
 ];
 
-// user should be able edit prefs
+// user cannot change This
+var personDataFixed = [
+  { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 650, "y_axis": 50, "radius": personRadius, "id": "C", "prefs": ["W", "Z", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 900, "y_axis": 50, "radius": personRadius, "id": "D", "prefs": ["Y", "W", "X", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "W", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null},
+  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
+  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
+  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
+
+// user should be able to edit prefs
 var personData = [
   { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
   { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
@@ -36,126 +47,130 @@ var svg = d3.select("#solution").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-// person preference lists (4 prefs per person)
-for (var i = 1; i <= numMen; i++) {
-	// display rectangles
-	var prefSquares = svg.selectAll("prefSquare")
-		.data(personData)
-		.enter()
-		.append("rect")
-	var rectAttributes = prefSquares
-		.attr("x", function (d) { return d.x_axis + 40 * i - 7; })
-		.attr("y", function (d) { return d.y_axis - 20; })
-		.attr("width", function (d) { return 40; })
-		.attr("height", function (d) { return 40; })
-		.attr("fill", function(d) {
-			if(d.proposals > i - 1) {
-				return "#70a0a6";
-			}
-			else {
-				return "#b0e0e6";
-			}
-		})
-		.attr("stroke-width", 1)
-		.attr("stroke", "#003366")
-		.attr("class", "pref-square" + i)
+function build(d) {
+  // person preference lists (4 prefs per person)
+  for (var i = 1; i <= numMen; i++) {
+  	// display rectangles
+  	var prefSquares = svg.selectAll("prefSquare")
+  		.data(personData)
+  		.enter()
+  		.append("rect")
+  	var rectAttributes = prefSquares
+  		.attr("x", function (d) { return d.x_axis + 40 * i - 7; })
+  		.attr("y", function (d) { return d.y_axis - 20; })
+  		.attr("width", function (d) { return 40; })
+  		.attr("height", function (d) { return 40; })
+  		.attr("fill", function(d) {
+  			if(d.proposals > i - 1) {
+  				return "#70a0a6";
+  			}
+  			else {
+  				return "#b0e0e6";
+  			}
+  		})
+  		.attr("stroke-width", 1)
+  		.attr("stroke", "#003366")
+  		.attr("class", "pref-square" + i)
 
-	// add text to person preference list
-	var prefText = svg.selectAll("prefTexts")
-		.data(personData)
-		.enter()
-		.append("text");
-	var prefLabels = prefText
-		.attr("x", function(d) { return d.x_axis + 40 * i + 14; })
-		.attr("y", function(d) { return d.y_axis + 11; })
-		.text( function (d) {
-			// get pref from personData
-			return d.prefs[i-1];
-		})
-		.attr("font-family", "sans-serif")
-		.attr("font-size", "30px")
-		.attr("text-anchor", "middle")
-		.attr("fill", "#000")
-		.attr("class", "pref-text" + i);
+  	// add text to person preference list
+  	var prefText = svg.selectAll("prefTexts")
+  		.data(personData)
+  		.enter()
+  		.append("text");
+  	var prefLabels = prefText
+  		.attr("x", function(d) { return d.x_axis + 40 * i + 14; })
+  		.attr("y", function(d) { return d.y_axis + 11; })
+  		.text( function (d) {
+  			// get pref from personData
+  			return d.prefs[i-1];
+  		})
+  		.attr("font-family", "sans-serif")
+  		.attr("font-size", "30px")
+  		.attr("text-anchor", "middle")
+  		.attr("fill", "#000")
+  		.attr("class", "pref-text" + i);
 
+  }
+
+  // add person circles
+  var personCircles = svg.selectAll("personCircle")
+      .data(personData)
+      .enter()
+      .append("circle");
+  var circleAttributes = personCircles
+      .attr("cx", function (d) { return d.x_axis; })
+      .attr("cy", function (d) { return d.y_axis; })
+      .attr("r", function (d) { return d.radius; })
+  	.attr("stroke", function(d) {
+  		// determine if free from personData
+  		if(d.free) {
+  			return "#ccc";
+  		}
+  		else {
+  			return "black";
+  		}
+  	})
+      .attr("fill", function(d) {
+  		if(d.gender == "m") {
+  			return malColor;
+  		}
+  		else {
+  			return femColor;
+  		}
+  	})
+  	.attr("stroke-width", 3)
+  	.attr("class", "person-circle")
+  	.on("click",function(d){
+  		if (started) {
+  			alert("The simulation has already started! Reset to set your own preference list!");
+  		}
+  		else {
+  			onCircleClick(d);
+  		}
+  	})
+  	.on("mouseover",function(d, i){
+  		d3.select(this).transition()
+              .duration('200')
+              .attr('fill', d.gender == "m" ? malColor2 : femColor2);
+  	})
+  	.on("mouseout",function(d, i){
+  		d3.select(this).transition()
+              .duration('200')
+              .attr('fill', d.gender == "m" ? malColor : femColor);
+  	});
+
+  // add text to person labels (circles)
+  var personText = svg.selectAll("personText")
+  	.data(personData)
+  	.enter()
+  	.append("text");
+  var personLabels = personText
+      .attr("x", function(d) { return d.x_axis; })
+      .attr("y", function(d) { return d.y_axis + 14; })
+      .text( function (d) { return d.id; })
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "40px")
+  	.attr("text-anchor", "middle")
+      .attr("fill", "red")
+  	.attr("class", "person-label");
+
+  // gender labels
+  var genderLabelText = svg.selectAll("genderText")
+  	.data(genderLabelData)
+  	.enter()
+  	.append("text");
+  var genderLabels = genderLabelText
+  	.attr("x", function(d) { return d.x_axis; })
+      .attr("y", function(d) { return d.y_axis + 14; })
+      .text( function (d) { return d.text; })
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "40px")
+  	.attr("text-anchor", "middle")
+  	.attr("font-weight", "bold")
+      .attr("fill", "black");
 }
 
-// add person circles
-var personCircles = svg.selectAll("personCircle")
-    .data(personData)
-    .enter()
-    .append("circle");
-var circleAttributes = personCircles
-    .attr("cx", function (d) { return d.x_axis; })
-    .attr("cy", function (d) { return d.y_axis; })
-    .attr("r", function (d) { return d.radius; })
-	.attr("stroke", function(d) {
-		// determine if free from personData
-		if(d.free) {
-			return "#ccc";
-		}
-		else {
-			return "black";
-		}
-	})
-    .attr("fill", function(d) {
-		if(d.gender == "m") {
-			return malColor;
-		}
-		else {
-			return femColor;
-		}
-	})
-	.attr("stroke-width", 3)
-	.attr("class", "person-circle")
-	.on("click",function(d){
-		if (started) {
-			alert("The simulation has already started! Reset to set your own preference list!");
-		}
-		else {
-			onCircleClick(d);
-		}
-	})
-	.on("mouseover",function(d, i){
-		d3.select(this).transition()
-            .duration('200')
-            .attr('fill', d.gender == "m" ? malColor2 : femColor2);
-	})
-	.on("mouseout",function(d, i){
-		d3.select(this).transition()
-            .duration('200')
-            .attr('fill', d.gender == "m" ? malColor : femColor);
-	});
-
-// add text to person labels (circles)
-var personText = svg.selectAll("personText")
-	.data(personData)
-	.enter()
-	.append("text");
-var personLabels = personText
-    .attr("x", function(d) { return d.x_axis; })
-    .attr("y", function(d) { return d.y_axis + 14; })
-    .text( function (d) { return d.id; })
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "40px")
-	.attr("text-anchor", "middle")
-    .attr("fill", "red")
-	.attr("class", "person-label");
-
-// gender labels
-var genderLabelText = svg.selectAll("genderText")
-	.data(genderLabelData)
-	.enter()
-	.append("text");
-var genderLabels = genderLabelText
-	.attr("x", function(d) { return d.x_axis; })
-    .attr("y", function(d) { return d.y_axis + 14; })
-    .text( function (d) { return d.text; })
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "40px")
-	.attr("text-anchor", "middle")
-	.attr("font-weight", "bold")
-    .attr("fill", "black");
+build()
 
 var curManIndex = null;
 
@@ -380,7 +395,29 @@ function onCircleClick(d) {
 	}
 }
 
-d3.select("#solution-next").on("click", solutionNextStep)
+function reset() {
+  // personData = personDataFixed.slice(0);
+  personData = [
+    { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 650, "y_axis": 50, "radius": personRadius, "id": "C", "prefs": ["W", "Z", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 900, "y_axis": 50, "radius": personRadius, "id": "D", "prefs": ["Y", "W", "X", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "W", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null},
+    { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
+    { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
+    { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
+  svg.selectAll("prefSquare").remove();
+  svg.selectAll("prefTexts").remove();
+  svg.selectAll("personCircle").remove();
+  svg.selectAll("personText").remove();
+  svg.selectAll("genderText").remove();
+  svg.selectAll(".engage-line").remove();
+  curManIndex = null;
+  build();
+}
+
+d3.select("#solution-next").on("click", solutionNextStep);
+d3.select("#solution-reset").on("click", reset);
 
 
 // You can include local JS files:
