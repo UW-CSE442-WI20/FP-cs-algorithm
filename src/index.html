@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="index.css"> 
+	<link rel="stylesheet" type="text/css" href="index.css">
     <title>Stable Matching Solution Visualized</title>
   </head>
   <body>
@@ -18,7 +18,7 @@
 			each other to their current partners.
 			For example consider the following matching with the pairs M1-W1 and M2-W2:</div>
 			<div id="problem-explanation1"></div> <!-- svg appended in explanation.js -->
-			
+
 			<div>The green lines above represent the current pairs in the matching A.<br>
 			Suppose:<br>
 			  1) M1 prefers W2 to W1 and<br>
@@ -33,7 +33,7 @@
 			<div>Given the preference lists of n men and n women, find a stable matching if one
 			exists.</div>
 		</div>
-		
+
 		<h2>The Solution</h2>
 		<div id="solution-pseudocode">
 		<h3>Algorithm pseudocode</h3>
@@ -46,7 +46,7 @@
 			<b>else</b> some pair (m', w) already exists
 				<b>if</b> w prefers m to m' <b>then</b>
 					m' becomes <i>free</i>
-					(m, w) become <i>engaged</i> 
+					(m, w) become <i>engaged</i>
 				<b>else</b>
 					(m', w) remain <i>engaged</i>
 				<b>end if</b>
@@ -56,11 +56,13 @@
 		</div>
 		<div>Click next to walk through the solution. Click circles to edit their preference lists.</div>
 		<div id="solution"></div>
+    <!-- <button type="button" id="solution-previous">Previous Step</button> -->
 		<button type="button" id="solution-next">Next Step</button>
+    <button type="button" id="solution-reset">Reset</button>
 		<h2>Try it yourself</h2>
 		<div id="user-interact"></div>
 	</div>
-	
+
     <script src="./explanation.js"></script>
     <script src="./index.js"></script>
     <script src="./user-interact.js"></script>

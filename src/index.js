@@ -13,13 +13,13 @@ var femColor = "#ffe4e1";
 var malColor = "#7fe5f0"
 var femColor2 = "#cfb4b1";
 var malColor2 = "#4fb5c0"
- 
+
 var genderLabelData = [
 	{ "x_axis": 50, "y_axis": 50, "text": "M:" },
 	{ "x_axis": 50, "y_axis": 350, "text": "F:" }
 ];
 
-// user should be able edit prefs
+// user should be able to edit prefs
 var personData = [
   { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
   { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
@@ -29,7 +29,7 @@ var personData = [
   { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
   { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
   { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
-  
+
 var numMen = personData.length / 2;
 
 var svg = d3.select("#solution").append("svg")
@@ -100,7 +100,7 @@ var circleAttributes = personCircles
 	})
     .attr("fill", function(d) {
 		if(d.gender == "m") {
-			return malColor; 
+			return malColor;
 		}
 		else {
 			return femColor;
@@ -159,20 +159,21 @@ var genderLabels = genderLabelText
 
 var curManIndex = null;
 
-/* 
+/*
 w := first woman on m's list to whom m has not yet proposed
 	if w is free then
 		(m, w) become engaged
 	else some pair (m', w) already exists
 		if w prefers m to m' then
 			m' becomes free
-			(m, w) become engaged 
+			(m, w) become engaged
 		else
 			(m', w) remain engaged
 		end if
-	end if 
+	end if
 */
 function solutionNextStep() {
+  started = true
 	if (curManIndex == null) {
 		curManIndex = 0;
 	}
@@ -184,7 +185,7 @@ function solutionNextStep() {
 	}
 	// use to catch repeats
 	var lastManIndex = curManIndex;
-	
+
 	// do first check
 	if (personData[curManIndex].proposals < numMen && personData[curManIndex].free) {
 		var curMan = personData[curManIndex];
@@ -210,6 +211,7 @@ function solutionNextStep() {
 		}
 		else {
 			alert("no one is free! matching is complete!");
+      started = false
 		}
 	}
 }
@@ -221,14 +223,14 @@ function propose(manId, womanId) {
 		alert(woman.id + " is free.");
 		man.proposals++;
 		makeEngaged(man, woman);
-	} 
+	}
 	else {
 		alert(woman.id + " is not free.");
-		
+
 		// new guy is better than old guy (sorry bro)
 		if (woman.prefs.indexOf(man.id) < woman.prefs.indexOf(woman.fiance)) {
 			alert(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + ".");
-			
+
 			// set old guy to free
 			var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
 			oldGuy.free = true;
@@ -265,7 +267,7 @@ function updateVis() {
 				return "black";
 			}
 		});
-	
+
 	// update prefs list
 	for (var i = 1; i <= numMen; i++) {
 		svg.selectAll(".pref-square" + i)
@@ -279,13 +281,13 @@ function updateVis() {
 				}
 			});
 	}
-	
+
 	// add lines to engaged couples
-	// warning: the code you are about to see is very dumb. i dont know how to do it the right way	
+	// warning: the code you are about to see is very dumb. i dont know how to do it the right way
 	svg.selectAll(".engage-line").remove();
 	for (var i = 0; i < numMen; i++)
 	{
-		
+
 		d = personData[i];
 		svg.append("line")
 			.attr("x1", function() { return d.x_axis; })
@@ -384,7 +386,22 @@ function onCircleClick(d) {
 	}
 }
 
-d3.select("#solution-next").on("click", solutionNextStep)
+function reset() {
+  personData = [
+    { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 650, "y_axis": 50, "radius": personRadius, "id": "C", "prefs": ["W", "Z", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 900, "y_axis": 50, "radius": personRadius, "id": "D", "prefs": ["Y", "W", "X", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+    { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "W", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null},
+    { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
+    { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
+    { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
+  curManIndex = null;
+  updateVis();
+}
+
+d3.select("#solution-next").on("click", solutionNextStep);
+d3.select("#solution-reset").on("click", reset);
 
 
 // You can include local JS files:
