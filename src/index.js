@@ -2,6 +2,8 @@
 // You can require libraries
 const d3 = require('d3')
 
+var started = false;
+
 // set the dimensions of the visualization
 var width = 1400;
 var height = 400;
@@ -9,6 +11,8 @@ var height = 400;
 var personRadius = 40;
 var femColor = "#ffe4e1";
 var malColor = "#7fe5f0"
+var femColor2 = "#cfb4b1";
+var malColor2 = "#4fb5c0"
  
 var genderLabelData = [
 	{ "x_axis": 50, "y_axis": 50, "text": "M:" },
@@ -72,7 +76,7 @@ for (var i = 1; i <= numMen; i++) {
 		.attr("font-size", "30px")
 		.attr("text-anchor", "middle")
 		.attr("fill", "#000")
-		.attr("class", "pref-text");
+		.attr("class", "pref-text" + i);
 
 }
 
@@ -103,7 +107,25 @@ var circleAttributes = personCircles
 		}
 	})
 	.attr("stroke-width", 3)
-	.attr("class", "person-circle");
+	.attr("class", "person-circle")
+	.on("click",function(d){
+		if (started) {
+			alert("The simulation has already started! Reset to set your own preference list!");
+		}
+		else {
+			onCircleClick(d);
+		}
+	})
+	.on("mouseover",function(d, i){
+		d3.select(this).transition()
+            .duration('200')
+            .attr('fill', d.gender == "m" ? malColor2 : femColor2);
+	})
+	.on("mouseout",function(d, i){
+		d3.select(this).transition()
+            .duration('200')
+            .attr('fill', d.gender == "m" ? malColor : femColor);
+	});
 
 // add text to person labels (circles)
 var personText = svg.selectAll("personText")
@@ -298,6 +320,61 @@ function updateVis() {
 				})
 			.attr("stroke", "green")
 			.attr("class", "engage-line");
+	}
+}
+function updatePrefText() {
+	// update prefs list
+	for (var i = 1; i <= personData.length; i++) {
+		svg.selectAll(".pref-text" + i)
+		.data(personData)
+		.each(function(d) {
+			d3.select(this).text(d.prefs[i-1]);
+		});
+	}
+}
+
+function onCircleClick(d) {
+	var prefStr = "";
+	var successfulInput = false;
+	if (d.gender == "m") {
+		var womenNames = "";
+		for (var i = numMen; i < numMen * 2; i++) {
+			womenNames += personData[i].id;
+		}
+		prefStr = prompt("Input the preference list for " + d.id + " like so: " + womenNames
+			+ "\nEach letter represents a different woman. You cannot repeat or exclude a name.");
+		if (prefStr.length != numMen) {
+		alert("Error. You must have " + numMen + " names in your input.");
+		}
+		else if (prefStr.split('').sort().join('') != womenNames.split('').sort().join('')) {
+			alert("Error. Make sure you are including the correct names, and that each name appears once.");
+		}
+		else {
+			successfulInput = true;
+		}
+	}
+	else {
+		var menNames = "";
+		for (var i = 0; i < numMen; i++) {
+			menNames += personData[i].id;
+		}
+		prefStr = prompt("Input the preference list for " + d.id + " like so: " + menNames
+			+ "\nEach letter represents a different man. You cannot repeat or exclude a name.");
+		if (prefStr.length != numMen) {
+		alert("Error. You must have " + numMen + " names in your input.");
+		}
+		else if (prefStr.split('').sort().join('') != menNames.split('').sort().join('')) {
+			alert("Error. Make sure you are including the correct names, and that each name appears once.");
+		}
+		else {
+			successfulInput = true;
+		}
+	}
+	if (successfulInput) {
+		for (var i = 0; i < prefStr.length; i++) {
+			d.prefs[i] = prefStr[i];
+		}
+		updatePrefText();
 	}
 }
 

@@ -235,8 +235,6 @@ function updateVis() {
 	}
 }
 
-d3.select("#solution-next").on("click", solutionNextStep)
-
 
 // You can include local JS files:
 // const MyClass = require('./my-class');
