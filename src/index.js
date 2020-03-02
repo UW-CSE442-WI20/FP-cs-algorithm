@@ -333,6 +333,12 @@ function updatePrefText() {
 	}
 }
 
+function displayText(txt, time) {
+	setInterval(function(){ 
+		alert("Hello");
+	}, time);
+}
+
 function onCircleClick(d) {
 	var prefStr = "";
 	var successfulInput = false;
@@ -342,7 +348,7 @@ function onCircleClick(d) {
 			womenNames += personData[i].id;
 		}
 		prefStr = prompt("Input the preference list for " + d.id + " like so: " + womenNames
-			+ "\nEach letter represents a different woman. You cannot repeat or exclude a name.");
+			+ "\nEach letter represents a different woman. You cannot repeat or exclude a name.").toUpperCase();
 		if (prefStr.length != numMen) {
 		alert("Error. You must have " + numMen + " names in your input.");
 		}
@@ -359,7 +365,7 @@ function onCircleClick(d) {
 			menNames += personData[i].id;
 		}
 		prefStr = prompt("Input the preference list for " + d.id + " like so: " + menNames
-			+ "\nEach letter represents a different man. You cannot repeat or exclude a name.");
+			+ "\nEach letter represents a different man. You cannot repeat or exclude a name.").toUpperCase();
 		if (prefStr.length != numMen) {
 		alert("Error. You must have " + numMen + " names in your input.");
 		}
