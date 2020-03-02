@@ -15,7 +15,7 @@ var genderLabelData = [
 	{ "x_axis": 50, "y_axis": 350, "text": "F:" }
 ];
 
-// user should be able edit prefs
+// todo fill more as needed
 var personData = [
   { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
   { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
@@ -28,7 +28,7 @@ var personData = [
   
 var numMen = personData.length / 2;
 
-var svg = d3.select("#solution").append("svg")
+var svg = d3.select("#user-interact").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -150,76 +150,10 @@ w := first woman on m's list to whom m has not yet proposed
 		end if
 	end if 
 */
-function solutionNextStep() {
-	if (curManIndex == null) {
-		curManIndex = 0;
-	}
-	else {
-		curManIndex++;
-		if (curManIndex >= numMen) {
-			curManIndex = 0;
-		}
-	}
-	// use to catch repeats
-	var lastManIndex = curManIndex;
-	
-	// do first check
-	if (personData[curManIndex].proposals < numMen && personData[curManIndex].free) {
-		var curMan = personData[curManIndex];
-		var curWoman = personData[personData.findIndex(p => p.id == curMan.prefs[curMan.proposals])];
-		propose(curMan.id, curWoman.id);
-	}
-	else {
-		curManIndex++;
-		if (curManIndex >= numMen) {
-			curManIndex = 0;
-		}
-		// while there exists a free man who still has a proposal to make
-		while (!(personData[curManIndex].proposals < numMen && personData[curManIndex].free) && curManIndex != lastManIndex) {
-			curManIndex++;
-			if (curManIndex >= numMen) {
-				curManIndex = 0;
-			}
-		}
-		if(curManIndex != lastManIndex) {
-			var curMan = personData[curManIndex];
-			var curWoman = personData[personData.findIndex(p => p.id == curMan.prefs[curMan.proposals])];
-			propose(curMan.id, curWoman.id);
-		}
-		else {
-			alert("no one is free! matching is complete!");
-		}
-	}
-}
-function propose(manId, womanId) {
-	var man = personData[personData.findIndex(p => p.id == manId)];
-	var woman = personData[personData.findIndex(p => p.id == womanId)];
-	alert(man.id + " is proposing to " + woman.id);
-	if (woman.free) {
-		alert(woman.id + " is free.");
-		man.proposals++;
-		makeEngaged(man, woman);
-	} 
-	else {
-		alert(woman.id + " is not free.");
-		
-		// new guy is better than old guy (sorry bro)
-		if (woman.prefs.indexOf(man.id) < woman.prefs.indexOf(woman.fiance)) {
-			alert(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + ".");
-			
-			// set old guy to free
-			var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
-			oldGuy.free = true;
-			oldGuy.fiance = null;
-			man.proposals++;
-			makeEngaged(man, woman);
-		}
-		else {
-			alert(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
-			man.proposals++;
-			updateVis();
-		}
-	}
+
+// use this function to pair two ppl based on user input
+function pair(manId, womanId) {
+	// remember to unpair ppl before engaging them
 }
 function makeEngaged(man, woman) {
 	// update data
