@@ -9,16 +9,6 @@ var height = 400;
 var personRadius = 40;
 var femColor = "#ffe4e1";
 var malColor = "#7fe5f0"
-
-var circleData = [
-  { "x_axis": 150, "y_axis": 50, "radius": personRadius, "person_id": "A" },
-  { "x_axis": 400, "y_axis": 50, "radius": personRadius, "person_id": "B"},
-  { "x_axis": 650, "y_axis": 50, "radius": personRadius, "person_id": "C"},
-  { "x_axis": 900, "y_axis": 50, "radius": personRadius, "person_id": "D"},
-  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "person_id": "W" },
-  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "person_id": "X"},
-  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "person_id": "Y"},
-  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "person_id": "Z"}];
  
 var genderLabelData = [
 	{ "x_axis": 50, "y_axis": 50, "text": "M:" },
@@ -27,24 +17,26 @@ var genderLabelData = [
 
 // todo fill more as needed
 var personData = [
-  { "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "id": "C", "prefs": ["W", "Z", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "id": "D", "prefs": ["Y", "W", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "id": "W", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null},
-  { "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
-  { "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
-  { "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
+  { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 650, "y_axis": 50, "radius": personRadius, "id": "C", "prefs": ["W", "Z", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 900, "y_axis": 50, "radius": personRadius, "id": "D", "prefs": ["Y", "W", "X", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
+  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "W", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null},
+  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
+  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
+  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
+  
+var numMen = personData.length / 2;
 
 var svg = d3.select("#solution").append("svg")
     .attr("width", width)
     .attr("height", height);
 
 // person preference lists (4 prefs per person)
-for (var i = 1; i <= 4; i++) {
+for (var i = 1; i <= numMen; i++) {
 	// display rectangles
 	var prefSquares = svg.selectAll("prefSquare")
-		.data(circleData)
+		.data(personData)
 		.enter()
 		.append("rect")
 	var rectAttributes = prefSquares
@@ -53,8 +45,7 @@ for (var i = 1; i <= 4; i++) {
 		.attr("width", function (d) { return 40; })
 		.attr("height", function (d) { return 40; })
 		.attr("fill", function(d) {
-			var index = personData.findIndex(p => p.id == d.person_id);
-			if(personData[index].proposals > i - 1) {
+			if(d.proposals > i - 1) {
 				return "#70a0a6";
 			}
 			else {
@@ -63,10 +54,11 @@ for (var i = 1; i <= 4; i++) {
 		})
 		.attr("stroke-width", 1)
 		.attr("stroke", "#003366")
+		.attr("class", "pref-square" + i)
 
 	// add text to person preference list
 	var prefText = svg.selectAll("prefTexts")
-		.data(circleData)
+		.data(personData)
 		.enter()
 		.append("text");
 	var prefLabels = prefText
@@ -74,59 +66,59 @@ for (var i = 1; i <= 4; i++) {
 		.attr("y", function(d) { return d.y_axis + 11; })
 		.text( function (d) {
 			// get pref from personData
-			var index = personData.findIndex(p => p.id == d.person_id);
-			return personData[index].prefs[i-1];
+			return d.prefs[i-1];
 		})
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "30px")
 		.attr("text-anchor", "middle")
-		.attr("fill", "#000");
+		.attr("fill", "#000")
+		.attr("class", "pref-text");
 
 }
 
 // add person circles
 var personCircles = svg.selectAll("personCircle")
-    .data(circleData)
+    .data(personData)
     .enter()
     .append("circle");
 var circleAttributes = personCircles
     .attr("cx", function (d) { return d.x_axis; })
     .attr("cy", function (d) { return d.y_axis; })
     .attr("r", function (d) { return d.radius; })
-	.style("stroke", function(d) {
+	.attr("stroke", function(d) {
 		// determine if free from personData
-		var index = personData.findIndex(p => p.id == d.person_id);
-		if(personData[index].free) {
+		if(d.free) {
 			return "#ccc";
 		}
 		else {
 			return "black";
 		}
 	})
-    .style("fill", function(d) {
-		var index = personData.findIndex(p => p.id == d.person_id);
-		if(personData[index].gender == "m") {
+    .attr("fill", function(d) {
+		if(d.gender == "m") {
 			return malColor; 
 		}
 		else {
 			return femColor;
 		}
 	})
-	.style("stroke-width", 3);
+	.attr("stroke-width", 3)
+	.attr("class", "person-circle");
 
 // add text to person labels (circles)
 var personText = svg.selectAll("personText")
-	.data(circleData)
+	.data(personData)
 	.enter()
 	.append("text");
 var personLabels = personText
     .attr("x", function(d) { return d.x_axis; })
     .attr("y", function(d) { return d.y_axis + 14; })
-    .text( function (d) { return d.person_id; })
+    .text( function (d) { return d.id; })
     .attr("font-family", "sans-serif")
     .attr("font-size", "40px")
 	.attr("text-anchor", "middle")
-    .attr("fill", "red");
+    .attr("fill", "red")
+	.attr("class", "person-label");
 
 // gender labels
 var genderLabelText = svg.selectAll("genderText")
@@ -143,9 +135,8 @@ var genderLabels = genderLabelText
 	.attr("font-weight", "bold")
     .attr("fill", "black");
 
-var curManIndex = 0;
-var numMen = personData.length / 2;
-console.log(numMen)
+var curManIndex = null;
+
 /* 
 w := first woman on m's list to whom m has not yet proposed
 	if w is free then
@@ -160,6 +151,15 @@ w := first woman on m's list to whom m has not yet proposed
 	end if 
 */
 function solutionNextStep() {
+	if (curManIndex == null) {
+		curManIndex = 0;
+	}
+	else {
+		curManIndex++;
+		if (curManIndex >= numMen) {
+			curManIndex = 0;
+		}
+	}
 	// use to catch repeats
 	var lastManIndex = curManIndex;
 	
@@ -192,22 +192,115 @@ function solutionNextStep() {
 	}
 }
 function propose(manId, womanId) {
-	man = personData[personData.findIndex(p => p.id == manId)];
-	woman = personData[personData.findIndex(p => p.id == womanId)];
+	var man = personData[personData.findIndex(p => p.id == manId)];
+	var woman = personData[personData.findIndex(p => p.id == womanId)];
 	alert(man.id + " is proposing to " + woman.id);
 	if (woman.free) {
-		// this does not update visuals :/
-		man.free = false;
-		woman.free = false;
-		man.fiance = woman.id;
-		woman.fiance = man.id;
-		alert(woman.id + " is free. " + man.id + " is now engaged to " + woman.id);
+		alert(woman.id + " is free.");
+		man.proposals++;
+		makeEngaged(man, woman);
 	} 
 	else {
 		alert(woman.id + " is not free.");
+		
+		// new guy is better than old guy (sorry bro)
+		if (woman.prefs.indexOf(man.id) < woman.prefs.indexOf(woman.fiance)) {
+			alert(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + ".");
+			
+			// set old guy to free
+			var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
+			oldGuy.free = true;
+			oldGuy.fiance = null;
+			man.proposals++;
+			makeEngaged(man, woman);
+		}
+		else {
+			alert(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
+			man.proposals++;
+			updateVis();
+		}
+	}
+}
+function makeEngaged(man, woman) {
+	// update data
+	man.free = false;
+	woman.free = false;
+	man.fiance = woman.id;
+	woman.fiance = man.id;
+	updateVis();
+		
+	// todo: draw line from man to woman
+	alert(man.id + " is now engaged to " + woman.id);
+}
+function updateVis() {
+	// update free indicator
+	svg.selectAll(".person-circle")
+		.data(personData)
+            .attr("stroke", function(d) {
+			// determine if free from personData
+			if(d.free) {
+				return "#ccc";
+			}
+			else {
+				return "black";
+			}
+		});
+	
+	// update prefs list
+	for (var i = 1; i <= numMen; i++) {
+		svg.selectAll(".pref-square" + i)
+			.data(personData)
+			.attr("fill", function(d) {
+				if(d.proposals > i - 1) {
+					return "#70a0a6";
+				}
+				else {
+					return "#b0e0e6";
+				}
+			});
 	}
 	
-	
+	// add lines to engaged couples
+	// warning: the code you are about to see is very dumb. i dont know how to do it the right way	
+	svg.selectAll(".engage-line").remove();
+	for (var i = 0; i < numMen; i++)
+	{
+		
+		d = personData[i];
+		svg.append("line")
+			.attr("x1", function() { return d.x_axis; })
+			.attr("y1", function() { return d.y_axis; })
+			.attr("x2", function() {
+				if (d.fiance != null) {
+					var other = personData[personData.findIndex(p => p.id == d.fiance)];
+					return other.x_axis;
+				}
+				else {
+					return 0;
+				}
+			})
+			.attr("y2", function() {
+				if (d.fiance != null) {
+					var other = personData[personData.findIndex(p => p.id == d.fiance)];
+					return other.y_axis;
+				}
+				else {
+					return 0;
+				}
+			})
+			.attr("stroke-width",
+				function() {
+					// display lines only when necessary
+					if (d.fiance != null) {
+						return 2;
+					}
+					else {
+						return 0;
+					}
+				})
+			.attr("stroke", "green")
+			.attr("class", "engage-line");
+	}
 }
 
 d3.select("#solution-next").on("click", solutionNextStep)
