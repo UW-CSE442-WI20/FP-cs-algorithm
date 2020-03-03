@@ -28884,19 +28884,16 @@ Object.keys(_d3Zoom).forEach(function (key) {
     }
   });
 });
-},{"./dist/package.js":"../node_modules/d3/dist/package.js","d3-array":"../node_modules/d3-array/src/index.js","d3-axis":"../node_modules/d3-axis/src/index.js","d3-brush":"../node_modules/d3-brush/src/index.js","d3-chord":"../node_modules/d3-chord/src/index.js","d3-collection":"../node_modules/d3-collection/src/index.js","d3-color":"../node_modules/d3-color/src/index.js","d3-contour":"../node_modules/d3-contour/src/index.js","d3-dispatch":"../node_modules/d3-dispatch/src/index.js","d3-drag":"../node_modules/d3-drag/src/index.js","d3-dsv":"../node_modules/d3-dsv/src/index.js","d3-ease":"../node_modules/d3-ease/src/index.js","d3-fetch":"../node_modules/d3-fetch/src/index.js","d3-force":"../node_modules/d3-force/src/index.js","d3-format":"../node_modules/d3-format/src/index.js","d3-geo":"../node_modules/d3-geo/src/index.js","d3-hierarchy":"../node_modules/d3-hierarchy/src/index.js","d3-interpolate":"../node_modules/d3-interpolate/src/index.js","d3-path":"../node_modules/d3-path/src/index.js","d3-polygon":"../node_modules/d3-polygon/src/index.js","d3-quadtree":"../node_modules/d3-quadtree/src/index.js","d3-random":"../node_modules/d3-random/src/index.js","d3-scale":"../node_modules/d3-scale/src/index.js","d3-scale-chromatic":"../node_modules/d3-scale-chromatic/src/index.js","d3-selection":"../node_modules/d3-selection/src/index.js","d3-shape":"../node_modules/d3-shape/src/index.js","d3-time":"../node_modules/d3-time/src/index.js","d3-time-format":"../node_modules/d3-time-format/src/index.js","d3-timer":"../node_modules/d3-timer/src/index.js","d3-transition":"../node_modules/d3-transition/src/index.js","d3-voronoi":"../node_modules/d3-voronoi/src/index.js","d3-zoom":"../node_modules/d3-zoom/src/index.js"}],"index.js":[function(require,module,exports) {
+},{"./dist/package.js":"../node_modules/d3/dist/package.js","d3-array":"../node_modules/d3-array/src/index.js","d3-axis":"../node_modules/d3-axis/src/index.js","d3-brush":"../node_modules/d3-brush/src/index.js","d3-chord":"../node_modules/d3-chord/src/index.js","d3-collection":"../node_modules/d3-collection/src/index.js","d3-color":"../node_modules/d3-color/src/index.js","d3-contour":"../node_modules/d3-contour/src/index.js","d3-dispatch":"../node_modules/d3-dispatch/src/index.js","d3-drag":"../node_modules/d3-drag/src/index.js","d3-dsv":"../node_modules/d3-dsv/src/index.js","d3-ease":"../node_modules/d3-ease/src/index.js","d3-fetch":"../node_modules/d3-fetch/src/index.js","d3-force":"../node_modules/d3-force/src/index.js","d3-format":"../node_modules/d3-format/src/index.js","d3-geo":"../node_modules/d3-geo/src/index.js","d3-hierarchy":"../node_modules/d3-hierarchy/src/index.js","d3-interpolate":"../node_modules/d3-interpolate/src/index.js","d3-path":"../node_modules/d3-path/src/index.js","d3-polygon":"../node_modules/d3-polygon/src/index.js","d3-quadtree":"../node_modules/d3-quadtree/src/index.js","d3-random":"../node_modules/d3-random/src/index.js","d3-scale":"../node_modules/d3-scale/src/index.js","d3-scale-chromatic":"../node_modules/d3-scale-chromatic/src/index.js","d3-selection":"../node_modules/d3-selection/src/index.js","d3-shape":"../node_modules/d3-shape/src/index.js","d3-time":"../node_modules/d3-time/src/index.js","d3-time-format":"../node_modules/d3-time-format/src/index.js","d3-timer":"../node_modules/d3-timer/src/index.js","d3-transition":"../node_modules/d3-transition/src/index.js","d3-voronoi":"../node_modules/d3-voronoi/src/index.js","d3-zoom":"../node_modules/d3-zoom/src/index.js"}],"user-interact.js":[function(require,module,exports) {
 // You can require libraries
-var d3 = require('d3');
+var d3 = require('d3'); // set the dimensions of the visualization
 
-var started = false; // set the dimensions of the visualization
 
 var width = 1400;
 var height = 400;
 var personRadius = 40;
 var femColor = "#ffe4e1";
 var malColor = "#7fe5f0";
-var femColor2 = "#cfb4b1";
-var malColor2 = "#4fb5c0";
 var genderLabelData = [{
   "x_axis": 50,
   "y_axis": 50,
@@ -28905,7 +28902,7 @@ var genderLabelData = [{
   "x_axis": 50,
   "y_axis": 350,
   "text": "F:"
-}]; // user should be able to edit prefs
+}]; // todo fill more as needed
 
 var personData = [{
   "x_axis": 150,
@@ -28985,7 +28982,7 @@ var personData = [{
   "fiance": null
 }];
 var numMen = personData.length / 2;
-var svg = d3.select("#solution").append("svg").attr("width", width).attr("height", height); // person preference lists (4 prefs per person)
+var svg = d3.select("#user-interact").append("svg").attr("width", width).attr("height", height); // person preference lists (4 prefs per person)
 
 for (var i = 1; i <= numMen; i++) {
   // display rectangles
@@ -29014,7 +29011,7 @@ for (var i = 1; i <= numMen; i++) {
   }).text(function (d) {
     // get pref from personData
     return d.prefs[i - 1];
-  }).attr("font-family", "sans-serif").attr("font-size", "30px").attr("text-anchor", "middle").attr("fill", "#000").attr("class", "pref-text" + i);
+  }).attr("font-family", "sans-serif").attr("font-size", "30px").attr("text-anchor", "middle").attr("fill", "#000").attr("class", "pref-text");
 } // add person circles
 
 
@@ -29038,17 +29035,7 @@ var circleAttributes = personCircles.attr("cx", function (d) {
   } else {
     return femColor;
   }
-}).attr("stroke-width", 3).attr("class", "person-circle").on("click", function (d) {
-  if (started) {
-    alert("The simulation has already started! Reset to set your own preference list!");
-  } else {
-    onCircleClick(d);
-  }
-}).on("mouseover", function (d, i) {
-  d3.select(this).transition().duration('200').attr('fill', d.gender == "m" ? malColor2 : femColor2);
-}).on("mouseout", function (d, i) {
-  d3.select(this).transition().duration('200').attr('fill', d.gender == "m" ? malColor : femColor);
-}); // add text to person labels (circles)
+}).attr("stroke-width", 3).attr("class", "person-circle"); // add text to person labels (circles)
 
 var personText = svg.selectAll("personText").data(personData).enter().append("text");
 var personLabels = personText.attr("x", function (d) {
@@ -29068,103 +29055,22 @@ var genderLabels = genderLabelText.attr("x", function (d) {
   return d.text;
 }).attr("font-family", "sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("font-weight", "bold").attr("fill", "black");
 var curManIndex = null;
-/*
+/* 
 w := first woman on m's list to whom m has not yet proposed
 	if w is free then
 		(m, w) become engaged
 	else some pair (m', w) already exists
 		if w prefers m to m' then
 			m' becomes free
-			(m, w) become engaged
+			(m, w) become engaged 
 		else
 			(m', w) remain engaged
 		end if
-	end if
+	end if 
 */
+// use this function to pair two ppl based on user input
 
-function solutionNextStep() {
-  started = true;
-
-  if (curManIndex == null) {
-    curManIndex = 0;
-  } else {
-    curManIndex++;
-
-    if (curManIndex >= numMen) {
-      curManIndex = 0;
-    }
-  } // use to catch repeats
-
-
-  var lastManIndex = curManIndex; // do first check
-
-  if (personData[curManIndex].proposals < numMen && personData[curManIndex].free) {
-    var curMan = personData[curManIndex];
-    var curWoman = personData[personData.findIndex(function (p) {
-      return p.id == curMan.prefs[curMan.proposals];
-    })];
-    propose(curMan.id, curWoman.id);
-  } else {
-    curManIndex++;
-
-    if (curManIndex >= numMen) {
-      curManIndex = 0;
-    } // while there exists a free man who still has a proposal to make
-
-
-    while (!(personData[curManIndex].proposals < numMen && personData[curManIndex].free) && curManIndex != lastManIndex) {
-      curManIndex++;
-
-      if (curManIndex >= numMen) {
-        curManIndex = 0;
-      }
-    }
-
-    if (curManIndex != lastManIndex) {
-      var curMan = personData[curManIndex];
-      var curWoman = personData[personData.findIndex(function (p) {
-        return p.id == curMan.prefs[curMan.proposals];
-      })];
-      propose(curMan.id, curWoman.id);
-    } else {
-      alert("no one is free! matching is complete!");
-      started = false;
-    }
-  }
-}
-
-function propose(manId, womanId) {
-  var man = personData[personData.findIndex(function (p) {
-    return p.id == manId;
-  })];
-  var woman = personData[personData.findIndex(function (p) {
-    return p.id == womanId;
-  })];
-  alert(man.id + " is proposing to " + woman.id);
-
-  if (woman.free) {
-    alert(woman.id + " is free.");
-    man.proposals++;
-    makeEngaged(man, woman);
-  } else {
-    alert(woman.id + " is not free."); // new guy is better than old guy (sorry bro)
-
-    if (woman.prefs.indexOf(man.id) < woman.prefs.indexOf(woman.fiance)) {
-      alert(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + "."); // set old guy to free
-
-      var oldGuy = personData[personData.findIndex(function (p) {
-        return p.id == woman.fiance;
-      })];
-      oldGuy.free = true;
-      oldGuy.fiance = null;
-      man.proposals++;
-      makeEngaged(man, woman);
-    } else {
-      alert(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
-      man.proposals++;
-      updateVis();
-    }
-  }
+function pair(manId, womanId) {// remember to unpair ppl before engaging them
 }
 
 function makeEngaged(man, woman) {
@@ -29197,7 +29103,7 @@ function updateVis() {
       }
     });
   } // add lines to engaged couples
-  // warning: the code you are about to see is very dumb. i dont know how to do it the right way
+  // warning: the code you are about to see is very dumb. i dont know how to do it the right way	
 
 
   svg.selectAll(".engage-line").remove();
@@ -29235,155 +29141,7 @@ function updateVis() {
       }
     }).attr("stroke", "green").attr("class", "engage-line");
   }
-}
-
-function updatePrefText() {
-  // update prefs list
-  for (var i = 1; i <= personData.length; i++) {
-    svg.selectAll(".pref-text" + i).data(personData).each(function (d) {
-      d3.select(this).text(d.prefs[i - 1]);
-    });
-  }
-}
-
-function displayText(txt, time) {
-  setInterval(function () {
-    alert("Hello");
-  }, time);
-}
-
-function onCircleClick(d) {
-  var prefStr = "";
-  var successfulInput = false;
-
-  if (d.gender == "m") {
-    var womenNames = "";
-
-    for (var i = numMen; i < numMen * 2; i++) {
-      womenNames += personData[i].id;
-    }
-
-    prefStr = prompt("Input the preference list for " + d.id + " like so: " + womenNames + "\nEach letter represents a different woman. You cannot repeat or exclude a name.").toUpperCase();
-
-    if (prefStr.length != numMen) {
-      alert("Error. You must have " + numMen + " names in your input.");
-    } else if (prefStr.split('').sort().join('') != womenNames.split('').sort().join('')) {
-      alert("Error. Make sure you are including the correct names, and that each name appears once.");
-    } else {
-      successfulInput = true;
-    }
-  } else {
-    var menNames = "";
-
-    for (var i = 0; i < numMen; i++) {
-      menNames += personData[i].id;
-    }
-
-    prefStr = prompt("Input the preference list for " + d.id + " like so: " + menNames + "\nEach letter represents a different man. You cannot repeat or exclude a name.").toUpperCase();
-
-    if (prefStr.length != numMen) {
-      alert("Error. You must have " + numMen + " names in your input.");
-    } else if (prefStr.split('').sort().join('') != menNames.split('').sort().join('')) {
-      alert("Error. Make sure you are including the correct names, and that each name appears once.");
-    } else {
-      successfulInput = true;
-    }
-  }
-
-  if (successfulInput) {
-    for (var i = 0; i < prefStr.length; i++) {
-      d.prefs[i] = prefStr[i];
-    }
-
-    updatePrefText();
-  }
-}
-
-function reset() {
-  personData = [{
-    "x_axis": 150,
-    "y_axis": 50,
-    "radius": personRadius,
-    "id": "A",
-    "prefs": ["X", "Y", "W", "Z"],
-    "free": true,
-    "gender": "m",
-    "fiance": null,
-    "proposals": 0
-  }, {
-    "x_axis": 400,
-    "y_axis": 50,
-    "radius": personRadius,
-    "id": "B",
-    "prefs": ["X", "W", "Z", "Y"],
-    "free": true,
-    "gender": "m",
-    "fiance": null,
-    "proposals": 0
-  }, {
-    "x_axis": 650,
-    "y_axis": 50,
-    "radius": personRadius,
-    "id": "C",
-    "prefs": ["W", "Z", "Y", "X"],
-    "free": true,
-    "gender": "m",
-    "fiance": null,
-    "proposals": 0
-  }, {
-    "x_axis": 900,
-    "y_axis": 50,
-    "radius": personRadius,
-    "id": "D",
-    "prefs": ["Y", "W", "X", "Z"],
-    "free": true,
-    "gender": "m",
-    "fiance": null,
-    "proposals": 0
-  }, {
-    "x_axis": 150,
-    "y_axis": 350,
-    "radius": personRadius,
-    "id": "W",
-    "prefs": ["A", "B", "C", "D"],
-    "free": true,
-    "gender": "f",
-    "fiance": null
-  }, {
-    "x_axis": 400,
-    "y_axis": 350,
-    "radius": personRadius,
-    "id": "X",
-    "prefs": ["B", "A", "D", "C"],
-    "free": true,
-    "gender": "f",
-    "fiance": null
-  }, {
-    "x_axis": 650,
-    "y_axis": 350,
-    "radius": personRadius,
-    "id": "Y",
-    "prefs": ["B", "A", "C", "D"],
-    "free": true,
-    "gender": "f",
-    "fiance": null
-  }, {
-    "x_axis": 900,
-    "y_axis": 350,
-    "radius": personRadius,
-    "id": "Z",
-    "prefs": ["A", "D", "C", "B"],
-    "free": true,
-    "gender": "f",
-    "fiance": null
-  }];
-  curManIndex = null;
-  started = false;
-  updateVis();
-}
-
-d3.select("#solution-next").on("click", solutionNextStep);
-d3.select("#solution-reset").on("click", reset); // You can include local JS files:
+} // You can include local JS files:
 // const MyClass = require('./my-class');
 // const myClassInstance = new MyClass();
 // myClassInstance.sayHi();
@@ -29601,5 +29359,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/src.e31bb0bc.js.map
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","user-interact.js"], null)
+//# sourceMappingURL=/user-interact.0bc44f12.js.map

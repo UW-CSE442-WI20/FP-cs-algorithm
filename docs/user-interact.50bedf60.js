@@ -28630,97 +28630,111 @@ Object.keys(_d3Zoom).forEach(function (key) {
     }
   });
 });
-},{"./dist/package.js":"pT13","d3-array":"K0bd","d3-axis":"mp0m","d3-brush":"tkh5","d3-chord":"Iy8J","d3-collection":"S3hn","d3-color":"Peej","d3-contour":"SiBy","d3-dispatch":"D3zY","d3-drag":"kkdU","d3-dsv":"EC2w","d3-ease":"pJ11","d3-fetch":"grWT","d3-force":"oYRE","d3-format":"VuZR","d3-geo":"Ah6W","d3-hierarchy":"Kps6","d3-interpolate":"k9aH","d3-path":"OTyq","d3-polygon":"H15P","d3-quadtree":"lUbg","d3-random":"Gz2j","d3-scale":"zL2z","d3-scale-chromatic":"ado2","d3-selection":"ysDv","d3-shape":"maww","d3-time":"hQYG","d3-time-format":"UYpZ","d3-timer":"rdzS","d3-transition":"UqVV","d3-voronoi":"rLIC","d3-zoom":"MHdZ"}],"Focm":[function(require,module,exports) {
+},{"./dist/package.js":"pT13","d3-array":"K0bd","d3-axis":"mp0m","d3-brush":"tkh5","d3-chord":"Iy8J","d3-collection":"S3hn","d3-color":"Peej","d3-contour":"SiBy","d3-dispatch":"D3zY","d3-drag":"kkdU","d3-dsv":"EC2w","d3-ease":"pJ11","d3-fetch":"grWT","d3-force":"oYRE","d3-format":"VuZR","d3-geo":"Ah6W","d3-hierarchy":"Kps6","d3-interpolate":"k9aH","d3-path":"OTyq","d3-polygon":"H15P","d3-quadtree":"lUbg","d3-random":"Gz2j","d3-scale":"zL2z","d3-scale-chromatic":"ado2","d3-selection":"ysDv","d3-shape":"maww","d3-time":"hQYG","d3-time-format":"UYpZ","d3-timer":"rdzS","d3-transition":"UqVV","d3-voronoi":"rLIC","d3-zoom":"MHdZ"}],"viwQ":[function(require,module,exports) {
 // You can require libraries
 var d3 = require('d3'); // set the dimensions of the visualization
 
 
-var width = 800;
-var height = 500;
+var width = 1400;
+var height = 400;
 var personRadius = 40;
 var femColor = "#ffe4e1";
 var malColor = "#7fe5f0";
-var circleData = [{
+var genderLabelData = [{
   "x_axis": 50,
   "y_axis": 50,
-  "radius": personRadius,
-  "color": malColor,
-  "person_id": "A"
-}, {
-  "x_axis": 50,
-  "y_axis": 150,
-  "radius": personRadius,
-  "color": malColor,
-  "person_id": "B"
-}, {
-  "x_axis": 50,
-  "y_axis": 250,
-  "radius": personRadius,
-  "color": malColor,
-  "person_id": "C"
+  "text": "M:"
 }, {
   "x_axis": 50,
   "y_axis": 350,
-  "radius": personRadius,
-  "color": malColor,
-  "person_id": "D"
-}, {
-  "x_axis": 400,
-  "y_axis": 50,
-  "radius": personRadius,
-  "color": femColor,
-  "person_id": "W"
-}, {
-  "x_axis": 400,
-  "y_axis": 150,
-  "radius": personRadius,
-  "color": femColor,
-  "person_id": "X"
-}, {
-  "x_axis": 400,
-  "y_axis": 250,
-  "radius": personRadius,
-  "color": femColor,
-  "person_id": "Y"
-}, {
-  "x_axis": 400,
-  "y_axis": 350,
-  "radius": personRadius,
-  "color": femColor,
-  "person_id": "Z"
+  "text": "F:"
 }]; // todo fill more as needed
 
 var personData = [{
+  "x_axis": 150,
+  "y_axis": 50,
+  "radius": personRadius,
   "id": "A",
-  "prefs": ["W", "X", "Y", "Z"]
+  "prefs": ["X", "Y", "W", "Z"],
+  "free": true,
+  "gender": "m",
+  "fiance": null,
+  "proposals": 0
 }, {
+  "x_axis": 400,
+  "y_axis": 50,
+  "radius": personRadius,
   "id": "B",
-  "prefs": ["X", "W", "Y", "Z"]
+  "prefs": ["X", "W", "Z", "Y"],
+  "free": true,
+  "gender": "m",
+  "fiance": null,
+  "proposals": 0
 }, {
+  "x_axis": 650,
+  "y_axis": 50,
+  "radius": personRadius,
   "id": "C",
-  "prefs": ["W", "X", "Y", "Z"]
+  "prefs": ["W", "Z", "Y", "X"],
+  "free": true,
+  "gender": "m",
+  "fiance": null,
+  "proposals": 0
 }, {
+  "x_axis": 900,
+  "y_axis": 50,
+  "radius": personRadius,
   "id": "D",
-  "prefs": ["W", "X", "Y", "Z"]
+  "prefs": ["Y", "W", "X", "Z"],
+  "free": true,
+  "gender": "m",
+  "fiance": null,
+  "proposals": 0
 }, {
+  "x_axis": 150,
+  "y_axis": 350,
+  "radius": personRadius,
   "id": "W",
-  "prefs": ["A", "B", "C", "D"]
+  "prefs": ["A", "B", "C", "D"],
+  "free": true,
+  "gender": "f",
+  "fiance": null
 }, {
+  "x_axis": 400,
+  "y_axis": 350,
+  "radius": personRadius,
   "id": "X",
-  "prefs": ["A", "B", "C", "D"]
+  "prefs": ["B", "A", "D", "C"],
+  "free": true,
+  "gender": "f",
+  "fiance": null
 }, {
+  "x_axis": 650,
+  "y_axis": 350,
+  "radius": personRadius,
   "id": "Y",
-  "prefs": ["A", "B", "C", "D"]
+  "prefs": ["B", "A", "C", "D"],
+  "free": true,
+  "gender": "f",
+  "fiance": null
 }, {
+  "x_axis": 900,
+  "y_axis": 350,
+  "radius": personRadius,
   "id": "Z",
-  "prefs": ["A", "B", "C", "D"]
+  "prefs": ["A", "D", "C", "B"],
+  "free": true,
+  "gender": "f",
+  "fiance": null
 }];
-var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+var numMen = personData.length / 2;
+var svg = d3.select("#user-interact").append("svg").attr("width", width).attr("height", height); // person preference lists (4 prefs per person)
 
-for (var i = 1; i <= 4; i++) {
-  var prefSquares = svg.selectAll("prefSquare").data(circleData).enter().append("rect");
+for (var i = 1; i <= numMen; i++) {
+  // display rectangles
+  var prefSquares = svg.selectAll("prefSquare").data(personData).enter().append("rect");
   var rectAttributes = prefSquares.attr("x", function (d) {
-    return d.x_axis + 40 * i - 5;
+    return d.x_axis + 40 * i - 7;
   }).attr("y", function (d) {
     return d.y_axis - 20;
   }).attr("width", function (d) {
@@ -28728,45 +28742,152 @@ for (var i = 1; i <= 4; i++) {
   }).attr("height", function (d) {
     return 40;
   }).attr("fill", function (d) {
-    return "#b0e0e6";
-  }).attr("stroke-width", 1).attr("stroke", "#003366"); //Add the SVG Text Element to the svgContainer
+    if (d.proposals > i - 1) {
+      return "#70a0a6";
+    } else {
+      return "#b0e0e6";
+    }
+  }).attr("stroke-width", 1).attr("stroke", "#003366").attr("class", "pref-square" + i); // add text to person preference list
 
-  var prefText = svg.selectAll("texts").data(circleData).enter().append("text"); //Add the text attributes
-
+  var prefText = svg.selectAll("prefTexts").data(personData).enter().append("text");
   var prefLabels = prefText.attr("x", function (d) {
-    return d.x_axis + 40 * i + 4;
+    return d.x_axis + 40 * i + 14;
   }).attr("y", function (d) {
-    return d.y_axis + 8;
+    return d.y_axis + 11;
   }).text(function (d) {
     // get pref from personData
-    var index = personData.findIndex(function (p) {
-      return p.id == d.person_id;
-    });
-    console.log(index);
-    return personData[index].prefs[i - 1];
-  }).attr("font-family", "sans-serif").attr("font-size", "30px").attr("fill", "#000");
-}
+    return d.prefs[i - 1];
+  }).attr("font-family", "sans-serif").attr("font-size", "30px").attr("text-anchor", "middle").attr("fill", "#000").attr("class", "pref-text");
+} // add person circles
 
-var personCircles = svg.selectAll("personCircle").data(circleData).enter().append("circle");
+
+var personCircles = svg.selectAll("personCircle").data(personData).enter().append("circle");
 var circleAttributes = personCircles.attr("cx", function (d) {
   return d.x_axis;
 }).attr("cy", function (d) {
   return d.y_axis;
 }).attr("r", function (d) {
   return d.radius;
-}).style("fill", function (d) {
-  return d.color;
-}); //Add the SVG Text Element to the svgContainer
+}).attr("stroke", function (d) {
+  // determine if free from personData
+  if (d.free) {
+    return "#ccc";
+  } else {
+    return "black";
+  }
+}).attr("fill", function (d) {
+  if (d.gender == "m") {
+    return malColor;
+  } else {
+    return femColor;
+  }
+}).attr("stroke-width", 3).attr("class", "person-circle"); // add text to person labels (circles)
 
-prefText = svg.selectAll("prefText").data(circleData).enter().append("text"); //Add the text attributes
-
-var personLabels = prefText.attr("x", function (d) {
-  return d.x_axis - 16;
+var personText = svg.selectAll("personText").data(personData).enter().append("text");
+var personLabels = personText.attr("x", function (d) {
+  return d.x_axis;
 }).attr("y", function (d) {
-  return d.y_axis + 12;
+  return d.y_axis + 14;
 }).text(function (d) {
-  return d.person_id;
-}).attr("font-family", "sans-serif").attr("font-size", "40px").attr("fill", "red"); // You can include local JS files:
+  return d.id;
+}).attr("font-family", "sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "red").attr("class", "person-label"); // gender labels
+
+var genderLabelText = svg.selectAll("genderText").data(genderLabelData).enter().append("text");
+var genderLabels = genderLabelText.attr("x", function (d) {
+  return d.x_axis;
+}).attr("y", function (d) {
+  return d.y_axis + 14;
+}).text(function (d) {
+  return d.text;
+}).attr("font-family", "sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("font-weight", "bold").attr("fill", "black");
+var curManIndex = null;
+/* 
+w := first woman on m's list to whom m has not yet proposed
+	if w is free then
+		(m, w) become engaged
+	else some pair (m', w) already exists
+		if w prefers m to m' then
+			m' becomes free
+			(m, w) become engaged 
+		else
+			(m', w) remain engaged
+		end if
+	end if 
+*/
+// use this function to pair two ppl based on user input
+
+function pair(manId, womanId) {// remember to unpair ppl before engaging them
+}
+
+function makeEngaged(man, woman) {
+  // update data
+  man.free = false;
+  woman.free = false;
+  man.fiance = woman.id;
+  woman.fiance = man.id;
+  updateVis();
+  alert(man.id + " is now engaged to " + woman.id);
+}
+
+function updateVis() {
+  // update free indicator
+  svg.selectAll(".person-circle").data(personData).attr("stroke", function (d) {
+    // determine if free from personData
+    if (d.free) {
+      return "#ccc";
+    } else {
+      return "black";
+    }
+  }); // update prefs list
+
+  for (var i = 1; i <= numMen; i++) {
+    svg.selectAll(".pref-square" + i).data(personData).attr("fill", function (d) {
+      if (d.proposals > i - 1) {
+        return "#70a0a6";
+      } else {
+        return "#b0e0e6";
+      }
+    });
+  } // add lines to engaged couples
+  // warning: the code you are about to see is very dumb. i dont know how to do it the right way	
+
+
+  svg.selectAll(".engage-line").remove();
+
+  for (var i = 0; i < numMen; i++) {
+    d = personData[i];
+    svg.append("line").attr("x1", function () {
+      return d.x_axis;
+    }).attr("y1", function () {
+      return d.y_axis;
+    }).attr("x2", function () {
+      if (d.fiance != null) {
+        var other = personData[personData.findIndex(function (p) {
+          return p.id == d.fiance;
+        })];
+        return other.x_axis;
+      } else {
+        return 0;
+      }
+    }).attr("y2", function () {
+      if (d.fiance != null) {
+        var other = personData[personData.findIndex(function (p) {
+          return p.id == d.fiance;
+        })];
+        return other.y_axis;
+      } else {
+        return 0;
+      }
+    }).attr("stroke-width", function () {
+      // display lines only when necessary
+      if (d.fiance != null) {
+        return 2;
+      } else {
+        return 0;
+      }
+    }).attr("stroke", "green").attr("class", "engage-line");
+  }
+} // You can include local JS files:
 // const MyClass = require('./my-class');
 // const myClassInstance = new MyClass();
 // myClassInstance.sayHi();
@@ -28780,5 +28901,5 @@ var personLabels = prefText.attr("x", function (d) {
 // .then((data) => {
 // console.log('Dynamically loaded CSV data', data);
 // })
-},{"d3":"UzF0"}]},{},["Focm"], null)
-//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.0ce9966f.js.map
+},{"d3":"UzF0"}]},{},["viwQ"], null)
+//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/user-interact.50bedf60.js.map
