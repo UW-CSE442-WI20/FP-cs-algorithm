@@ -2,10 +2,69 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Title</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+    <title>Stable Matching Solution Visualized</title>
   </head>
   <body>
-    <h1>My Webpage</h1>
-    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.0ce9966f.js"></script>
+	<div id="main">
+		<h2>The Problem</h2>
+		<div>
+			<h3>Perfect Matching:</h3>
+			<div>A perfect matching is a matching of men and weomen in which everyone is matched
+		monogamously. Each man gets exactly one woman and each woman gets exactly one man.</div>
+
+			<h3>Unstable Pairs:</h3>
+			<div>In a matching A, an unmatched pair M-W is unstable if man M and woman W prefer
+			each other to their current partners.
+			For example consider the following matching with the pairs M1-W1 and M2-W2:</div>
+			<div id="problem-explanation1"></div> <!-- svg appended in explanation.js -->
+
+			<div>The green lines above represent the current pairs in the matching A.<br>
+			Suppose:<br>
+			  1) M1 prefers W2 to W1 and<br>
+			  2) W2 prefers M1 to M2<br>
+			Then the pair M1-W2 (represented by the red line above) is an unstable pair
+			because both M1 and W2 prefer each other to their current partners.</div>
+
+			<h3>Stable Matching:</h3>
+			<div>A perfect matching with no unstable pairs is called a stable matching.</div>
+
+			<h3>Stable Matching Problem:</h3>
+			<div>Given the preference lists of n men and n women, find a stable matching if one
+			exists.</div>
+		</div>
+
+		<h2>The Solution</h2>
+		<div id="solution-pseudocode">
+		<h3>Algorithm pseudocode</h3>
+		<pre><b>algorithm</b> stable_matching <b>is</b>
+		Initialize all <i>m</i> ∈ M and <i>w</i> ∈ W to <i>free</i>
+		<b>while</b> ∃ <i>free</i> man <i>m</i> who still has a woman w to propose to <b>do</b>
+			w&nbsp;:= first woman on m's list to whom m has not yet proposed
+			<b>if</b> w is <i>free</i> <b>then</b>
+				(m, w) become <i>engaged</i>
+			<b>else</b> some pair (m', w) already exists
+				<b>if</b> w prefers m to m' <b>then</b>
+					m' becomes <i>free</i>
+					(m, w) become <i>engaged</i>
+				<b>else</b>
+					(m', w) remain <i>engaged</i>
+				<b>end if</b>
+			<b>end if</b>
+		<b>repeat</b>
+		</pre>
+		</div>
+		<div>Click next to walk through the solution. Click circles to edit their preference lists.</div>
+		<div id="solution"></div>
+    <!-- <button type="button" id="solution-previous">Previous Step</button> -->
+		<button type="button" id="solution-next">Next Step</button>
+    <button type="button" id="solution-reset">Reset</button>
+		<h2>Try it yourself</h2>
+		<div id="user-interact"></div>
+	</div>
+
+    <script src="./explanation.js"></script>
+    <script src="./index.js"></script>
+    <script src="./user-interact.js"></script>
   </body>
 </html>
