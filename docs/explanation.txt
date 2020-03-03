@@ -1,0 +1,22 @@
+Perfect Matching:
+A perfect matching is a matching of men and weomen in which everyone is matched
+monogamously. Each man gets exactly one woman and each woman gets exactly one man.
+
+Unstable Pairs:
+In a matching A, an unmatched pair M-W is unstable if man M and woman W prefer
+each other to their current partners.
+For example consider the following matching with the pairs M1-W1 and M2-W2:
+                            <diagram>
+The green lines above represent the current pairs in the matching A.
+Suppose:
+  1) M1 prefers W2 to W1 and
+  2) W2 prefers M1 to M2
+Then the pair M1-W2 (represented by the red line above) is an unstable pair
+because both M1 and W2 prefer each other to their current partners.
+
+Stable Matching:
+A perfect matching with no unstable pairs is called a stable matching.
+
+Stable Matching Problem:
+Given the preference lists of n men and n women, find a stable matching if one
+exists.
