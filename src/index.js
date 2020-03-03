@@ -397,6 +397,7 @@ function reset() {
     { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
     { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
   curManIndex = null;
+	started = false
   updateVis();
 }
 
