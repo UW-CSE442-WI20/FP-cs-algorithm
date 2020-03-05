@@ -6,35 +6,79 @@ var started = false;
 
 // set the dimensions of the visualization
 var width = 1400;
-var height = 400;
+var height = 450;
 
-var personRadius = 40;
+// width not raidus... too lazy to change
+var personRadius = 100;
 var femColor = "#ffe4e1";
 var malColor = "#7fe5f0"
-var femColor2 = "#cfb4b1";
-var malColor2 = "#4fb5c0"
+var femColor2 = "#efd4d1";
+var malColor2 = "#5fc5d0";
 
 var genderLabelData = [
-	{ "x_axis": 50, "y_axis": 50, "text": "M:" },
-	{ "x_axis": 50, "y_axis": 350, "text": "F:" }
+	{ "x_axis": 65, "y_axis": 120, "text": "♂️:" },
+	{ "x_axis": 65, "y_axis": 350, "text": "♀️:" }
 ];
 
 // user should be able to edit prefs
 var personData = [
-  { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "x_axis": 650, "y_axis": 50, "radius": personRadius, "id": "C", "prefs": ["W", "Z", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "x_axis": 900, "y_axis": 50, "radius": personRadius, "id": "D", "prefs": ["Y", "W", "X", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "W", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null},
-  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
-  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
-  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
+  { "x_axis": 150, "y_axis": 120, "radius": personRadius, "id": "A", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
+  { "x_axis": 400, "y_axis": 120, "radius": personRadius, "id": "B", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
+  { "x_axis": 650, "y_axis": 120, "radius": personRadius, "id": "C", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
+  { "x_axis": 900, "y_axis": 120, "radius": personRadius, "id": "D", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
+  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "1", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" },
+  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "2", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" },
+  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "3", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" },
+  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "4", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" }]
+var men = ["A", "B", "C", "D"];
+var women = ["1", "2", "3", "4"];
+assignPrefs();
+function assignPrefs() {
+	for (var i = 0; i < personData.length; i++) {
+		if (personData[i].gender == "m") {
+			personData[i].prefs = [...women]; // copy array
+			
+		}
+		else {
+			personData[i].prefs = [...men];
+		}
+		shuffle(personData[i].prefs);
+	}
+}
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+}
+
+var fem_tops = ["LongHairBigHair", "LongHairBob", "LongHairBun", "LongHairCurly", "LongHairFro", "LongHairFroBand", "LongHairMiaWallace", "LongHairStraight", "LongHairStraight2", "LongHairStraightStrand"];
+var mal_tops = ["NoHair", "ShortHairDreads01", "ShortHairShortCurly", "ShortHairShortFlat", "ShortHairShortRound", "ShortHairShortWaved", "ShortHairSides", "ShortHairTheCaesar"];
+var opt_acc = ["Prescription02", "Round"];
+var hair_colors = ["Auburn", "Black", "Blonde", "BlondeGolden", "Brown", "BrownDark", "SilverGray"];
+var facial_hairs = ["BeardLight", "BeardMagestic", "MoustacheMagnum"];
+var clothes = ["BlazerShirt", "BlazerSweater", "CollarSweater", "Hoodie", "Overall", "ShirtCrewNeck", "ShirtScoopNeck", "ShirtVNeck"];
+var clothes_color = ["Black", "Blue02", "Blue03", "Gray02", "Heather", "PastelBlue", "Pink", "Red", "White"];
+var skins = ["Pale", "Light", "Brown", "DarkBrown"]
+
+for (var i = 0; i < personData.length; i++) {
+	personData[i].url = generateAvatar(personData[i].gender);
+}
 
 var numMen = personData.length / 2;
 
 var svg = d3.select("#solution").append("svg")
     .attr("width", width)
     .attr("height", height);
+	
+// define image filters here
+var filter = svg.append("defs")
+      .append("filter")
+      .attr("id", "brightness")
+      .append("feComponentTransfer")
+filter.append("feFuncR").attr("type","linear").attr("slope","1.2");
+filter.append("feFuncG").attr("type","linear").attr("slope","1.2");
+filter.append("feFuncB").attr("type","linear").attr("slope","1.2");
 
 // person preference lists (4 prefs per person)
 for (var i = 1; i <= numMen; i++) {
@@ -44,7 +88,7 @@ for (var i = 1; i <= numMen; i++) {
 		.enter()
 		.append("rect")
 	var rectAttributes = prefSquares
-		.attr("x", function (d) { return d.x_axis + 40 * i - 7; })
+		.attr("x", function (d) { return d.x_axis + 40 * i - 1; })
 		.attr("y", function (d) { return d.y_axis - 20; })
 		.attr("width", function (d) { return 40; })
 		.attr("height", function (d) { return 40; })
@@ -58,16 +102,15 @@ for (var i = 1; i <= numMen; i++) {
 		})
 		.attr("stroke-width", 1)
 		.attr("stroke", "#003366")
-		.attr("class", "pref-square" + i)
-
+		.attr("class", "pref-square" + i)	
 	// add text to person preference list
 	var prefText = svg.selectAll("prefTexts")
 		.data(personData)
 		.enter()
 		.append("text");
 	var prefLabels = prefText
-		.attr("x", function(d) { return d.x_axis + 40 * i + 14; })
-		.attr("y", function(d) { return d.y_axis + 11; })
+		.attr("x", function(d) { return d.x_axis + 40 * i + 18; })
+		.attr("y", function(d) { return d.y_axis - 35; })
 		.text( function (d) {
 			// get pref from personData
 			return d.prefs[i-1];
@@ -75,38 +118,38 @@ for (var i = 1; i <= numMen; i++) {
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "30px")
 		.attr("text-anchor", "middle")
-		.attr("fill", "#000")
+		.attr("fill", function(d) { return d.gender == "m" ? femColor : malColor })
 		.attr("class", "pref-text" + i);
+}
 
+for (var i = 1; i <= numMen; i++) {
+		
+	var prefImgs = svg.selectAll("prefImg")
+		.data(personData)
+		.enter()
+		.append("image")
+	var rectAttributes = prefImgs
+		.attr("x", function (d) { return d.x_axis + 40 * i - 6; })
+		.attr("y", function (d) { return d.y_axis - 37; })
+		.attr("width", function (d) { return 50; })
+		.attr("height", function (d) { return 60; })
+		.attr("xlink:href", function (d) {
+			var person = personData[personData.findIndex(p => p.id == d.prefs[i-1])];
+			return person.url; 
+		})
+		.attr("class", "pref-img" + i)
 }
 
 // add person circles
 var personCircles = svg.selectAll("personCircle")
     .data(personData)
     .enter()
-    .append("circle");
+    .append("image");
 var circleAttributes = personCircles
-    .attr("cx", function (d) { return d.x_axis; })
-    .attr("cy", function (d) { return d.y_axis; })
-    .attr("r", function (d) { return d.radius; })
-	.attr("stroke", function(d) {
-		// determine if free from personData
-		if(d.free) {
-			return "#ccc";
-		}
-		else {
-			return "black";
-		}
-	})
-    .attr("fill", function(d) {
-		if(d.gender == "m") {
-			return malColor;
-		}
-		else {
-			return femColor;
-		}
-	})
-	.attr("stroke-width", 3)
+    .attr("x", function (d) { return d.x_axis - d.radius / 2; })
+    .attr("y", function (d) { return d.y_axis - d.radius / 2 - 10; })
+    .attr("width", function (d) { return d.radius; })
+	.attr("xlink:href", function (d) { return d.url + "&avatarStyle=Circle"; })
 	.attr("class", "person-circle")
 	.on("click",function(d){
 		if (started) {
@@ -119,28 +162,31 @@ var circleAttributes = personCircles
 	.on("mouseover",function(d, i){
 		d3.select(this).transition()
             .duration('200')
-            .attr('fill', d.gender == "m" ? malColor2 : femColor2);
+            .attr('filter', 'url(#brightness)');
 	})
 	.on("mouseout",function(d, i){
 		d3.select(this).transition()
             .duration('200')
-            .attr('fill', d.gender == "m" ? malColor : femColor);
+            .attr('filter', 'null');
 	});
 
 // add text to person labels (circles)
+
 var personText = svg.selectAll("personText")
 	.data(personData)
 	.enter()
 	.append("text");
 var personLabels = personText
     .attr("x", function(d) { return d.x_axis; })
-    .attr("y", function(d) { return d.y_axis + 14; })
+    .attr("y", function(d) { return d.y_axis - 60; })
     .text( function (d) { return d.id; })
     .attr("font-family", "sans-serif")
     .attr("font-size", "40px")
 	.attr("text-anchor", "middle")
-    .attr("fill", "red")
+    .attr("fill", function(d) { return d.gender == "m" ? malColor2 : femColor2 })
 	.attr("class", "person-label");
+
+
 
 // gender labels
 var genderLabelText = svg.selectAll("genderText")
@@ -154,12 +200,12 @@ var genderLabels = genderLabelText
     .attr("font-family", "sans-serif")
     .attr("font-size", "40px")
 	.attr("text-anchor", "middle")
-	.attr("font-weight", "bold")
     .attr("fill", "black");
 
 var curManIndex = null;
 
 /*
+algo:
 w := first woman on m's list to whom m has not yet proposed
 	if w is free then
 		(m, w) become engaged
@@ -173,7 +219,7 @@ w := first woman on m's list to whom m has not yet proposed
 	end if
 */
 function solutionNextStep() {
-  started = true
+    started = true;
 	if (curManIndex == null) {
 		curManIndex = 0;
 	}
@@ -210,8 +256,7 @@ function solutionNextStep() {
 			propose(curMan.id, curWoman.id);
 		}
 		else {
-			alert("no one is free! matching is complete!");
-      started = false
+			alert("Everyone now has a match. Matching is complete!");
 		}
 	}
 }
@@ -270,6 +315,11 @@ function updateVis() {
 
 	// update prefs list
 	for (var i = 1; i <= numMen; i++) {
+		svg.selectAll(".pref-text" + i)
+			.data(personData)
+			.each(function(d) {
+				d3.select(this).text(d.prefs[i-1]);
+			});
 		svg.selectAll(".pref-square" + i)
 			.data(personData)
 			.attr("fill", function(d) {
@@ -280,6 +330,12 @@ function updateVis() {
 					return "#b0e0e6";
 				}
 			});
+		svg.selectAll(".pref-img" + i)
+			.data(personData)
+			.attr("xlink:href", function (d) {
+				var person = personData[personData.findIndex(p => p.id == d.prefs[i-1])];
+				return person.url; 
+			});
 	}
 
 	// add lines to engaged couples
@@ -287,51 +343,22 @@ function updateVis() {
 	svg.selectAll(".engage-line").remove();
 	for (var i = 0; i < numMen; i++)
 	{
-
 		d = personData[i];
-		svg.append("line")
-			.attr("x1", function() { return d.x_axis; })
-			.attr("y1", function() { return d.y_axis; })
-			.attr("x2", function() {
-				if (d.fiance != null) {
-					var other = personData[personData.findIndex(p => p.id == d.fiance)];
-					return other.x_axis;
-				}
-				else {
-					return 0;
-				}
-			})
-			.attr("y2", function() {
-				if (d.fiance != null) {
-					var other = personData[personData.findIndex(p => p.id == d.fiance)];
-					return other.y_axis;
-				}
-				else {
-					return 0;
-				}
-			})
-			.attr("stroke-width",
-				function() {
-					// display lines only when necessary
-					if (d.fiance != null) {
-						return 2;
-					}
-					else {
-						return 0;
-					}
-				})
-			.attr("stroke", "green")
-			.attr("class", "engage-line");
-	}
-}
-function updatePrefText() {
-	// update prefs list
-	for (var i = 1; i <= personData.length; i++) {
-		svg.selectAll(".pref-text" + i)
-		.data(personData)
-		.each(function(d) {
-			d3.select(this).text(d.prefs[i-1]);
-		});
+		if (d.fiance != null) {
+			var other = personData[personData.findIndex(p => p.id == d.fiance)];
+			var link = d3.linkVertical()({
+				source: [d.x_axis, d.y_axis + personRadius / 2],
+				target: [other.x_axis, other.y_axis - personRadius / 2]
+			});
+			
+			svg
+				.append('path')
+				.attr('d', link)
+				.attr('stroke', 'green')
+				.attr('stroke-width', 2)
+				.attr('fill', 'none')
+				.attr("class", "engage-line");
+		}			
 	}
 }
 
@@ -382,27 +409,47 @@ function onCircleClick(d) {
 		for (var i = 0; i < prefStr.length; i++) {
 			d.prefs[i] = prefStr[i];
 		}
-		updatePrefText();
+		updateVis();
 	}
 }
 
+// on reset button click
 function reset() {
-  personData = [
-    { "x_axis": 150, "y_axis": 50, "radius": personRadius, "id": "A", "prefs": ["X", "Y", "W", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-    { "x_axis": 400, "y_axis": 50, "radius": personRadius, "id": "B", "prefs": ["X", "W", "Z", "Y"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-    { "x_axis": 650, "y_axis": 50, "radius": personRadius, "id": "C", "prefs": ["W", "Z", "Y", "X"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-    { "x_axis": 900, "y_axis": 50, "radius": personRadius, "id": "D", "prefs": ["Y", "W", "X", "Z"], "free": true, "gender": "m", "fiance": null, "proposals": 0 },
-    { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "W", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null},
-    { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "X", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null},
-    { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "Y", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null},
-    { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "Z", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null}]
-  curManIndex = null;
-	started = false
-  updateVis();
+	assignPrefs();
+	// reset proposals/partners
+	for (var i = 0; i < personData.length; i++) {
+		personData[i].fiance = null;
+		personData[i].free = true;
+		if (personData[i].gender == "m") {
+			personData[i].proposals = 0;
+		}
+	}
+    curManIndex = null;
+	started = false;
+    updateVis();
 }
 
 d3.select("#solution-next").on("click", solutionNextStep);
 d3.select("#solution-reset").on("click", reset);
+
+// generates a URL to the avatar (thanks to https://getavataaars.com/)
+function generateAvatar(gender) {
+	var hairColor = hair_colors[Math.floor(Math.random() * hair_colors.length)];
+	var avatar = "https://avataaars.io/" +
+		"?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) +
+		"&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) +
+		"&hairColor=" + hairColor +
+		"&facialHairColor=" + hairColor +
+		"&facialHairType=" + (Math.random() > .3 || gender == "f" ? "Blank" : facial_hairs[Math.floor(Math.random() * facial_hairs.length)]) +
+		"&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +
+		"&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +
+		"&eyeType=Default" +
+		"&eyebrowType=Default" +
+		"&mouthType=Default" +
+		"&skinColor=" + skins[Math.floor(Math.random() * skins.length)];
+	return avatar;
+}
+
 
 
 // You can include local JS files:
