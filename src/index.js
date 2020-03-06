@@ -72,13 +72,13 @@ var svg = d3.select("#solution").append("svg")
     .attr("height", height);
 	
 // define image filters here
-var filter = svg.append("defs")
+var bright = svg.append("defs")
       .append("filter")
       .attr("id", "brightness")
       .append("feComponentTransfer")
-filter.append("feFuncR").attr("type","linear").attr("slope","1.2");
-filter.append("feFuncG").attr("type","linear").attr("slope","1.2");
-filter.append("feFuncB").attr("type","linear").attr("slope","1.2");
+bright.append("feFuncR").attr("type","linear").attr("slope","1.2");
+bright.append("feFuncG").attr("type","linear").attr("slope","1.2");
+bright.append("feFuncB").attr("type","linear").attr("slope","1.2");
 
 // person preference lists (4 prefs per person)
 for (var i = 1; i <= numMen; i++) {
@@ -156,6 +156,9 @@ var circleAttributes = personCircles
 			alert("The simulation has already started! Reset to set your own preference list!");
 		}
 		else {
+			if (!selecting) {
+				// should indicate selection somehow
+			}
 			onCircleClick(d);
 		}
 	})
@@ -318,7 +321,12 @@ function updateVis() {
 		svg.selectAll(".pref-text" + i)
 			.data(personData)
 			.each(function(d) {
-				d3.select(this).text(d.prefs[i-1]);
+				if(d.prefs[i-1] == null) {
+					d3.select(this).text("");
+				}
+				else {
+					d3.select(this).text(d.prefs[i-1]);
+				}
 			});
 		svg.selectAll(".pref-square" + i)
 			.data(personData)
@@ -333,8 +341,13 @@ function updateVis() {
 		svg.selectAll(".pref-img" + i)
 			.data(personData)
 			.attr("xlink:href", function (d) {
-				var person = personData[personData.findIndex(p => p.id == d.prefs[i-1])];
-				return person.url; 
+				if(d.prefs[i-1] == null) {
+					return null;
+				}
+				else {
+					var person = personData[personData.findIndex(p => p.id == d.prefs[i-1])];
+					return person.url; 
+				}
 			});
 	}
 
@@ -347,14 +360,14 @@ function updateVis() {
 		if (d.fiance != null) {
 			var other = personData[personData.findIndex(p => p.id == d.fiance)];
 			var link = d3.linkVertical()({
-				source: [d.x_axis, d.y_axis + personRadius / 2],
-				target: [other.x_axis, other.y_axis - personRadius / 2]
+				source: [d.x_axis, d.y_axis + personRadius / 2 - 5],
+				target: [other.x_axis, other.y_axis - personRadius / 2 - 2]
 			});
 			
 			svg
 				.append('path')
 				.attr('d', link)
-				.attr('stroke', 'green')
+				.attr('stroke', 'red')
 				.attr('stroke-width', 2)
 				.attr('fill', 'none')
 				.attr("class", "engage-line");
@@ -368,7 +381,82 @@ function displayText(txt, time) {
 	}, time);
 }
 
+var selecting = false;
+var selectPerson = null;
+var selectIndex = 0;
 function onCircleClick(d) {
+	if (selecting) {
+		if (d.gender != selectPerson.gender) {
+			if (!selectPerson.prefs.includes(d.id)) {
+				selectPerson.prefs[selectIndex] = d.id;
+				selectIndex++;
+				updateVis();
+				if (selectIndex >= numMen) {
+					selecting = false;
+				}
+			}
+		}
+	}
+	else {
+		selecting = true;
+		selectPerson = d;
+		d.prefs = [null, null, null, null];
+		selectIndex = 0;
+		updateVis();
+	}
+}
+
+// on reset button click
+function reset() {
+	// reset proposals/partners
+	for (var i = 0; i < personData.length; i++) {
+		personData[i].fiance = null;
+		personData[i].free = true;
+		if (personData[i].gender == "m") {
+			personData[i].proposals = 0;
+		}
+	}
+    curManIndex = null;
+	started = false;
+    updateVis();
+}
+
+d3.select("#solution-next").on("click", solutionNextStep);
+d3.select("#solution-reset").on("click", reset);
+d3.select("#shuffle-prefs").on("click", function() { 
+	if (!started) { 
+		assignPrefs(); 
+		updateVis();
+	}
+	else {
+		alert("Reset before you can set preferences!");
+	}
+});
+
+// generates a URL to the avatar (thanks to https://getavataaars.com/)
+function generateAvatar(gender) {
+	var hairColor = hair_colors[Math.floor(Math.random() * hair_colors.length)];
+	var avatar = "https://avataaars.io/" +
+		"?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) +
+		"&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) +
+		"&hairColor=" + hairColor +
+		"&facialHairColor=" + hairColor +
+		"&facialHairType=" + (Math.random() > .3 || gender == "f" ? "Blank" : facial_hairs[Math.floor(Math.random() * facial_hairs.length)]) +
+		"&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +
+		"&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +
+		"&eyeType=Default" +
+		"&eyebrowType=Default" +
+		"&mouthType=Default" +
+		"&skinColor=" + skins[Math.floor(Math.random() * skins.length)];
+	return avatar;
+}
+
+
+
+
+
+// useless
+function onCircleClick2(d) {
 	var prefStr = "";
 	var successfulInput = false;
 	if (d.gender == "m") {
@@ -411,43 +499,6 @@ function onCircleClick(d) {
 		}
 		updateVis();
 	}
-}
-
-// on reset button click
-function reset() {
-	assignPrefs();
-	// reset proposals/partners
-	for (var i = 0; i < personData.length; i++) {
-		personData[i].fiance = null;
-		personData[i].free = true;
-		if (personData[i].gender == "m") {
-			personData[i].proposals = 0;
-		}
-	}
-    curManIndex = null;
-	started = false;
-    updateVis();
-}
-
-d3.select("#solution-next").on("click", solutionNextStep);
-d3.select("#solution-reset").on("click", reset);
-
-// generates a URL to the avatar (thanks to https://getavataaars.com/)
-function generateAvatar(gender) {
-	var hairColor = hair_colors[Math.floor(Math.random() * hair_colors.length)];
-	var avatar = "https://avataaars.io/" +
-		"?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) +
-		"&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) +
-		"&hairColor=" + hairColor +
-		"&facialHairColor=" + hairColor +
-		"&facialHairType=" + (Math.random() > .3 || gender == "f" ? "Blank" : facial_hairs[Math.floor(Math.random() * facial_hairs.length)]) +
-		"&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +
-		"&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +
-		"&eyeType=Default" +
-		"&eyebrowType=Default" +
-		"&mouthType=Default" +
-		"&skinColor=" + skins[Math.floor(Math.random() * skins.length)];
-	return avatar;
 }
 
 
