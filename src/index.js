@@ -415,7 +415,7 @@ function onCircleClick(d) {
 				}
 			}
 		} else {
-			d.prefs = prevState;
+			selectPerson.prefs = prevState;
 			selecting = false;
 			updateVis();
 		}
