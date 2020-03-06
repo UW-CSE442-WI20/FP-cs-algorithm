@@ -6,7 +6,7 @@ var started = false;
 
 // set the dimensions of the visualization
 var width = 1400;
-var height = 450;
+var height = 500;
 
 // width not raidus... too lazy to change
 var personRadius = 100;
@@ -153,7 +153,7 @@ var circleAttributes = personCircles
 	.attr("class", "person-circle")
 	.on("click",function(d){
 		if (started) {
-			alert("The simulation has already started! Reset to set your own preference list!");
+			updateAlert("Reset to set your own preferences!");
 		}
 		else {
 			if (!selecting) {
@@ -201,8 +201,6 @@ var personLabels = personText
     .attr("fill", function(d) { return d.gender == "m" ? malColor2 : femColor2 })
 	.attr("class", "person-label");
 
-
-
 // gender labels
 var genderLabelText = svg.selectAll("genderText")
 	.data(genderLabelData)
@@ -216,6 +214,19 @@ var genderLabels = genderLabelText
     .attr("font-size", "40px")
 	.attr("text-anchor", "middle")
     .attr("fill", "black");
+	
+var alertText = svg.selectAll("alertText")
+	.data(personData)
+    .enter()
+    .append("text")
+	.attr("x", 600)
+    .attr("y", 450)
+    .text( function () { return alertText; })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "35px")
+    .attr("fill", "black")
+	.style("text-anchor", "middle")
+	.attr("class", "alertText");
 
 var curManIndex = null;
 
@@ -234,10 +245,14 @@ w := first woman on m's list to whom m has not yet proposed
 	end if
 */
 
-var textQueue = [];
+var alertQueue = [];
 function solutionNextStep() {
 	if (!started && selecting) {
-		alert("You must select preferences first!");
+		updateAlert("You must select preferences first!");
+		return;
+	}
+	if (alertQueue.length > 0) {
+		updateAlert(alertQueue.shift());
 		return;
 	}
     started = true;
@@ -277,25 +292,27 @@ function solutionNextStep() {
 			propose(curMan.id, curWoman.id);
 		}
 		else {
-			alert("Everyone now has a match. Matching is complete!");
+			updateAlert("Everyone now has a match. Matching is complete!");
+			clearInterval(interval);
+			d3.select("#play-button").text("Play Algorithm");
 		}
 	}
 }
 function propose(manId, womanId) {
 	var man = personData[personData.findIndex(p => p.id == manId)];
 	var woman = personData[personData.findIndex(p => p.id == womanId)];
-	alert(man.id + " is proposing to " + woman.id);
+	updateAlert(man.id + " is proposing to " + woman.id);
 	if (woman.free) {
-		alert(woman.id + " is free.");
+		alertQueue.push(woman.id + " is free.");
 		man.proposals++;
 		makeEngaged(man, woman);
 	}
 	else {
-		alert(woman.id + " is not free.");
+		alertQueue.push(woman.id + " is not free.");
 
 		// new guy is better than old guy (sorry bro)
 		if (woman.prefs.indexOf(man.id) < woman.prefs.indexOf(woman.fiance)) {
-			alert(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + ".");
+			alertQueue.push(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + ".");
 
 			// set old guy to free
 			var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
@@ -305,7 +322,7 @@ function propose(manId, womanId) {
 			makeEngaged(man, woman);
 		}
 		else {
-			alert(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
+			alertQueue.push(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
 			man.proposals++;
 			updateVis();
 		}
@@ -318,7 +335,14 @@ function makeEngaged(man, woman) {
 	man.fiance = woman.id;
 	woman.fiance = man.id;
 	updateVis();
-	alert(man.id + " is now engaged to " + woman.id);
+	alertQueue.push(man.id + " is now engaged to " + woman.id);
+}
+function updateAlert(alertText) {
+	svg.selectAll(".alertText")
+		.data(personData)
+		.each(function(d) {
+			d3.select(this).text(alertText);
+		});
 }
 function updateVis() {
 	// update free indicator
@@ -393,12 +417,6 @@ function updateVis() {
 	}
 }
 
-function displayText(txt, time) {
-	setInterval(function(){
-		alert("Hello");
-	}, time);
-}
-
 var selecting = false;
 var selectPerson = null;
 var selectIndex = 0;
@@ -442,9 +460,27 @@ function reset() {
 	}
     curManIndex = null;
 	started = false;
+	d3.select("#play-button").text("Play Algorithm");
+	clearInterval(interval);
+	updateAlert();
     updateVis();
 }
 
+var interval;
+function playSolution() {
+	if (started) {
+		d3.select(this).text("Play Algorithm");
+		clearInterval(interval);
+	}
+	else {
+		interval = setInterval(function(){ 
+			solutionNextStep();
+		}, 1000);
+		d3.select(this).text("Pause Algorithm");
+	}
+}
+
+d3.select("#play-button").on("click", playSolution);
 d3.select("#solution-next").on("click", solutionNextStep);
 d3.select("#solution-reset").on("click", reset);
 d3.select("#shuffle-prefs").on("click", function() { 
@@ -454,7 +490,7 @@ d3.select("#shuffle-prefs").on("click", function() {
 		updateVis();
 	}
 	else {
-		alert("Reset before you can set preferences!");
+		updateAlert("Reset before you can set preferences!");
 	}
 });
 

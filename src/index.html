@@ -37,26 +37,23 @@
 		<h2>The Solution</h2>
 		<div id="solution-pseudocode">
 		<h3>Algorithm pseudocode</h3>
-		<pre><b>algorithm</b> stable_matching <b>is</b>
-		Initialize all <i>m</i> ∈ M and <i>w</i> ∈ W to <i>free</i>
-		<b>while</b> ∃ <i>free</i> man <i>m</i> who still has a woman w to propose to <b>do</b>
-			w&nbsp;:= first woman on m's list to whom m has not yet proposed
-			<b>if</b> w is <i>free</i> <b>then</b>
+		<pre>algorithm <b>stable_matching</b>:
+		Initialize all <i>men</i> and <i>women</i> to <i>free</i>
+		<b>while</b> there exists a <i>free</i> man <i>m</i> who still has a woman <i>w</i> to propose to:
+			<b>set</b> w <b>to</b> first woman on m's list to whom m has not yet proposed
+			<b>if</b> w is <i>free</i>:
 				(m, w) become <i>engaged</i>
-			<b>else</b> some pair (m', w) already exists
+			<b>else</b>:
+				some pair (m', w) already exists
 				<b>if</b> w prefers m to m' <b>then</b>
 					m' becomes <i>free</i>
 					(m, w) become <i>engaged</i>
 				<b>else</b>
-					(m', w) remain <i>engaged</i>
-				<b>end if</b>
-			<b>end if</b>
-		<b>repeat</b>
-		</pre>
+					(m', w) remain <i>engaged</i></pre>
 		</div>
 		<div>Click next to walk through the solution. Click circles to edit their preference lists.</div>
 		<div id="solution"></div>
-    <!-- <button type="button" id="solution-previous">Previous Step</button> -->
+		<button type="button" id="play-button">Play Algorithm</button>
 		<button type="button" id="solution-next">Next Step</button>
 		<button type="button" id="solution-reset">Reset</button>
 		<button type="button" id="shuffle-prefs">Shuffle Preferences</button>
