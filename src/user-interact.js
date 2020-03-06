@@ -388,6 +388,7 @@ function propose(manId, womanId) {
         var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
         oldGuy.free = true;
         oldGuy.fiance = null;
+        oldGuy.proposals = 0;
         man.proposals = man.prefs.indexOf(woman.id) + 1;
         makeEngaged(man, woman);
     }
