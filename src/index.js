@@ -37,7 +37,7 @@ function assignPrefs() {
 	for (var i = 0; i < personData.length; i++) {
 		if (personData[i].gender == "m") {
 			personData[i].prefs = [...women]; // copy array
-			
+
 		}
 		else {
 			personData[i].prefs = [...men];
@@ -70,7 +70,7 @@ var numMen = personData.length / 2;
 var svg = d3.select("#solution").append("svg")
     .attr("width", width)
     .attr("height", height);
-	
+
 // define image filters here
 var bright = svg.append("defs")
       .append("filter")
@@ -102,7 +102,7 @@ for (var i = 1; i <= numMen; i++) {
 		})
 		.attr("stroke-width", 1)
 		.attr("stroke", "#003366")
-		.attr("class", "pref-square" + i)	
+		.attr("class", "pref-square" + i)
 	// add text to person preference list
 	var prefText = svg.selectAll("prefTexts")
 		.data(personData)
@@ -123,7 +123,7 @@ for (var i = 1; i <= numMen; i++) {
 }
 
 for (var i = 1; i <= numMen; i++) {
-		
+
 	var prefImgs = svg.selectAll("prefImg")
 		.data(personData)
 		.enter()
@@ -135,7 +135,7 @@ for (var i = 1; i <= numMen; i++) {
 		.attr("height", function (d) { return 60; })
 		.attr("xlink:href", function (d) {
 			var person = personData[personData.findIndex(p => p.id == d.prefs[i-1])];
-			return person.url; 
+			return person.url;
 		})
 		.attr("class", "pref-img" + i)
 }
@@ -346,7 +346,7 @@ function updateVis() {
 				}
 				else {
 					var person = personData[personData.findIndex(p => p.id == d.prefs[i-1])];
-					return person.url; 
+					return person.url;
 				}
 			});
 	}
@@ -363,7 +363,7 @@ function updateVis() {
 				source: [d.x_axis, d.y_axis + personRadius / 2 - 5],
 				target: [other.x_axis, other.y_axis - personRadius / 2 - 2]
 			});
-			
+
 			svg
 				.append('path')
 				.attr('d', link)
@@ -371,12 +371,12 @@ function updateVis() {
 				.attr('stroke-width', 2)
 				.attr('fill', 'none')
 				.attr("class", "engage-line");
-		}			
+		}
 	}
 }
 
 function displayText(txt, time) {
-	setInterval(function(){ 
+	setInterval(function(){
 		alert("Hello");
 	}, time);
 }
@@ -384,6 +384,7 @@ function displayText(txt, time) {
 var selecting = false;
 var selectPerson = null;
 var selectIndex = 0;
+var prevState = null;
 function onCircleClick(d) {
 	if (selecting) {
 		if (d.gender != selectPerson.gender) {
@@ -395,11 +396,16 @@ function onCircleClick(d) {
 					selecting = false;
 				}
 			}
+		} else {
+			d.prefs = prevState;
+			selecting = false;
+			updateVis();
 		}
 	}
 	else {
 		selecting = true;
 		selectPerson = d;
+		prevState = d.prefs;
 		d.prefs = [null, null, null, null];
 		selectIndex = 0;
 		updateVis();
@@ -423,9 +429,9 @@ function reset() {
 
 d3.select("#solution-next").on("click", solutionNextStep);
 d3.select("#solution-reset").on("click", reset);
-d3.select("#shuffle-prefs").on("click", function() { 
-	if (!started) { 
-		assignPrefs(); 
+d3.select("#shuffle-prefs").on("click", function() {
+	if (!started) {
+		assignPrefs();
 		updateVis();
 	}
 	else {
