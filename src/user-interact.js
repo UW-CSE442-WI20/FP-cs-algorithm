@@ -5,7 +5,7 @@ var started = false;
 
 // set the dimensions of the visualization
 var width = 1400;
-var height = 450;
+var height = 500;
 
 // width not raidus... too lazy to change
 var personRadius = 100;
@@ -266,7 +266,7 @@ var circleAttributes = personCircles
     .attr("class", "person-circle")
     .on("click", function (d) {
         if (started) {
-            alert("The simulation has already started! Reset to set your own preference list!");
+            // no need
         } else {
             if (!selecting) {
                 // should indicate selection somehow
@@ -330,6 +330,19 @@ var genderLabels = genderLabelText
     .attr("text-anchor", "middle")
     .attr("fill", "black");
 
+var alertText = svg.selectAll("alertText")
+    .data(personData)
+    .enter()
+    .append("text")
+    .attr("x", 600)
+    .attr("y", 450)
+    .text( function () { return alertText; })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "35px")
+    .attr("fill", "black")
+    .style("text-anchor", "middle")
+    .attr("class", "alertText");
+
 var curManIndex = null;
 
 /*
@@ -348,7 +361,7 @@ w := first woman on m's list to whom m has not yet proposed
 */
 function solutionNextStep() {
     if(!getMatches()) {
-        alert("Incomplete number of matches. Please finishing matching to proceed.");
+        updateAlert("Incomplete number of matches. Please finishing matching to proceed.");
     } else {
         for(var i = 0; i < numMen; i++) {
             var woman = personData[personData.length - 1 - i];
@@ -356,12 +369,12 @@ function solutionNextStep() {
             for(var j = 0; j < higher.length; j++) {
                 var man = personData[personData.findIndex(p => p.id == higher[j])];
                 if(man.prefs.indexOf(woman.id) < man.prefs.indexOf(man.fiance)){
-                    alert("Matching failed. Try again.");
+                    updateAlert("Matching failed. Try again.");
                     return;
                 }
             }
         }
-        alert("Matching successful. Everyone now has a match.");
+        updateAlert("Matching successful. Everyone now has a match.");
     }
 }
 
@@ -380,7 +393,6 @@ function propose(manId, womanId) {
     if(woman.id == man.fiance) {
         return;
     }
-    alert(man.id + " is proposing to " + woman.id);
     if (woman.free) {
         man.proposals = man.prefs.indexOf(woman.id) + 1;
         makeEngaged(man, woman);
@@ -401,7 +413,14 @@ function makeEngaged(man, woman) {
     man.fiance = woman.id;
     woman.fiance = man.id;
     updateVis();
-    alert(man.id + " is now engaged to " + woman.id);
+}
+
+function updateAlert(alertText) {
+    svg.selectAll(".alertText")
+        .data(personData)
+        .each(function(d) {
+            d3.select(this).text(alertText);
+        });
 }
 
 function updateVis() {
@@ -482,14 +501,20 @@ var selecting = false;
 var selectPerson = null;
 
 function onCircleClick(d) {
+    let temp;
     if (selecting) {
         if (d.gender != selectPerson.gender) {
+            if (selectPerson.gender != 'm') {
+                temp = d;
+                d = selectPerson;
+                selectPerson = temp;
+            }
             propose(selectPerson.id, d.id);
             selecting = false;
         } else {
             selectPerson = d;
         }
-    } else if (d.gender == "m") {
+    } else {
         selecting = true;
         selectPerson = d;
         updateVis();
@@ -508,6 +533,7 @@ function reset() {
     }
     curManIndex = null;
     started = false;
+    updateAlert();
     updateVis();
 }
 
