@@ -163,9 +163,21 @@ var circleAttributes = personCircles
 		}
 	})
 	.on("mouseover",function(d, i){
-		d3.select(this).transition()
+		// highlight only when interactable
+		if (!started && 
+			(!selecting || 
+				(d.gender != selectPerson.gender && !selectPerson.prefs.includes(d.id))
+			)
+		) {
+			d3.select(this).transition()
+				.duration('200')
+				.attr('filter', 'url(#brightness)');
+		}
+		else {
+			d3.select(this).transition()
             .duration('200')
-            .attr('filter', 'url(#brightness)');
+            .attr('filter', 'null');
+		}
 	})
 	.on("mouseout",function(d, i){
 		d3.select(this).transition()
@@ -221,7 +233,13 @@ w := first woman on m's list to whom m has not yet proposed
 		end if
 	end if
 */
+
+var textQueue = [];
 function solutionNextStep() {
+	if (!started && selecting) {
+		alert("You must select preferences first!");
+		return;
+	}
     started = true;
 	if (curManIndex == null) {
 		curManIndex = 0;
@@ -425,7 +443,8 @@ d3.select("#solution-next").on("click", solutionNextStep);
 d3.select("#solution-reset").on("click", reset);
 d3.select("#shuffle-prefs").on("click", function() { 
 	if (!started) { 
-		assignPrefs(); 
+		assignPrefs();
+		selecting = false;
 		updateVis();
 	}
 	else {
