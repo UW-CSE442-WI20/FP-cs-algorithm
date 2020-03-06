@@ -78,7 +78,8 @@ var personData = [
         "free": true,
         "gender": "f",
         "fiance": null,
-        "url": "https://avataaars.io/"
+        "url": "https://avataaars.io/",
+        "proposals": 0
     },
     {
         "x_axis": 400,
@@ -89,7 +90,8 @@ var personData = [
         "free": true,
         "gender": "f",
         "fiance": null,
-        "url": "https://avataaars.io/"
+        "url": "https://avataaars.io/",
+        "proposals": 0
     },
     {
         "x_axis": 650,
@@ -100,7 +102,8 @@ var personData = [
         "free": true,
         "gender": "f",
         "fiance": null,
-        "url": "https://avataaars.io/"
+        "url": "https://avataaars.io/",
+        "proposals": 0
     },
     {
         "x_axis": 900,
@@ -111,7 +114,8 @@ var personData = [
         "free": true,
         "gender": "f",
         "fiance": null,
-        "url": "https://avataaars.io/"
+        "url": "https://avataaars.io/",
+        "proposals": 0
     }]
 var men = ["A", "B", "C", "D"];
 var women = ["1", "2", "3", "4"];
@@ -393,17 +397,25 @@ function propose(manId, womanId) {
     if(woman.id == man.fiance) {
         return;
     }
-    if (woman.free) {
-        man.proposals = man.prefs.indexOf(woman.id) + 1;
-        makeEngaged(man, woman);
-    } else {
-        var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
-        oldGuy.free = true;
-        oldGuy.fiance = null;
-        oldGuy.proposals = 0;
-        man.proposals = man.prefs.indexOf(woman.id) + 1;
-        makeEngaged(man, woman);
-    }
+	if (!man.free) {
+		var prevGf = personData[personData.findIndex(p => p.id == man.fiance)]
+		prevGf.free = true;
+		prevGf.fiance = null;
+		prevGf.proposals = 0;
+	}
+
+	if (woman.free) {
+		man.proposals = man.prefs.indexOf(woman.id) + 1;
+		woman.proposals = woman.prefs.indexOf(man.id) + 1;
+		makeEngaged(man, woman);
+	} else {
+		var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
+		oldGuy.free = true;
+		oldGuy.fiance = null;
+		oldGuy.proposals = 0;
+		man.proposals = man.prefs.indexOf(woman.id) + 1;
+		makeEngaged(man, woman);
+	}
 }
 
 function makeEngaged(man, woman) {
@@ -527,9 +539,7 @@ function reset() {
     for (var i = 0; i < personData.length; i++) {
         personData[i].fiance = null;
         personData[i].free = true;
-        if (personData[i].gender == "m") {
-            personData[i].proposals = 0;
-        }
+        personData[i].proposals = 0;
     }
     curManIndex = null;
     started = false;

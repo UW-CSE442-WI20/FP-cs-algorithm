@@ -37,19 +37,19 @@
 		<h2>The Solution</h2>
 		<div id="solution-pseudocode">
 		<h3>Algorithm pseudocode</h3>
-		<pre>algorithm <b>stable_matching</b>:
-		Initialize all <i>men</i> and <i>women</i> to <i>free</i>
-		<b>while</b> there exists a <i>free</i> man <i>m</i> who still has a woman <i>w</i> to propose to:
-			<b>set</b> w <b>to</b> first woman on m's list to whom m has not yet proposed
-			<b>if</b> w is <i>free</i>:
-				(m, w) become <i>engaged</i>
-			<b>else</b>:
-				some pair (m', w) already exists
-				<b>if</b> w prefers m to m' <b>then</b>
-					m' becomes <i>free</i>
-					(m, w) become <i>engaged</i>
-				<b>else</b>
-					(m', w) remain <i>engaged</i></pre>
+		<pre><span id="pcode1">algorithm <b>stable_matching</b>:
+		<span id="pcode2">Initialize all <i>men</i> and <i>women</i> to <i>free</i></span>
+		<span id="pcode3"><b>while</b> there exists a <i>free</i> man <i>m</i> who still has a woman <i>w</i> to propose to:</span>
+			<span id="pcode4"><b>set</b> w <b>to</b> first woman on m's list to whom m has not yet proposed</span>
+			<span id="pcode5"><b>if</b> w is <i>free</i>:</span>
+				<span id="pcode6">(m, w) become <i>engaged</i></span>
+			<span id="pcode7"><b>else</b>:</span>
+				<span id="pcode8">some pair (m', w) already exists</span>
+				<span id="pcode9"><b>if</b> w prefers m to m' <b>then</b></span>
+					<span id="pcode10">m' becomes <i>free</i></span>
+					<span id="pcode11">(m, w) become <i>engaged</i></span>
+				<span id="pcode12"><b>else</b></span>
+					<span id="pcode13">(m', w) remain <i>engaged</i></span></pre>
 		</div>
 		<div>Click next to walk through the solution. Click circles to edit their preference lists.</div>
 		<div id="solution"></div>
