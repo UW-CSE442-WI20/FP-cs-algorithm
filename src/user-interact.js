@@ -432,17 +432,30 @@ function updateAlert(alertText) {
 }
 
 function updateVis() {
-    // update free indicator
-    svg.selectAll(".person-circle")
-        .data(personData)
-        .attr("stroke", function (d) {
-            // determine if free from personData
-            if (d.free) {
-                return "#ccc";
-            } else {
-                return "black";
-            }
-        });
+	// update faces to reflect the quality of match
+	svg.selectAll(".person-circle")
+		.data(personData)
+		.attr("xlink:href", function (d) {
+			var url = d.url + "&avatarStyle=Circle"
+			if (d.fiance == null) {
+				return url;
+			}
+			else {
+				var fianceIndex = d.prefs.indexOf(d.fiance);
+				if (fianceIndex == 0) {
+					return url + "&mouthType=Smile" + "&eyeType=Happy";
+				}
+				else if (fianceIndex == 1) {
+					return url + "&eyebrowType=RaisedExcited";
+				}
+				else if (fianceIndex == 2) {
+					return url + "&mouthType=Serious" + "&eyebrowType=SadConcerned";
+				}
+				else {
+					return url + "&mouthType=Sad" + "&eyebrowType=SadConcerned";
+				}
+			}
+		});
 
     // update prefs list
     for (var i = 1; i <= numMen; i++) {
@@ -557,9 +570,6 @@ function generateAvatar(gender) {
         "&facialHairType=" + (Math.random() > .3 || gender == "f" ? "Blank" : facial_hairs[Math.floor(Math.random() * facial_hairs.length)]) +
         "&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +
         "&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +
-        "&eyeType=Default" +
-        "&eyebrowType=Default" +
-        "&mouthType=Default" +
         "&skinColor=" + skins[Math.floor(Math.random() * skins.length)];
     return avatar;
 }
