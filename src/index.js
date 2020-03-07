@@ -22,14 +22,14 @@ var genderLabelData = [
 
 // user should be able to edit prefs
 var personData = [
-  { "x_axis": 150, "y_axis": 120, "radius": personRadius, "id": "A", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
-  { "x_axis": 400, "y_axis": 120, "radius": personRadius, "id": "B", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
-  { "x_axis": 650, "y_axis": 120, "radius": personRadius, "id": "C", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
-  { "x_axis": 900, "y_axis": 120, "radius": personRadius, "id": "D", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "proposals": 0 },
-  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "1", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" },
-  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "2", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" },
-  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "3", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" },
-  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "4", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/" }]
+  { "x_axis": 150, "y_axis": 120, "radius": personRadius, "id": "A", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 400, "y_axis": 120, "radius": personRadius, "id": "B", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 650, "y_axis": 120, "radius": personRadius, "id": "C", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 900, "y_axis": 120, "radius": personRadius, "id": "D", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "1", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
+  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "2", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
+  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "3", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
+  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "4", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] }]
 var men = ["A", "B", "C", "D"];
 var women = ["1", "2", "3", "4"];
 assignPrefs();
@@ -123,7 +123,6 @@ for (var i = 1; i <= numMen; i++) {
 }
 
 for (var i = 1; i <= numMen; i++) {
-
 	var prefImgs = svg.selectAll("prefImg")
 		.data(personData)
 		.enter()
@@ -227,6 +226,25 @@ var alertText = svg.selectAll("alertText")
     .attr("fill", "black")
 	.style("text-anchor", "middle")
 	.attr("class", "alertText");
+	
+for (var i = 1; i <= numMen; i++) {
+	var prefXText = svg.selectAll("prefXTexts")
+		.data(personData)
+		.enter()
+		.append("text");
+	var prefLabels = prefXText
+		.attr("x", function(d) { return d.x_axis + 40 * i + 18; })
+		.attr("y", function(d) { return d.y_axis; })
+		.text( function (d) {
+			// get pref from personData
+			return "";
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "40px")
+		.attr("text-anchor", "middle")
+		.attr("fill", "red")
+		.attr("class", "pref-x-text" + i);
+}
 
 var curManIndex = null;
 
@@ -318,12 +336,17 @@ function propose(manId, womanId) {
 			var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
 			oldGuy.free = true;
 			oldGuy.fiance = null;
+			oldGuy.exes.push(woman.id);
+			woman.exes.push(oldGuy.id);
 			man.proposals++;
 			makeEngaged(man, woman);
 		}
 		else {
 			alertQueue.push(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
 			man.proposals++;
+			// exes is a bit of a misnomer. we still want to label failed proposals
+			man.exes.push(woman.id); 
+			woman.exes.push(man.id); // but should we label failed woman proposal? use different markings for former relationship?
 			updateVis();
 		}
 	}
@@ -370,14 +393,34 @@ function updateVis() {
 					d3.select(this).text(d.prefs[i-1]);
 				}
 			});
+		svg.selectAll(".pref-x-text" + i)
+			.data(personData)
+			.each(function(d) {
+				if(d.exes.includes(d.prefs[i-1])) {
+					d3.select(this).text("X");
+				}
+				else {
+					d3.select(this).text("");
+				}
+			});
 		svg.selectAll(".pref-square" + i)
 			.data(personData)
 			.attr("fill", function(d) {
-				if(d.proposals > i - 1) {
-					return "#70a0a6";
+				if (d.gender == "m") {
+					if(d.proposals == i) {
+						return "#70a0a6";
+					}
+					else {
+						return "#b0e0e6";
+					}
 				}
 				else {
-					return "#b0e0e6";
+					if(d.prefs[i-1] == d.fiance) {
+						return "#70a0a6";
+					}
+					else {
+						return "#b0e0e6";
+					}
 				}
 			});
 		svg.selectAll(".pref-img" + i)
