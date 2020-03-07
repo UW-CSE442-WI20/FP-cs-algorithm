@@ -403,19 +403,13 @@ function propose(manId, womanId) {
 		prevGf.fiance = null;
 		prevGf.proposals = 0;
 	}
-
-	if (woman.free) {
-		man.proposals = man.prefs.indexOf(woman.id) + 1;
-		woman.proposals = woman.prefs.indexOf(man.id) + 1;
-		makeEngaged(man, woman);
-	} else {
+	if (!woman.free) {
 		var oldGuy = personData[personData.findIndex(p => p.id == woman.fiance)]
 		oldGuy.free = true;
 		oldGuy.fiance = null;
 		oldGuy.proposals = 0;
-		man.proposals = man.prefs.indexOf(woman.id) + 1;
-		makeEngaged(man, woman);
 	}
+	makeEngaged(man, woman);
 }
 
 function makeEngaged(man, woman) {
@@ -424,6 +418,8 @@ function makeEngaged(man, woman) {
     woman.free = false;
     man.fiance = woman.id;
     woman.fiance = man.id;
+	man.proposals = man.prefs.indexOf(woman.id) + 1;
+	woman.proposals = woman.prefs.indexOf(man.id) + 1;
     updateVis();
 }
 
