@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"src.588edcbb.css","sourceRoot":"../src","sourcesContent":["body {\n\tfont-family: sans-serif;\n}\n\n#solution-pseudocode {\n\tfont-size: 16px;\n}\n\n#main {\n\tpadding-left: 200px;\n\tpadding-right: 200px;\n}"]}

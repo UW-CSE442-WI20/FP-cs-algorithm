@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.046e0cb2.css">
+	<link rel="stylesheet" type="text/css" href="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.588edcbb.css">
     <title>Stable Matching Solution Visualized</title>
   </head>
   <body>
@@ -37,34 +37,34 @@
 		<h2>The Solution</h2>
 		<div id="solution-pseudocode">
 		<h3>Algorithm pseudocode</h3>
-		<pre><b>algorithm</b> stable_matching <b>is</b>
-		Initialize all <i>m</i> ∈ M and <i>w</i> ∈ W to <i>free</i>
-		<b>while</b> ∃ <i>free</i> man <i>m</i> who still has a woman w to propose to <b>do</b>
-			w&nbsp;:= first woman on m's list to whom m has not yet proposed
-			<b>if</b> w is <i>free</i> <b>then</b>
-				(m, w) become <i>engaged</i>
-			<b>else</b> some pair (m', w) already exists
-				<b>if</b> w prefers m to m' <b>then</b>
-					m' becomes <i>free</i>
-					(m, w) become <i>engaged</i>
-				<b>else</b>
-					(m', w) remain <i>engaged</i>
-				<b>end if</b>
-			<b>end if</b>
-		<b>repeat</b>
-		</pre>
+		<pre><span id="pcode1">algorithm <b>stable_matching</b>:
+		<span id="pcode2">Initialize all <i>men</i> and <i>women</i> to <i>free</i></span>
+		<span id="pcode3"><b>while</b> there exists a <i>free</i> man <i>m</i> who still has a woman <i>w</i> to propose to:</span>
+			<span id="pcode4"><b>set</b> w <b>to</b> first woman on m's list to whom m has not yet proposed</span>
+			<span id="pcode5"><b>if</b> w is <i>free</i>:</span>
+				<span id="pcode6">(m, w) become <i>engaged</i></span>
+			<span id="pcode7"><b>else</b>:</span>
+				<span id="pcode8">some pair (m', w) already exists</span>
+				<span id="pcode9"><b>if</b> w prefers m to m' <b>then</b></span>
+					<span id="pcode10">m' becomes <i>free</i></span>
+					<span id="pcode11">(m, w) become <i>engaged</i></span>
+				<span id="pcode12"><b>else</b></span>
+					<span id="pcode13">(m', w) remain <i>engaged</i></span></span></pre>
 		</div>
 		<div>Click next to walk through the solution. Click circles to edit their preference lists.</div>
 		<div id="solution"></div>
-    <!-- <button type="button" id="solution-previous">Previous Step</button> -->
+		<button type="button" id="play-button">Play Algorithm</button>
 		<button type="button" id="solution-next">Next Step</button>
-    <button type="button" id="solution-reset">Reset</button>
+		<button type="button" id="solution-reset">Reset</button>
+		<button type="button" id="shuffle-prefs">Shuffle Preferences</button>
 		<h2>Try it yourself</h2>
 		<div id="user-interact"></div>
+		<button type="button" id="check-work">Check My Work</button>
+		<button type="button" id="try-reset">Reset</button>
 	</div>
 
     <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/explanation.21805a9a.js"></script>
-    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.a4f96443.js"></script>
-    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/user-interact.50bedf60.js"></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.96277484.js"></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/user-interact.0b4c8e3b.js"></script>
   </body>
 </html>
