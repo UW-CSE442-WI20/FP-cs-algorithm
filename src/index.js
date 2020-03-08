@@ -22,16 +22,64 @@ var genderLabelData = [
 
 // user should be able to edit prefs
 var personData = [
-  { "x_axis": 150, "y_axis": 120, "radius": personRadius, "id": "A", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
-  { "x_axis": 400, "y_axis": 120, "radius": personRadius, "id": "B", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
-  { "x_axis": 650, "y_axis": 120, "radius": personRadius, "id": "C", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
-  { "x_axis": 900, "y_axis": 120, "radius": personRadius, "id": "D", "prefs": ["1", "2", "3", "4"], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
-  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "1", "prefs": ["A", "B", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
-  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "2", "prefs": ["B", "A", "D", "C"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
-  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "3", "prefs": ["B", "A", "C", "D"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
-  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "4", "prefs": ["A", "D", "C", "B"], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] }]
-var men = ["A", "B", "C", "D"];
-var women = ["1", "2", "3", "4"];
+  { "x_axis": 150, "y_axis": 120, "radius": personRadius, "id": "A", "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 400, "y_axis": 120, "radius": personRadius, "id": "B", "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 650, "y_axis": 120, "radius": personRadius, "id": "C", "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 900, "y_axis": 120, "radius": personRadius, "id": "D", "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 },
+  { "x_axis": 150, "y_axis": 350, "radius": personRadius, "id": "1", "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
+  { "x_axis": 400, "y_axis": 350, "radius": personRadius, "id": "2", "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
+  { "x_axis": 650, "y_axis": 350, "radius": personRadius, "id": "3", "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] },
+  { "x_axis": 900, "y_axis": 350, "radius": personRadius, "id": "4", "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [] }]
+var men = [];
+var women = [];
+
+var numMen = personData.length / 2;
+
+var fem_tops = ["LongHairBigHair", "LongHairBob", "LongHairBun", "LongHairCurly", "LongHairFro", "LongHairFroBand", "LongHairMiaWallace", "LongHairStraight", "LongHairStraight2", "LongHairStraightStrand"];
+var mal_tops = ["NoHair", "ShortHairDreads01", "ShortHairShortCurly", "ShortHairShortFlat", "ShortHairShortRound", "ShortHairShortWaved", "ShortHairSides", "ShortHairTheCaesar"];
+var opt_acc = ["Prescription02", "Round"];
+var hair_colors = ["Auburn", "Black", "Blonde", "BlondeGolden", "Brown", "BrownDark", "SilverGray"];
+var facial_hairs = ["BeardLight", "BeardMagestic", "MoustacheMagnum"];
+var clothes = ["BlazerShirt", "BlazerSweater", "CollarSweater", "Hoodie", "Overall", "ShirtCrewNeck", "ShirtScoopNeck", "ShirtVNeck"];
+var clothes_color = ["Black", "Blue02", "Blue03", "Gray02", "Heather", "PastelBlue", "Pink", "Red", "White"];
+var skins = ["Pale", "Light", "Brown", "DarkBrown"]
+
+// 65 most common male and female names
+var femaleNames = ["Emily","Hannah","Madison","Ashley","Sarah","Alexis","Samantha","Jessica","Elizabeth","Taylor","Lauren","Alyssa","Kayla","Abigail","Brianna","Olivia","Emma","Megan","Grace","Victoria","Rachel","Anna","Sydney","Destiny","Morgan","Jennifer","Jasmine","Haley","Julia","Kaitlyn","Nicole","Amanda","Katherine","Natalie","Hailey","Alexandra","Savannah","Chloe","Rebecca","Stephanie","Maria","Sophia","Mackenzie","Allison","Isabella","Amber","Mary","Danielle","Gabrielle","Jordan","Brooke","Michelle","Sierra","Katelyn","Andrea","Madeline","Sara","Kimberly","Courtney","Erin","Brittany","Vanessa","Jenna","Jacqueline","Caroline"];
+var maleNames = ["Jacob","Michael","Matthew","Joshua","Christopher","Nicholas","Andrew","Joseph","Daniel","Tyler","William","Brandon","Ryan","John","Zachary","David","Anthony","James","Justin","Alexander","Jonathan","Christian","Austin","Dylan","Ethan","Benjamin","Noah","Samuel","Robert","Nathan","Cameron","Kevin","Thomas","Jose","Hunter","Jordan","Kyle","Caleb","Jason","Logan","Aaron","Eric","Brian","Gabriel","Adam","Jack","Isaiah","Juan","Luis","Connor","Charles","Elijah","Isaac","Steven","Evan","Jared","Sean","Timothy","Luke","Cody","Nathaniel","Alex","Seth","Mason","Richard"];
+
+for (var i = 0; i < personData.length; i++) {
+	// generate picture
+	personData[i].url = generateAvatar(personData[i].gender);
+	
+	// generate names
+	var men_initials = [];
+	var women_initials = [];
+	for (var a = 0; a < men.length; a++) {
+		men_initials.push(men[a].charAt(0));
+	}
+	for (var a = 0; a < women.length; a++) {
+		women_initials.push(women[a].charAt(0));
+	}
+
+	// the starting letter mustbe unique
+	do {
+		if (personData[i].gender == "m") {
+			personData[i].id = maleNames[Math.floor(Math.random() * maleNames.length)];
+		}
+		else {
+			personData[i].id = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+		}
+	} while (men_initials.includes(personData[i].id.charAt(0)) || women_initials.includes(personData[i].id.charAt(0)));
+	
+	if (personData[i].gender == "m") {
+		men[i] = personData[i].id;
+	}
+	else { 
+		women[i - 4] = personData[i].id;
+	}
+}
+
 assignPrefs();
 function assignPrefs() {
 	for (var i = 0; i < personData.length; i++) {
@@ -51,21 +99,6 @@ function shuffle(a) {
         [a[i], a[j]] = [a[j], a[i]];
     }
 }
-
-var fem_tops = ["LongHairBigHair", "LongHairBob", "LongHairBun", "LongHairCurly", "LongHairFro", "LongHairFroBand", "LongHairMiaWallace", "LongHairStraight", "LongHairStraight2", "LongHairStraightStrand"];
-var mal_tops = ["NoHair", "ShortHairDreads01", "ShortHairShortCurly", "ShortHairShortFlat", "ShortHairShortRound", "ShortHairShortWaved", "ShortHairSides", "ShortHairTheCaesar"];
-var opt_acc = ["Prescription02", "Round"];
-var hair_colors = ["Auburn", "Black", "Blonde", "BlondeGolden", "Brown", "BrownDark", "SilverGray"];
-var facial_hairs = ["BeardLight", "BeardMagestic", "MoustacheMagnum"];
-var clothes = ["BlazerShirt", "BlazerSweater", "CollarSweater", "Hoodie", "Overall", "ShirtCrewNeck", "ShirtScoopNeck", "ShirtVNeck"];
-var clothes_color = ["Black", "Blue02", "Blue03", "Gray02", "Heather", "PastelBlue", "Pink", "Red", "White"];
-var skins = ["Pale", "Light", "Brown", "DarkBrown"]
-
-for (var i = 0; i < personData.length; i++) {
-	personData[i].url = generateAvatar(personData[i].gender);
-}
-
-var numMen = personData.length / 2;
 
 var svg = d3.select("#solution").append("svg")
     .attr("width", width)
@@ -113,7 +146,7 @@ for (var i = 1; i <= numMen; i++) {
 		.attr("y", function(d) { return d.y_axis - 35; })
 		.text( function (d) {
 			// get pref from personData
-			return d.prefs[i-1];
+			return d.prefs[i-1].charAt(0);
 		})
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "30px")
@@ -192,10 +225,16 @@ var personText = svg.selectAll("personText")
 	.append("text");
 var personLabels = personText
     .attr("x", function(d) { return d.x_axis; })
-    .attr("y", function(d) { return d.y_axis - 60; })
+    .attr("y", function(d) {
+			if (d.gender == "m") {
+				return d.y_axis - 58; 
+			} else {
+				return d.y_axis + 70;
+			}
+		})
     .text( function (d) { return d.id; })
     .attr("font-family", "sans-serif")
-    .attr("font-size", "40px")
+    .attr("font-size", "30px")
 	.attr("text-anchor", "middle")
     .attr("fill", function(d) { return d.gender == "m" ? malColor2 : femColor2 })
 	.attr("class", "person-label");
@@ -403,7 +442,7 @@ function updateVis() {
 					d3.select(this).text("");
 				}
 				else {
-					d3.select(this).text(d.prefs[i-1]);
+					d3.select(this).text(d.prefs[i-1].charAt(0));
 				}
 			});
 		svg.selectAll(".pref-x-text" + i)
@@ -428,7 +467,7 @@ function updateVis() {
 					}
 				}
 				else {
-					if(d.prefs[i-1] == d.fiance) {
+					if(d.prefs[i-1] != null && d.prefs[i-1] == d.fiance) {
 						return "#70a0a6";
 					}
 					else {
