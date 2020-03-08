@@ -10,10 +10,10 @@ var height = 500;
 
 // width not raidus... too lazy to change
 var personRadius = 100;
-var femColor = "#ffe4e1";
-var malColor = "#7fe5f0"
-var femColor2 = "#efd4d1";
-var malColor2 = "#5fc5d0";
+var femColor2 = "#F7347A";
+var malColor2 = "#4ca3dd"
+var femColor = "#fFa6b1";
+var malColor = "#a6c2ff";
 
 var genderLabelData = [
 	{ "x_axis": 65, "y_axis": 120, "text": "♂️:" },
@@ -143,13 +143,13 @@ for (var i = 1; i <= numMen; i++) {
 		.append("text");
 	var prefLabels = prefText
 		.attr("x", function(d) { return d.x_axis + 40 * i + 18; })
-		.attr("y", function(d) { return d.y_axis - 35; })
+		.attr("y", function(d) { return d.y_axis + 40; })
 		.text( function (d) {
 			// get pref from personData
 			return d.prefs[i-1].charAt(0);
 		})
 		.attr("font-family", "sans-serif")
-		.attr("font-size", "30px")
+		.attr("font-size", "22px")
 		.attr("text-anchor", "middle")
 		.attr("fill", function(d) { return d.gender == "m" ? femColor : malColor })
 		.attr("class", "pref-text" + i);
@@ -258,7 +258,7 @@ var alertText = svg.selectAll("alertText")
     .enter()
     .append("text")
 	.attr("x", 600)
-    .attr("y", 450)
+    .attr("y", 480)
     .text( function () { return alertText; })
     .attr("font-family", "sans-serif")
     .attr("font-size", "35px")
