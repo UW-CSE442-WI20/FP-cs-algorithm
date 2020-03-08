@@ -555,7 +555,14 @@ function reset() {
 		if (personData[i].gender == "m") {
 			personData[i].proposals = 0;
 		}
+		if(personData[i] == selectPerson) {
+			personData[i].prefs = prevState;
+		}
 	}
+	selecting = false;
+	selectPerson = null;
+	selectIndex = 0;
+	prevState = null;
     curManIndex = null;
 	started = false;
 	d3.select("#play-button").text("Play Algorithm");
