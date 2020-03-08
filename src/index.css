@@ -36,6 +36,13 @@ h2 {
 	padding-left: 25px;
 }
 
+#solution-pseudocode {
+	border: 1px solid black;
+	margin-right: 250px;
+	margin-bottom: 30px;
+	padding: 1px 10px;
+	background: #F3F3F3
+}
 button {
 	background: transparent;
 	border-radius:20px;
