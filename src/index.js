@@ -619,15 +619,22 @@ function generateAvatar(gender) {
 	else {
 		var hairColor = dark_hair_colors[Math.floor(Math.random() * dark_hair_colors.length)];
 	}
+	// 30% chance of facial hair for males only
+	var facialHair = "Blank";
+	if(Math.random() < .3 && gender == "m") {
+		facialHair = facial_hairs[Math.floor(Math.random() * facial_hairs.length)];
+	}
 	var avatar = "https://avataaars.io/" +
 		"?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) +
 		"&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) +
 		"&hairColor=" + hairColor +
-		"&facialHairColor=" + hairColor +
-		"&facialHairType=" + (Math.random() > .3 || gender == "f" ? "Blank" : facial_hairs[Math.floor(Math.random() * facial_hairs.length)]) +
+		"&facialHairType=" + facialHair +
 		"&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +
 		"&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +
 		"&skinColor=" + skinColor;
+	if (hairColor != "SilverGray") {
+		avatar += "&facialHairColor=" + hairColor;
+	}
 	return avatar;
 }
 
