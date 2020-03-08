@@ -28888,32 +28888,36 @@ Object.keys(_d3Zoom).forEach(function (key) {
 // You can require libraries
 var d3 = require('d3');
 
-var started = false; // set the dimensions of the visualization
-
-var width = 1400;
+WebFont.load({
+  google: {
+    families: ['Nunito']
+  }
+});
+var started = false;
+var width = 1100;
 var height = 500; // width not raidus... too lazy to change
 
 var personRadius = 100;
-var femColor = "#ffe4e1";
-var malColor = "#7fe5f0";
-var femColor2 = "#efd4d1";
-var malColor2 = "#5fc5d0";
+var femColor2 = "#F7347A";
+var malColor2 = "#4ca3dd";
+var femColor = "#fFa6b1";
+var malColor = "#a6c2ff";
 var genderLabelData = [{
-  "x_axis": 65,
+  "x_axis": 20,
   "y_axis": 120,
   "text": "♂️:"
 }, {
-  "x_axis": 65,
+  "x_axis": 20,
   "y_axis": 350,
   "text": "♀️:"
 }]; // user should be able to edit prefs
 
 var personData = [{
-  "x_axis": 150,
+  "x_axis": 100,
   "y_axis": 120,
   "radius": personRadius,
   "id": "A",
-  "prefs": ["1", "2", "3", "4"],
+  "prefs": [],
   "free": true,
   "gender": "m",
   "fiance": null,
@@ -28921,11 +28925,11 @@ var personData = [{
   "exes": [],
   "proposals": 0
 }, {
-  "x_axis": 400,
+  "x_axis": 350,
   "y_axis": 120,
   "radius": personRadius,
   "id": "B",
-  "prefs": ["1", "2", "3", "4"],
+  "prefs": [],
   "free": true,
   "gender": "m",
   "fiance": null,
@@ -28933,11 +28937,11 @@ var personData = [{
   "exes": [],
   "proposals": 0
 }, {
-  "x_axis": 650,
+  "x_axis": 600,
   "y_axis": 120,
   "radius": personRadius,
   "id": "C",
-  "prefs": ["1", "2", "3", "4"],
+  "prefs": [],
   "free": true,
   "gender": "m",
   "fiance": null,
@@ -28945,11 +28949,11 @@ var personData = [{
   "exes": [],
   "proposals": 0
 }, {
-  "x_axis": 900,
+  "x_axis": 850,
   "y_axis": 120,
   "radius": personRadius,
   "id": "D",
-  "prefs": ["1", "2", "3", "4"],
+  "prefs": [],
   "free": true,
   "gender": "m",
   "fiance": null,
@@ -28957,52 +28961,97 @@ var personData = [{
   "exes": [],
   "proposals": 0
 }, {
-  "x_axis": 150,
+  "x_axis": 100,
   "y_axis": 350,
   "radius": personRadius,
   "id": "1",
-  "prefs": ["A", "B", "C", "D"],
+  "prefs": [],
   "free": true,
   "gender": "f",
   "fiance": null,
   "url": "https://avataaars.io/",
   "exes": []
 }, {
-  "x_axis": 400,
+  "x_axis": 350,
   "y_axis": 350,
   "radius": personRadius,
   "id": "2",
-  "prefs": ["B", "A", "D", "C"],
+  "prefs": [],
   "free": true,
   "gender": "f",
   "fiance": null,
   "url": "https://avataaars.io/",
   "exes": []
 }, {
-  "x_axis": 650,
+  "x_axis": 600,
   "y_axis": 350,
   "radius": personRadius,
   "id": "3",
-  "prefs": ["B", "A", "C", "D"],
+  "prefs": [],
   "free": true,
   "gender": "f",
   "fiance": null,
   "url": "https://avataaars.io/",
   "exes": []
 }, {
-  "x_axis": 900,
+  "x_axis": 850,
   "y_axis": 350,
   "radius": personRadius,
   "id": "4",
-  "prefs": ["A", "D", "C", "B"],
+  "prefs": [],
   "free": true,
   "gender": "f",
   "fiance": null,
   "url": "https://avataaars.io/",
   "exes": []
 }];
-var men = ["A", "B", "C", "D"];
-var women = ["1", "2", "3", "4"];
+var men = [];
+var women = [];
+var numMen = personData.length / 2;
+var fem_tops = ["LongHairBigHair", "LongHairBob", "LongHairBun", "LongHairCurly", "LongHairFro", "LongHairFroBand", "LongHairMiaWallace", "LongHairStraight", "LongHairStraight2", "LongHairStraightStrand"];
+var mal_tops = ["NoHair", "ShortHairDreads01", "ShortHairShortCurly", "ShortHairShortFlat", "ShortHairShortRound", "ShortHairShortWaved", "ShortHairSides", "ShortHairTheCaesar"];
+var opt_acc = ["Prescription02", "Round"];
+var all_hair_colors = ["Auburn", "Black", "BlondeGolden", "Brown", "BrownDark", "SilverGray"];
+var dark_hair_colors = ["Black", "Brown", "BrownDark", "SilverGray"];
+var facial_hairs = ["BeardLight", "BeardMajestic", "MoustacheMagnum"];
+var clothes = ["BlazerShirt", "BlazerSweater", "CollarSweater", "Hoodie", "Overall", "ShirtCrewNeck", "ShirtScoopNeck", "ShirtVNeck"];
+var clothes_color = ["Black", "Blue02", "Blue03", "Gray02", "Heather", "PastelBlue", "Pink", "Red", "White"];
+var skins = ["Pale", "Light", "Brown", "DarkBrown"]; // 150 most common male and female names
+
+var femaleNames = ["Emily", "Hannah", "Madison", "Ashley", "Sarah", "Alexis", "Samantha", "Jessica", "Elizabeth", "Taylor", "Lauren", "Alyssa", "Kayla", "Abigail", "Brianna", "Olivia", "Emma", "Megan", "Grace", "Victoria", "Rachel", "Anna", "Sydney", "Destiny", "Morgan", "Jennifer", "Jasmine", "Haley", "Julia", "Kaitlyn", "Nicole", "Amanda", "Katherine", "Natalie", "Hailey", "Alexandra", "Savannah", "Chloe", "Rebecca", "Stephanie", "Maria", "Sophia", "Mackenzie", "Allison", "Isabella", "Amber", "Mary", "Danielle", "Gabrielle", "Jordan", "Brooke", "Michelle", "Sierra", "Katelyn", "Andrea", "Madeline", "Sara", "Kimberly", "Courtney", "Erin", "Brittany", "Vanessa", "Jenna", "Jacqueline", "Caroline", "Faith", "Makayla", "Bailey", "Paige", "Shelby", "Melissa", "Kaylee", "Christina", "Trinity", "Mariah", "Caitlin", "Autumn", "Marissa", "Breanna", "Angela", "Catherine", "Zoe", "Briana", "Jada", "Laura", "Claire", "Alexa", "Kelsey", "Kathryn", "Leslie", "Alexandria", "Sabrina", "Mia", "Isabel", "Molly", "Leah", "Katie", "Gabriella", "Cheyenne", "Cassandra", "Tiffany", "Erica", "Lindsey", "Kylie", "Amy", "Diana", "Cassidy", "Mikayla", "Ariana", "Margaret", "Kelly", "Miranda", "Maya", "Melanie", "Audrey", "Jade", "Gabriela", "Caitlyn", "Angel", "Jillian", "Alicia", "Jocelyn", "Erika", "Lily", "Heather", "Madelyn", "Adriana", "Arianna", "Lillian", "Kiara", "Riley", "Crystal", "Mckenzie", "Meghan", "Skylar", "Ana", "Britney", "Angelica", "Kennedy", "Chelsea", "Daisy", "Kristen", "Veronica", "Isabelle", "Summer", "Hope", "Brittney", "Lydia", "Hayley", "Evelyn"];
+var maleNames = ["Jacob", "Michael", "Matthew", "Joshua", "Christopher", "Nicholas", "Andrew", "Joseph", "Daniel", "Tyler", "William", "Brandon", "Ryan", "John", "Zachary", "David", "Anthony", "James", "Justin", "Alexander", "Jonathan", "Christian", "Austin", "Dylan", "Ethan", "Benjamin", "Noah", "Samuel", "Robert", "Nathan", "Cameron", "Kevin", "Thomas", "Jose", "Hunter", "Jordan", "Kyle", "Caleb", "Jason", "Logan", "Aaron", "Eric", "Brian", "Gabriel", "Adam", "Jack", "Isaiah", "Juan", "Luis", "Connor", "Charles", "Elijah", "Isaac", "Steven", "Evan", "Jared", "Sean", "Timothy", "Luke", "Cody", "Nathaniel", "Alex", "Seth", "Mason", "Richard", "Carlos", "Angel", "Patrick", "Devin", "Bryan", "Cole", "Jackson", "Ian", "Garrett", "Trevor", "Jesus", "Chase", "Adrian", "Mark", "Blake", "Sebastian", "Antonio", "Lucas", "Jeremy", "Gavin", "Miguel", "Julian", "Dakota", "Alejandro", "Jesse", "Dalton", "Bryce", "Tanner", "Kenneth", "Stephen", "Jake", "Victor", "Spencer", "Marcus", "Paul", "Brendan", "Jeremiah", "Xavier", "Jeffrey", "Tristan", "Jalen", "Jorge", "Edward", "Riley", "Wyatt", "Colton", "Joel", "Maxwell", "Aidan", "Travis", "Shane", "Colin", "Dominic", "Carson", "Vincent", "Derek", "Oscar", "Grant", "Eduardo", "Peter", "Henry", "Parker", "Hayden", "Collin", "George", "Bradley", "Mitchell", "Devon", "Ricardo", "Shawn", "Taylor", "Nicolas", "Francisco", "Gregory", "Liam", "Kaleb", "Preston", "Erik", "Owen", "Omar", "Diego", "Dustin", "Corey", "Fernando", "Clayton"];
+
+for (var i = 0; i < personData.length; i++) {
+  // generate picture
+  personData[i].url = generateAvatar(personData[i].gender); // generate names
+
+  var men_initials = [];
+  var women_initials = [];
+
+  for (var a = 0; a < men.length; a++) {
+    men_initials.push(men[a].charAt(0));
+  }
+
+  for (var a = 0; a < women.length; a++) {
+    women_initials.push(women[a].charAt(0));
+  } // the starting letter mustbe unique
+
+
+  do {
+    if (personData[i].gender == "m") {
+      personData[i].id = maleNames[Math.floor(Math.random() * maleNames.length)];
+    } else {
+      personData[i].id = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+    }
+  } while (men_initials.includes(personData[i].id.charAt(0)) || women_initials.includes(personData[i].id.charAt(0)));
+
+  if (personData[i].gender == "m") {
+    men[i] = personData[i].id;
+  } else {
+    women[i - 4] = personData[i].id;
+  }
+}
+
 assignPrefs();
 
 function assignPrefs() {
@@ -29026,20 +29075,6 @@ function shuffle(a) {
   }
 }
 
-var fem_tops = ["LongHairBigHair", "LongHairBob", "LongHairBun", "LongHairCurly", "LongHairFro", "LongHairFroBand", "LongHairMiaWallace", "LongHairStraight", "LongHairStraight2", "LongHairStraightStrand"];
-var mal_tops = ["NoHair", "ShortHairDreads01", "ShortHairShortCurly", "ShortHairShortFlat", "ShortHairShortRound", "ShortHairShortWaved", "ShortHairSides", "ShortHairTheCaesar"];
-var opt_acc = ["Prescription02", "Round"];
-var hair_colors = ["Auburn", "Black", "Blonde", "BlondeGolden", "Brown", "BrownDark", "SilverGray"];
-var facial_hairs = ["BeardLight", "BeardMagestic", "MoustacheMagnum"];
-var clothes = ["BlazerShirt", "BlazerSweater", "CollarSweater", "Hoodie", "Overall", "ShirtCrewNeck", "ShirtScoopNeck", "ShirtVNeck"];
-var clothes_color = ["Black", "Blue02", "Blue03", "Gray02", "Heather", "PastelBlue", "Pink", "Red", "White"];
-var skins = ["Pale", "Light", "Brown", "DarkBrown"];
-
-for (var i = 0; i < personData.length; i++) {
-  personData[i].url = generateAvatar(personData[i].gender);
-}
-
-var numMen = personData.length / 2;
 var svg = d3.select("#solution").append("svg").attr("width", width).attr("height", height); // define image filters here
 
 var bright = svg.append("defs").append("filter").attr("id", "brightness").append("feComponentTransfer");
@@ -29070,11 +29105,11 @@ for (var i = 1; i <= numMen; i++) {
   var prefLabels = prefText.attr("x", function (d) {
     return d.x_axis + 40 * i + 18;
   }).attr("y", function (d) {
-    return d.y_axis - 35;
+    return d.y_axis + 40;
   }).text(function (d) {
     // get pref from personData
-    return d.prefs[i - 1];
-  }).attr("font-family", "sans-serif").attr("font-size", "30px").attr("text-anchor", "middle").attr("fill", function (d) {
+    return d.prefs[i - 1].charAt(0);
+  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "22px").attr("text-anchor", "middle").attr("fill", function (d) {
     return d.gender == "m" ? femColor : malColor;
   }).attr("class", "pref-text" + i);
 }
@@ -29131,10 +29166,14 @@ var personText = svg.selectAll("personText").data(personData).enter().append("te
 var personLabels = personText.attr("x", function (d) {
   return d.x_axis;
 }).attr("y", function (d) {
-  return d.y_axis - 60;
+  if (d.gender == "m") {
+    return d.y_axis - 58;
+  } else {
+    return d.y_axis + 70;
+  }
 }).text(function (d) {
   return d.id;
-}).attr("font-family", "sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", function (d) {
+}).attr("font-family", "Nunito, sans-serif").attr("font-size", "30px").attr("text-anchor", "middle").attr("fill", function (d) {
   return d.gender == "m" ? malColor2 : femColor2;
 }).attr("class", "person-label"); // gender labels
 
@@ -29145,10 +29184,10 @@ var genderLabels = genderLabelText.attr("x", function (d) {
   return d.y_axis + 14;
 }).text(function (d) {
   return d.text;
-}).attr("font-family", "sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "black");
-var alertText = svg.selectAll("alertText").data(personData).enter().append("text").attr("x", 600).attr("y", 450).text(function () {
+}).attr("font-family", "Nunito, sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "black");
+var alertText = svg.append("text").attr("x", 550).attr("y", 480).text(function () {
   return alertText;
-}).attr("font-family", "sans-serif").attr("font-size", "35px").attr("fill", "black").style("text-anchor", "middle").attr("class", "alertText");
+}).attr("font-family", "Nunito, sans-serif").attr("font-size", "35px").attr("fill", "black").style("text-anchor", "middle").attr("class", "alertText");
 
 for (var i = 1; i <= numMen; i++) {
   var prefXText = svg.selectAll("prefXTexts").data(personData).enter().append("text");
@@ -29159,7 +29198,7 @@ for (var i = 1; i <= numMen; i++) {
   }).text(function (d) {
     // get pref from personData
     return "";
-  }).attr("font-family", "sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "red").attr("class", "pref-x-text" + i);
+  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "red").attr("class", "pref-x-text" + i);
 }
 
 var curManIndex = null;
@@ -29325,7 +29364,7 @@ function updateVis() {
       if (d.prefs[i - 1] == null) {
         d3.select(this).text("");
       } else {
-        d3.select(this).text(d.prefs[i - 1]);
+        d3.select(this).text(d.prefs[i - 1].charAt(0));
       }
     });
     svg.selectAll(".pref-x-text" + i).data(personData).each(function (d) {
@@ -29343,7 +29382,7 @@ function updateVis() {
           return "#b0e0e6";
         }
       } else {
-        if (d.prefs[i - 1] == d.fiance) {
+        if (d.prefs[i - 1] != null && d.prefs[i - 1] == d.fiance) {
           return "#70a0a6";
         } else {
           return "#b0e0e6";
@@ -29421,14 +29460,24 @@ function reset() {
     personData[i].fiance = null;
     personData[i].free = true;
     personData[i].exes = [];
+    alertQueue = [];
 
     if (personData[i].gender == "m") {
       personData[i].proposals = 0;
     }
+
+    if (personData[i] == selectPerson) {
+      personData[i].prefs = prevState;
+    }
   }
 
+  selecting = false;
+  selectPerson = null;
+  selectIndex = 0;
+  prevState = null;
   curManIndex = null;
   started = false;
+  stepClicked = false;
   d3.select("#play-button").text("Play Algorithm");
   clearInterval(interval);
   updateAlert();
@@ -29438,19 +29487,31 @@ function reset() {
 var interval;
 
 function playSolution() {
-  if (started) {
+  if (started && !stepClicked) {
     d3.select(this).text("Play Algorithm");
     clearInterval(interval);
+    started = false;
   } else {
+    clearInterval(interval);
+    solutionNextStep();
     interval = setInterval(function () {
       solutionNextStep();
     }, 1000);
     d3.select(this).text("Pause Algorithm");
   }
+
+  stepClicked = false;
+}
+
+var stepClicked = false;
+
+function nexStep() {
+  stepClicked = true;
+  solutionNextStep();
 }
 
 d3.select("#play-button").on("click", playSolution);
-d3.select("#solution-next").on("click", solutionNextStep);
+d3.select("#solution-next").on("click", nexStep);
 d3.select("#solution-reset").on("click", reset);
 d3.select("#shuffle-prefs").on("click", function () {
   if (!started) {
@@ -29463,8 +29524,27 @@ d3.select("#shuffle-prefs").on("click", function () {
 }); // generates a URL to the avatar (thanks to https://getavataaars.com/)
 
 function generateAvatar(gender) {
-  var hairColor = hair_colors[Math.floor(Math.random() * hair_colors.length)];
-  var avatar = "https://avataaars.io/" + "?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) + "&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) + "&hairColor=" + hairColor + "&facialHairColor=" + hairColor + "&facialHairType=" + (Math.random() > .3 || gender == "f" ? "Blank" : facial_hairs[Math.floor(Math.random() * facial_hairs.length)]) + "&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] + "&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] + "&skinColor=" + skins[Math.floor(Math.random() * skins.length)];
+  var skinColor = skins[Math.floor(Math.random() * skins.length)];
+
+  if (skinColor == "Pale" || skinColor == "Light") {
+    var hairColor = all_hair_colors[Math.floor(Math.random() * all_hair_colors.length)];
+  } else {
+    var hairColor = dark_hair_colors[Math.floor(Math.random() * dark_hair_colors.length)];
+  } // 30% chance of facial hair for males only
+
+
+  var facialHair = "Blank";
+
+  if (Math.random() < .3 && gender == "m") {
+    facialHair = facial_hairs[Math.floor(Math.random() * facial_hairs.length)];
+  }
+
+  var avatar = "https://avataaars.io/" + "?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) + "&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) + "&hairColor=" + hairColor + "&facialHairType=" + facialHair + "&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] + "&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] + "&skinColor=" + skinColor;
+
+  if (hairColor != "SilverGray") {
+    avatar += "&facialHairColor=" + hairColor;
+  }
+
   return avatar;
 } // useless
 
@@ -29556,7 +29636,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54760" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62338" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,18 +2,20 @@
 <html>
   <head>
     <meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.588edcbb.css">
+	<link rel="stylesheet" type="text/css" href="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.a4777738.css">
+	  <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,900&display=swap" rel="stylesheet">
+	  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <title>Stable Matching Solution Visualized</title>
   </head>
   <body>
 	<div id="main">
-		<h2>The Problem</h2>
+		<h1>The Problem</h1>
 		<div>
-			<h3>Perfect Matching:</h3>
+			<h2>Perfect Matching:</h2>
 			<div>A perfect matching is a matching of men and weomen in which everyone is matched
 		monogamously. Each man gets exactly one woman and each woman gets exactly one man.</div>
 
-			<h3>Unstable Pairs:</h3>
+			<h2>Unstable Pairs:</h2>
 			<div>In a matching A, an unmatched pair M-W is unstable if man M and woman W prefer
 			each other to their current partners.
 			For example consider the following matching with the pairs M1-W1 and M2-W2:</div>
@@ -26,17 +28,16 @@
 			Then the pair M1-W2 (represented by the red line above) is an unstable pair
 			because both M1 and W2 prefer each other to their current partners.</div>
 
-			<h3>Stable Matching:</h3>
+			<h2>Stable Matching:</h2>
 			<div>A perfect matching with no unstable pairs is called a stable matching.</div>
 
-			<h3>Stable Matching Problem:</h3>
+			<h2>Stable Matching Problem:</h2>
 			<div>Given the preference lists of n men and n women, find a stable matching if one
 			exists.</div>
 		</div>
-
-		<h2>The Solution</h2>
+		<h1>The Solution</h1>
 		<div id="solution-pseudocode">
-		<h3>Algorithm pseudocode</h3>
+		<h2>Algorithm pseudocode</h2>
 		<pre><span id="pcode1">algorithm <b>stable_matching</b>:
 		<span id="pcode2">Initialize all <i>men</i> and <i>women</i> to <i>free</i></span>
 		<span id="pcode3"><b>while</b> there exists a <i>free</i> man <i>m</i> who still has a woman <i>w</i> to propose to:</span>
@@ -62,9 +63,8 @@
 		<button type="button" id="check-work">Check My Work</button>
 		<button type="button" id="try-reset">Reset</button>
 	</div>
-
     <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/explanation.21805a9a.js"></script>
-    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.96277484.js"></script>
-    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/user-interact.0b4c8e3b.js"></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.69996f38.js"></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-cs-algorithm/user-interact.0faa1e2f.js"></script>
   </body>
 </html>
