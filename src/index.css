@@ -10,3 +10,19 @@ body {
 	padding-left: 200px;
 	padding-right: 200px;
 }
+
+button {
+	background: #f08080;
+	border-radius: 3px;
+	border: none;
+	color: white;
+	font-weight: 600;
+	font-size: 100%;
+	padding: 10px 20px;
+	margin: 0 3px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #696969;
+}
