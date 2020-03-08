@@ -28889,7 +28889,7 @@ var circleAttributes = personCircles.attr("x", function (d) {
 }).attr("xlink:href", function (d) {
   return d.url + "&avatarStyle=Circle";
 }).attr("class", "person-circle").on("click", function (d) {
-  if (started) {
+  if (checkClicked) {
     updateAlert("Reset to set your own preferences!");
   } else {
     if (!selecting) {// should indicate selection somehow
@@ -29224,6 +29224,8 @@ function reset() {
   curManIndex = null;
   started = false;
   stepClicked = false;
+  checkClicked = false;
+  playing = false;
   d3.select("#play-button").text("Play Algorithm");
   clearInterval(interval);
   updateAlert();
@@ -29231,12 +29233,15 @@ function reset() {
 }
 
 var interval;
+var playing = false;
+var checkClicked = false;
 
 function playSolution() {
-  if (started && !stepClicked) {
+  if (started && !stepClicked || stepClicked && playing) {
     d3.select(this).text("Play Algorithm");
     clearInterval(interval);
     started = false;
+    playing = false;
   } else {
     clearInterval(interval);
     solutionNextStep();
@@ -29244,14 +29249,17 @@ function playSolution() {
       solutionNextStep();
     }, 1000);
     d3.select(this).text("Pause Algorithm");
+    playing = true;
   }
 
   stepClicked = false;
+  checkClicked = true;
 }
 
 var stepClicked = false;
 
 function nexStep() {
+  checkClicked = true;
   stepClicked = true;
   solutionNextStep();
 }
@@ -29260,7 +29268,7 @@ d3.select("#play-button").on("click", playSolution);
 d3.select("#solution-next").on("click", nexStep);
 d3.select("#solution-reset").on("click", reset);
 d3.select("#shuffle-prefs").on("click", function () {
-  if (!started) {
+  if (!checkClicked) {
     assignPrefs();
     selecting = false;
     updateVis();
@@ -29355,4 +29363,4 @@ function onCircleClick2(d) {
 // console.log('Dynamically loaded CSV data', data);
 // })
 },{"d3":"UzF0"}]},{},["Focm"], null)
-//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.69996f38.js.map
+//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.a234f75a.js.map
