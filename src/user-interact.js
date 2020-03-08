@@ -363,9 +363,11 @@ w := first woman on m's list to whom m has not yet proposed
 		end if
 	end if
 */
+var currentAlert = "";
 function solutionNextStep() {
     if(!getMatches()) {
-        updateAlert("Incomplete number of matches. Please finishing matching to proceed.");
+        currentAlert = "Incomplete number of matches. Please finishing matching to proceed.";
+        updateAlert(currentAlert);
     } else {
         for(var i = 0; i < numMen; i++) {
             var woman = personData[personData.length - 1 - i];
@@ -373,12 +375,14 @@ function solutionNextStep() {
             for(var j = 0; j < higher.length; j++) {
                 var man = personData[personData.findIndex(p => p.id == higher[j])];
                 if(man.prefs.indexOf(woman.id) < man.prefs.indexOf(man.fiance)){
-                    updateAlert("Matching failed. Try again.");
+                    currentAlert = "Matching failed. Try again.";
+                    updateAlert(currentAlert);
                     return;
                 }
             }
         }
-        updateAlert("Matching successful. Everyone now has a match.");
+        currentAlert = "Matching successful. Everyone now has a match.";
+        updateAlert(currentAlert);
     }
 }
 
@@ -531,6 +535,10 @@ function onCircleClick(d) {
                 selectPerson = temp;
             }
             propose(selectPerson.id, d.id);
+            if(currentAlert != "") {
+                currentAlert = "";
+                updateAlert(currentAlert);
+            }
             selecting = false;
         } else {
             selectPerson = d;
