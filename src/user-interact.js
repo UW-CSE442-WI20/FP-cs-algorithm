@@ -370,16 +370,15 @@ var genderLabels = genderLabelText
     .attr("text-anchor", "middle")
     .attr("fill", "black");
 
-var alertText = svg.selectAll("alertText")
-    .data(personData)
-    .enter()
+var alertText = svg
     .append("text")
     .attr("x", 600)
-    .attr("y", 450)
+    .attr("y", 480)
     .text( function () { return alertText; })
     .attr("font-family", "sans-serif")
     .attr("font-size", "35px")
     .attr("fill", "black")
+	.attr("stroke", "none")
     .style("text-anchor", "middle")
     .attr("class", "alertText");
 

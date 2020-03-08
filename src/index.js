@@ -254,9 +254,7 @@ var genderLabels = genderLabelText
 	.attr("text-anchor", "middle")
     .attr("fill", "black");
 	
-var alertText = svg.selectAll("alertText")
-	.data(personData)
-    .enter()
+var alertText = svg
     .append("text")
 	.attr("x", 600)
     .attr("y", 480)
