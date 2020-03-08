@@ -552,6 +552,7 @@ function reset() {
 		personData[i].fiance = null;
 		personData[i].free = true;
 		personData[i].exes = [];
+		alertQueue = [];
 		if (personData[i].gender == "m") {
 			personData[i].proposals = 0;
 		}
@@ -576,8 +577,11 @@ function playSolution() {
 	if (started) {
 		d3.select(this).text("Play Algorithm");
 		clearInterval(interval);
+		started = false;
 	}
 	else {
+		clearInterval(interval);
+		solutionNextStep();
 		interval = setInterval(function(){ 
 			solutionNextStep();
 		}, 1000);
