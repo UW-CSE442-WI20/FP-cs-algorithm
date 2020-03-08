@@ -564,6 +564,7 @@ function reset() {
 	prevState = null;
     curManIndex = null;
 	started = false;
+	stepClicked = false;
 	d3.select("#play-button").text("Play Algorithm");
 	clearInterval(interval);
 	updateAlert();
@@ -572,7 +573,7 @@ function reset() {
 
 var interval;
 function playSolution() {
-	if (started) {
+	if (started && !stepClicked) {
 		d3.select(this).text("Play Algorithm");
 		clearInterval(interval);
 		started = false;
@@ -585,10 +586,18 @@ function playSolution() {
 		}, 1000);
 		d3.select(this).text("Pause Algorithm");
 	}
+	stepClicked = false;
+}
+
+var stepClicked = false;
+
+function nexStep() {
+	stepClicked = true;
+	solutionNextStep();
 }
 
 d3.select("#play-button").on("click", playSolution);
-d3.select("#solution-next").on("click", solutionNextStep);
+d3.select("#solution-next").on("click", nexStep);
 d3.select("#solution-reset").on("click", reset);
 d3.select("#shuffle-prefs").on("click", function() { 
 	if (!started) { 
