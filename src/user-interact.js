@@ -1,28 +1,34 @@
 // You can require libraries
 const d3 = require('d3')
 
+WebFont.load({
+    google: {
+        families: ['Nunito']
+    }
+});
+
 var started = false;
 
 // set the dimensions of the visualization
-var width = 1400;
+var width = 1100;
 var height = 500;
 
 // width not raidus... too lazy to change
 var personRadius = 100;
-var femColor2 = "#F7347A";	
-var malColor2 = "#4ca3dd"	
-var femColor = "#fFa6b1";	
+var femColor2 = "#F7347A";
+var malColor2 = "#4ca3dd"
+var femColor = "#fFa6b1";
 var malColor = "#a6c2ff";
 
 var genderLabelData = [
-    {"x_axis": 65, "y_axis": 120, "text": "♂️:"},
-    {"x_axis": 65, "y_axis": 350, "text": "♀️:"}
+    {"x_axis": 20, "y_axis": 120, "text": "♂️:"},
+    {"x_axis": 20, "y_axis": 350, "text": "♀️:"}
 ];
 
 // user should be able to edit prefs
 var personData = [
     {
-        "x_axis": 150,
+        "x_axis": 100,
         "y_axis": 120,
         "radius": personRadius,
         "id": "A",
@@ -34,7 +40,7 @@ var personData = [
         "proposals": 0
     },
     {
-        "x_axis": 400,
+        "x_axis": 350,
         "y_axis": 120,
         "radius": personRadius,
         "id": "B",
@@ -46,7 +52,7 @@ var personData = [
         "proposals": 0
     },
     {
-        "x_axis": 650,
+        "x_axis": 600,
         "y_axis": 120,
         "radius": personRadius,
         "id": "C",
@@ -58,7 +64,7 @@ var personData = [
         "proposals": 0
     },
     {
-        "x_axis": 900,
+        "x_axis": 850,
         "y_axis": 120,
         "radius": personRadius,
         "id": "D",
@@ -70,7 +76,7 @@ var personData = [
         "proposals": 0
     },
     {
-        "x_axis": 150,
+        "x_axis": 100,
         "y_axis": 350,
         "radius": personRadius,
         "id": "1",
@@ -82,7 +88,7 @@ var personData = [
         "proposals": 0
     },
     {
-        "x_axis": 400,
+        "x_axis": 350,
         "y_axis": 350,
         "radius": personRadius,
         "id": "2",
@@ -94,7 +100,7 @@ var personData = [
         "proposals": 0
     },
     {
-        "x_axis": 650,
+        "x_axis": 600,
         "y_axis": 350,
         "radius": personRadius,
         "id": "3",
@@ -106,7 +112,7 @@ var personData = [
         "proposals": 0
     },
     {
-        "x_axis": 900,
+        "x_axis": 850,
         "y_axis": 350,
         "radius": personRadius,
         "id": "4",
@@ -116,7 +122,7 @@ var personData = [
         "fiance": null,
         "url": "https://avataaars.io/",
         "proposals": 0
-    }]
+    }];
 var men = [];
 var women = [];
 
@@ -246,7 +252,7 @@ for (var i = 1; i <= numMen; i++) {
             // get pref from personData
             return d.prefs[i - 1].charAt(0);
         })
-        .attr("font-family", "sans-serif")
+        .attr("font-family", "Nunito, sans-serif")
         .attr("font-size", "22px")
         .attr("text-anchor", "middle")
         .attr("fill", function (d) {
@@ -341,7 +347,7 @@ var personLabels = personText
     .text(function (d) {
         return d.id;
     })
-    .attr("font-family", "sans-serif")
+    .attr("font-family", "Nunito, sans-serif")
     .attr("font-size", "30px")
     .attr("text-anchor", "middle")
     .attr("fill", function (d) {
@@ -365,17 +371,17 @@ var genderLabels = genderLabelText
     .text(function (d) {
         return d.text;
     })
-    .attr("font-family", "sans-serif")
+    .attr("font-family", "Nunito, sans-serif")
     .attr("font-size", "40px")
     .attr("text-anchor", "middle")
     .attr("fill", "black");
 
 var alertText = svg
     .append("text")
-    .attr("x", 600)
+    .attr("x", 550)
     .attr("y", 480)
     .text( function () { return alertText; })
-    .attr("font-family", "sans-serif")
+    .attr("font-family", "Nunito, sans-serif")
     .attr("font-size", "35px")
     .attr("fill", "black")
 	.attr("stroke", "none")
@@ -401,7 +407,7 @@ w := first woman on m's list to whom m has not yet proposed
 var currentAlert = "";
 function solutionNextStep() {
     if(!getMatches()) {
-        currentAlert = "Incomplete number of matches. Please finishing matching to proceed.";
+        currentAlert = "Incomplete number of matches. Please finish matching first.";
         updateAlert(currentAlert);
     } else {
         for(var i = 0; i < numMen; i++) {
