@@ -57,7 +57,7 @@ var maleNames = ["Jacob","Michael","Matthew","Joshua","Christopher","Nicholas","
 for (var i = 0; i < personData.length; i++) {
 	// generate picture
 	personData[i].url = generateAvatar(personData[i].gender);
-	
+
 	// generate names
 	var men_initials = [];
 	var women_initials = [];
@@ -77,11 +77,11 @@ for (var i = 0; i < personData.length; i++) {
 			personData[i].id = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 		}
 	} while (men_initials.includes(personData[i].id.charAt(0)) || women_initials.includes(personData[i].id.charAt(0)));
-	
+
 	if (personData[i].gender == "m") {
 		men[i] = personData[i].id;
 	}
-	else { 
+	else {
 		women[i - 4] = personData[i].id;
 	}
 }
@@ -100,21 +100,21 @@ function assignPrefs() {
 	}
 }
 function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
+	for (let i = a.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[a[i], a[j]] = [a[j], a[i]];
+	}
 }
 
 var svg = d3.select("#solution").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+	.attr("width", width)
+	.attr("height", height);
 
 // define image filters here
 var bright = svg.append("defs")
-      .append("filter")
-      .attr("id", "brightness")
-      .append("feComponentTransfer")
+	.append("filter")
+	.attr("id", "brightness")
+	.append("feComponentTransfer")
 bright.append("feFuncR").attr("type","linear").attr("slope","1.2");
 bright.append("feFuncG").attr("type","linear").attr("slope","1.2");
 bright.append("feFuncB").attr("type","linear").attr("slope","1.2");
@@ -180,17 +180,17 @@ for (var i = 1; i <= numMen; i++) {
 
 // add person circles
 var personCircles = svg.selectAll("personCircle")
-    .data(personData)
-    .enter()
-    .append("image");
+	.data(personData)
+	.enter()
+	.append("image");
 var circleAttributes = personCircles
-    .attr("x", function (d) { return d.x_axis - d.radius / 2; })
-    .attr("y", function (d) { return d.y_axis - d.radius / 2 - 10; })
-    .attr("width", function (d) { return d.radius; })
+	.attr("x", function (d) { return d.x_axis - d.radius / 2; })
+	.attr("y", function (d) { return d.y_axis - d.radius / 2 - 10; })
+	.attr("width", function (d) { return d.radius; })
 	.attr("xlink:href", function (d) { return d.url + "&avatarStyle=Circle"; })
 	.attr("class", "person-circle")
 	.on("click",function(d){
-		if (started) {
+		if (checkClicked) {
 			updateAlert("Reset to set your own preferences!");
 		}
 		else {
@@ -202,8 +202,8 @@ var circleAttributes = personCircles
 	})
 	.on("mouseover",function(d, i){
 		// highlight only when interactable
-		if (!started && 
-			(!selecting || 
+		if (!started &&
+			(!selecting ||
 				(d.gender != selectPerson.gender && !selectPerson.prefs.includes(d.id))
 			)
 		) {
@@ -213,14 +213,14 @@ var circleAttributes = personCircles
 		}
 		else {
 			d3.select(this).transition()
-            .duration('200')
-            .attr('filter', 'null');
+				.duration('200')
+				.attr('filter', 'null');
 		}
 	})
 	.on("mouseout",function(d, i){
 		d3.select(this).transition()
-            .duration('200')
-            .attr('filter', 'null');
+			.duration('200')
+			.attr('filter', 'null');
 	});
 
 // add text to person labels (circles)
@@ -230,19 +230,19 @@ var personText = svg.selectAll("personText")
 	.enter()
 	.append("text");
 var personLabels = personText
-    .attr("x", function(d) { return d.x_axis; })
-    .attr("y", function(d) {
-			if (d.gender == "m") {
-				return d.y_axis - 58; 
-			} else {
-				return d.y_axis + 70;
-			}
-		})
-    .text( function (d) { return d.id; })
+	.attr("x", function(d) { return d.x_axis; })
+	.attr("y", function(d) {
+		if (d.gender == "m") {
+			return d.y_axis - 58;
+		} else {
+			return d.y_axis + 70;
+		}
+	})
+	.text( function (d) { return d.id; })
 	.attr("font-family", "Nunito, sans-serif")
-    .attr("font-size", "30px")
+	.attr("font-size", "30px")
 	.attr("text-anchor", "middle")
-    .attr("fill", function(d) { return d.gender == "m" ? malColor2 : femColor2 })
+	.attr("fill", function(d) { return d.gender == "m" ? malColor2 : femColor2 })
 	.attr("class", "person-label");
 
 // gender labels
@@ -252,24 +252,24 @@ var genderLabelText = svg.selectAll("genderText")
 	.append("text");
 var genderLabels = genderLabelText
 	.attr("x", function(d) { return d.x_axis; })
-    .attr("y", function(d) { return d.y_axis + 14; })
-    .text( function (d) { return d.text; })
+	.attr("y", function(d) { return d.y_axis + 14; })
+	.text( function (d) { return d.text; })
 	.attr("font-family", "Nunito, sans-serif")
-    .attr("font-size", "40px")
+	.attr("font-size", "40px")
 	.attr("text-anchor", "middle")
-    .attr("fill", "black");
-	
+	.attr("fill", "black");
+
 var alertText = svg
-    .append("text")
+	.append("text")
 	.attr("x", 550)
-    .attr("y", 480)
-    .text( function () { return alertText; })
+	.attr("y", 480)
+	.text( function () { return alertText; })
 	.attr("font-family", "Nunito, sans-serif")
-    .attr("font-size", "35px")
-    .attr("fill", "black")
+	.attr("font-size", "35px")
+	.attr("fill", "black")
 	.style("text-anchor", "middle")
 	.attr("class", "alertText");
-	
+
 for (var i = 1; i <= numMen; i++) {
 	var prefXText = svg.selectAll("prefXTexts")
 		.data(personData)
@@ -316,7 +316,7 @@ function solutionNextStep() {
 		updateAlert(alertQueue.shift());
 		return;
 	}
-    started = true;
+	started = true;
 	//document.getElementById("pcode3").style.backgroundColor = "yellow";
 	if (curManIndex == null) {
 		curManIndex = 0;
@@ -389,7 +389,7 @@ function propose(manId, womanId) {
 			alertQueue.push(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
 			man.proposals++;
 			// exes is a bit of a misnomer. we still want to label failed proposals
-			man.exes.push(woman.id); 
+			man.exes.push(woman.id);
 			woman.exes.push(man.id); // but should we label failed woman proposal? use different markings for former relationship?
 			updateVis();
 		}
@@ -531,7 +531,7 @@ function onCircleClick(d) {
 					selecting = false;
 				}
 			}
-		} 
+		}
 		else if (d.id == selectPerson.id) {
 			selectPerson.prefs = prevState;
 			selecting = false;
@@ -567,36 +567,44 @@ function reset() {
 	selectPerson = null;
 	selectIndex = 0;
 	prevState = null;
-    curManIndex = null;
+	curManIndex = null;
 	started = false;
 	stepClicked = false;
+	checkClicked = false;
+	playing = false;
 	d3.select("#play-button").text("Play Algorithm");
 	clearInterval(interval);
 	updateAlert();
-    updateVis();
+	updateVis();
 }
 
 var interval;
+var playing = false;
+var checkClicked = false;
 function playSolution() {
-	if (started && !stepClicked) {
+	if ((started && !stepClicked) || (stepClicked && playing)) {
 		d3.select(this).text("Play Algorithm");
 		clearInterval(interval);
 		started = false;
+		playing = false;
 	}
 	else {
 		clearInterval(interval);
 		solutionNextStep();
-		interval = setInterval(function(){ 
+		interval = setInterval(function(){
 			solutionNextStep();
 		}, 1000);
 		d3.select(this).text("Pause Algorithm");
+		playing = true;
 	}
 	stepClicked = false;
+	checkClicked = true;
 }
 
 var stepClicked = false;
 
 function nexStep() {
+	checkClicked = true;
 	stepClicked = true;
 	solutionNextStep();
 }
@@ -604,8 +612,8 @@ function nexStep() {
 d3.select("#play-button").on("click", playSolution);
 d3.select("#solution-next").on("click", nexStep);
 d3.select("#solution-reset").on("click", reset);
-d3.select("#shuffle-prefs").on("click", function() { 
-	if (!started) { 
+d3.select("#shuffle-prefs").on("click", function() {
+	if (!checkClicked) {
 		assignPrefs();
 		selecting = false;
 		updateVis();
@@ -659,7 +667,7 @@ function onCircleClick2(d) {
 		prefStr = prompt("Input the preference list for " + d.id + " like so: " + womenNames
 			+ "\nEach letter represents a different woman. You cannot repeat or exclude a name.").toUpperCase();
 		if (prefStr.length != numMen) {
-		alert("Error. You must have " + numMen + " names in your input.");
+			alert("Error. You must have " + numMen + " names in your input.");
 		}
 		else if (prefStr.split('').sort().join('') != womenNames.split('').sort().join('')) {
 			alert("Error. Make sure you are including the correct names, and that each name appears once.");
@@ -676,7 +684,7 @@ function onCircleClick2(d) {
 		prefStr = prompt("Input the preference list for " + d.id + " like so: " + menNames
 			+ "\nEach letter represents a different man. You cannot repeat or exclude a name.").toUpperCase();
 		if (prefStr.length != numMen) {
-		alert("Error. You must have " + numMen + " names in your input.");
+			alert("Error. You must have " + numMen + " names in your input.");
 		}
 		else if (prefStr.split('').sort().join('') != menNames.split('').sort().join('')) {
 			alert("Error. Make sure you are including the correct names, and that each name appears once.");
@@ -710,6 +718,6 @@ function onCircleClick2(d) {
 // Anything you put in the static folder will be available
 // over the network, e.g.
 // d3.csv('carbon-emissions.csv')
-  // .then((data) => {
-    // console.log('Dynamically loaded CSV data', data);
-  // })
+// .then((data) => {
+// console.log('Dynamically loaded CSV data', data);
+// })
