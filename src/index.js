@@ -80,7 +80,7 @@ function newPersonData(numPairs) {
 		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 350, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
 	}
 	numMen = personData.length / 2;
-	
+
 	for (var i = 0; i < personData.length; i++) {
 		// generate picture
 		personData[i].url = generateAvatar(personData[i].gender);
