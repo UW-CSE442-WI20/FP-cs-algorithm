@@ -10,6 +10,7 @@ WebFont.load({
 
 var started = false;
 
+// set the dimensions of the visualization
 // todo: width should be dynamic
 var widths = [1000,1000,1000,1100,1600];
 var height = 500;
@@ -79,7 +80,6 @@ function newPersonData(numPairs) {
 		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 350, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
 	}
 	numMen = personData.length / 2;
-	console.log(personData);
 	
 	for (var i = 0; i < personData.length; i++) {
 		// generate picture
@@ -644,12 +644,13 @@ d3.select("#shuffle-prefs").on("click", function() {
 		updateAlert("Reset before you can set preferences!");
 	}
 });
-d3.select('#pairs')
+d3.select('#pairs1')
   .on('change', function() {
 	  var value = d3.select(this).property('value');
       newPersonData(value);
 	  init();
 	  reset();
+	  alert('lol');
 });
 
 // generates a URL to the avatar (thanks to https://getavataaars.com/)
