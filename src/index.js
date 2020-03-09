@@ -80,7 +80,7 @@ function newPersonData(numPairs) {
 	}
 	numMen = personData.length / 2;
 	console.log(personData);
-	
+
 	for (var i = 0; i < personData.length; i++) {
 		// generate picture
 		personData[i].url = generateAvatar(personData[i].gender);
