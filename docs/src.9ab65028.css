@@ -2,13 +2,42 @@ body {
 	font-family: 'Nunito', sans-serif;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 #solution-pseudocode {
 	font-size: 16px;
 }
 
 h1 {
+	font-weight: 900;
+	font-size: 40px;
 	border-bottom: 5px solid #b0e0e6;
 	padding-top: 40px;
+}
+
+#enter-button {
+	margin-top: -400px;
+	margin-left: 750px;
+	margin-bottom: 300px;
+	padding: 5px 10px;
+	letter-spacing: 10px;
+}
+
+#intro {
+	margin-top: 40px;
+	font-size: 60px;
+	font-weight: 900;
+}
+
+#intro-text {
+	margin-top: -400px;
+	margin-left: 600px;
+	font-size: 90px;
+	font-weight: 900;
+	line-height: 0.9;
+	margin-bottom: 400px;
 }
 
 h2 {
@@ -19,6 +48,7 @@ h2 {
 	text-decoration-style: wavy;
 	text-decoration-color: #70a0a6;
 	text-decoration-width: 1px;
+	line-height: 1.5;
 }
 
 #main {
@@ -61,4 +91,4 @@ button:hover {
 	background-color: #b0e0e6;
 }
 
-/*# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.4cc7ce2d.css.map */
+/*# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.9ab65028.css.map */
