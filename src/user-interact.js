@@ -411,8 +411,11 @@ function updateVis() {
 				else if (fianceIndex == 2) {
 					return url + "&mouthType=Serious" + "&eyebrowType=SadConcerned";
 				}
-				else {
+				else if (fianceIndex == 3) {
 					return url + "&mouthType=Sad" + "&eyebrowType=SadConcerned";
+				}
+				else {
+					return url + "&eyeType=Surprised" + "&eyebrowType=SadConcerned" + "&mouthType=Concerned"
 				}
 			}
 		});
