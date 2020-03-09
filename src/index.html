@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="index.css">
 	  <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,900&display=swap" rel="stylesheet">
 	  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
     <title>Stable Matching Solution Visualized</title>
   </head>
   <body>
@@ -37,8 +38,108 @@
 			<h2>Stable Matching Problem:</h2>
 			<div>Given the preference lists of n men and n women, find a stable matching if one
 			exists.</div>
+
+      <h2>Applications:</h2>
+      <div>Algorithms for finding solutions to the stable marriage problem have applications
+        in a variety of real-world situations, perhaps the best known of these being in the
+        assignment of graduating medical students to their first hospital appointments.
+        In 2012, The Sveriges Riksbank Prize in Economic Sciences in Memory of Alfred Nobel
+        was awarded to Lloyd S. Shapley and Alvin E. Roth <i>"for the theory of stable allocations
+        and the practice of market design."</i> <br /> <br /> An important and large-scale application
+        of stable marriage is in <b>assigning users to
+        servers in a large distributed Internet service</b>: <br />
+        Billions of users access web pages, videos, and other services on the Internet, requiring
+        each user to be matched to one of (potentially) hundreds of thousands of servers around the
+        world that offer that service. A user prefers servers that are proximal enough to provide a
+        faster response time for the requested service, resulting in a (partial) preferential ordering
+        of the servers for each user. Each server prefers to serve users that it can with a lower cost,
+        resulting in a (partial) preferential ordering of users for each server. <br /> <b>Content delivery
+        networks</b> that distribute much of the world's content and services solve this large and complex
+        stable marriage problem between users and servers every tens of seconds to enable billions of users
+        to be matched up with their respective servers that can provide the requested web pages, videos,
+        or other services. <br /> <br /> Another important application of Stable Matching is the
+        <b>Rural hospitals theorem:</b> <br />
+        The Rural hospitals theorem concerns a more general variant of the stable matching problem, like that
+        applying in the problem of matching doctors to positions at hospitals, differing in the following ways
+        from the basic \(n\)-to-\(n\) form of the stable marriage problem:
+        <ul type="disc">
+          <li>Each participant may only be willing to be matched to a subset of the participants on the other
+            side of the matching.</li>
+          <li>The participants on one side of the matching (the hospitals) may have a numerical capacity,
+            specifying the number of doctors they are willing to hire.</li>
+          <li>The total number of participants on one side might not equal the total capacity to which they
+            are to be matched on the other side.</li>
+          <li>The resulting matching might not match all of the participants.</li>
+        </ul>
+        In this case, the condition of stability is that no unmatched pair prefer each other to their
+        situation in the matching (whether that situation is another partner or being unmatched). With
+        this condition, a stable matching will still exist, and can still be found by the Gale–Shapley
+        algorithm. <br />
+        For this kind of stable matching problem, the rural hospitals theorem states that:
+        <ul type="disc">
+          <li>The set of assigned doctors, and the number of filled positions in each hospital,
+            are the same in all stable matchings.</li>
+          <li>Any hospital that has some empty positions in some stable matching, receives exactly
+            the same set of doctors in all stable matchings.</li>
+        </ul>
+
+      <h2>Related Algorithms:</h2>
+      <ul type="circle">
+        <li><b>Stable Matching with Indifference:</b> In this problem some men might be indifferent
+          between two or more women and vice versa.</li>
+        <li><b>Stable Roommates Problem: </b>This problem is similar to the stable marriage problem, but differs
+          in that all participants belong to a single pool (instead of being divided into equal numbers of <i>"men"</i>
+          and <i>"women"</i>).</li>
+        <li><b>Hospitals/Residents Problem:</b> This problem – also known as the <b>college admissions problem </b>– differs from the
+          stable marriage problem in that a hospital can take multiple residents, or a college can take an
+          incoming class of more than one student. Algorithms to solve the hospitals/residents problem can be
+          hospital-oriented or resident-oriented. This problem was solved, with an algorithm, in the same original
+          paper by Gale and Shapley, in which the stable marriage problem was solved.</li>
+        <li><b>Hospitals/Residents Problem with couples:</b> This problem allows the set of residents to include couples who must be
+          assigned together, either to the same hospital or to a specific pair of hospitals chosen by the couple
+          (e.g., a married couple want to ensure that they will stay together and not be stuck in programs that are
+          far away from each other). The addition of couples to the hospitals/residents problem renders the problem
+          NP-complete, which means that it cannot be solved in polynomial time as the Stable Matching Problem.</li>
+        <li><b>Assignment Problem:</b> This problem seeks to find a matching in a weighted bipartite graph that has maximum weight. Maximum
+          weighted matchings do not have to be stable, but in some applications a maximum weighted matching is better than a
+          stable one.</li>
+        <li><b>Matching with Contracts Problem:</b> This problem is a generalization of matching problem, in which participants can be
+          matched with different terms of contracts. An important special case of contracts is matching with flexible wages</li>
+      </ul>
+      </div>
 		</div>
 		<h1>The Solution</h1>
+    <h2>Algorithm:</h2>
+    <div>In 1962, <b>David Gale</b> and <b>Lloyd Shapley</b> proved that, for any equal number of men and women,
+    it is always possible to solve the SMP and make all marriages stable. They presented an algorithm to do so. <br />
+    <br /> The <b>Gale–Shapley algorithm</b> (also known as the deferred acceptance algorithm) involves a
+    number of <i>"rounds"</i> (or <i>"iterations"</i> ):
+    <ul type="square">
+      <li>In the first round, first
+        <ul type="circle">
+          <li>Each unengaged man proposes to the woman he prefers most, and then </li>
+          <li>Each woman replies <i>"maybe"</i> to her suitor she most prefers and <i>"no"</i> to
+            all other suitors.</li>
+        </ul>
+        She is then provisionally <i>"engaged"</i> to the suitor she most prefers
+        so far, and that suitor is likewise provisionally engaged to her.
+      </li>
+      <li>In each subsequent round, first
+        <ul>
+          <li>Each unengaged man proposes to the most-preferred woman to whom he has not
+            yet proposed (regardless of whether the woman is already engaged), and then</li>
+          <li>Each woman replies <i>"maybe"</i> if she is currently not engaged or if she prefers
+            this man over her current provisional partner (in this case, she rejects her
+            current provisional partner who becomes unengaged).</li>
+        </ul>
+         The provisional nature of engagements preserves the right of an already-engaged woman
+         to <i>"trade up"</i> (and, in the process, to <i>"jilt"</i> her until-then partner)
+      </li>
+      <li>This process is repeated until everyone is engaged.</li>
+    </ul>
+    This algorithm is guaranteed to produce a stable marriage for all participants in time
+    \(O(n^2)\) where \(n\) is the number of men or women.
+    </div>
 		<h2>Algorithm pseudocode</h2>
 		<div id="solution-pseudocode">
 		<pre><span id="pcode1">algorithm <b>stable_matching</b>:
@@ -69,7 +170,7 @@
 		  <option value="4" selected>4</option>
 		  <option value="5">5</option>
 		</select>
-		
+
 		<h2>Try it yourself</h2>
 		<div id="user-interact"></div>
 		<button type="button" id="check-work">Check My Work</button>
