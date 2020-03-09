@@ -650,7 +650,6 @@ d3.select('#pairs1')
       newPersonData(value);
 	  init();
 	  reset();
-	  alert('lol');
 });
 
 // generates a URL to the avatar (thanks to https://getavataaars.com/)
