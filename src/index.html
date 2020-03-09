@@ -139,6 +139,16 @@
     </ul>
     This algorithm is guaranteed to produce a stable marriage for all participants in time
     \(O(n^2)\) where \(n\) is the number of men or women.
+
+    <br /> Among all possible different stable matchings, it always yields the one that is best for
+    all men among all stable matchings, and worst for all women. It is a truthful mechanism from the
+    point of view of men (the proposing side). I.e, no man can get a better matching for himself by
+    misrepresenting his preferences. Moreover, the GS algorithm is even group-strategy proof for men,
+    i.e., no coalition of men can coordinate a misrepresentation of their preferences such that all
+    men in the coalition are strictly better-off. However, it is possible for some coalition to
+    misrepresent their preferences such that some men are better-off and the other men retain the
+    same partner. The Gale-Shapley algorithm is non-truthful for the women (the reviewing side): each
+    woman may be able to misrepresent her preferences and get a better match.
     </div>
 		<h2>Algorithm pseudocode</h2>
 		<div id="solution-pseudocode">
