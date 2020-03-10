@@ -13,7 +13,7 @@ var femColor = "#fFa6b1";
 var malColor = "#a6c2ff";
 
 var genderLabelData = [
-	{ "x_axis": 20, "y_axis": 60, "text": "♂️:" },
+	{ "x_axis": 20, "y_axis": 80, "text": "♂️:" },
 	{ "x_axis": 20, "y_axis": 280, "text": "♀️:" }
 ];
 
@@ -57,18 +57,18 @@ function shuffle(a) {
 }
 
 
-// newPersonData(2)
+newPersonData(2)
 function newPersonData(numPairs) {
 	personData = [];
 	men = [];
 	women = [];
 	// add men
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 });
+		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 80, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 });
 	}
 	// add women
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 350, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
+		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 280, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
 	}
 	numMen = personData.length / 2;
 
@@ -228,4 +228,31 @@ function init() {
 		.attr("font-size", "40px")
 		.attr("text-anchor", "middle")
 		.attr("fill", "black");
+}
+
+function generateAvatar(gender) {
+	var skinColor = skins[Math.floor(Math.random() * skins.length)];
+	if (skinColor == "Pale" || skinColor == "Light") {
+		var hairColor = all_hair_colors[Math.floor(Math.random() * all_hair_colors.length)];
+	}
+	else {
+		var hairColor = dark_hair_colors[Math.floor(Math.random() * dark_hair_colors.length)];
+	}
+	// 30% chance of facial hair for males only
+	var facialHair = "Blank";
+	if(Math.random() < .3 && gender == "m") {
+		facialHair = facial_hairs[Math.floor(Math.random() * facial_hairs.length)];
+	}
+	var avatar = "https://avataaars.io/" +
+		"?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) +
+		"&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) +
+		"&hairColor=" + hairColor +
+		"&facialHairType=" + facialHair +
+		"&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +
+		"&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +
+		"&skinColor=" + skinColor;
+	if (hairColor != "SilverGray") {
+		avatar += "&facialHairColor=" + hairColor;
+	}
+	return avatar;
 }
