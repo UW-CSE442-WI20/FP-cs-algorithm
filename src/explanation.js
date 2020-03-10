@@ -125,7 +125,11 @@ function desc(numPairs) {
 	personData = [];
 	men = [];
 	women = [];
-  names = ["Jim", "Dwight", "Angela", "Pam"]
+	names = ["Jim", "Dwight", "Angela", "Pam"];
+	urls = ["https://avataaars.io/?topType=ShortHairShortFlat&accessoriesType=Blank&hairColor=Brown&facialHairType=Blank&clotheType=CollarSweater&clotheColor=White&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Pale",
+		"https://avataaars.io/?topType=ShortHairShortRound&accessoriesType=Prescription01&hairColor=Brown&facialHairType=Blank&clotheType=CollarSweater&clotheColor=PastelYellow&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light",
+		"https://avataaars.io/?topType=LongHairStraight&accessoriesType=Blank&hairColor=BlondeGolden&facialHairType=Blank&clotheType=CollarSweater&clotheColor=Gray02&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Pale",
+		"https://avataaars.io/?topType=LongHairStraightStrand&accessoriesType=Blank&hairColor=Auburn&facialHairType=Blank&clotheType=CollarSweater&clotheColor=PastelRed&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"]
 	// add men
 	for (var i = 0; i < numPairs; i++) {
 		personData.push({ "x_axis": 100 + i * (40 * numPairs + 200), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 });
@@ -137,11 +141,12 @@ function desc(numPairs) {
 	numMen = personData.length / 2;
 
 	for (var i = 0; i < personData.length; i++) {
-    // add name
+    // add name and img url
     personData[i].id = names[i]
+	personData[i].url = urls[i]
 
-		// generate picture
-		personData[i].url = generateAvatar(personData[i].gender);
+	// generate picture
+	//personData[i].url = generateAvatar(personData[i].gender);
 
 	}
 }
