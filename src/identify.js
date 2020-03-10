@@ -42,6 +42,7 @@ var svg = d3.select("#identify").append("svg")
 			.attr("height", height);
 init()
 function init() {
+  
   // person preference lists (2 prefs per person)
 	for (var i = 1; i <= numMen; i++) {
 		// display rectangles
@@ -133,4 +134,18 @@ function init() {
 		.attr("text-anchor", "middle")
 		.attr("fill", function(d) { return d.gender == "m" ? malColor2 : femColor2 })
 		.attr("class", "person-label");
+
+  // gender labels
+	var genderLabelText = svg.selectAll("genderText")
+		.data(genderLabelData)
+		.enter()
+		.append("text");
+	var genderLabels = genderLabelText
+		.attr("x", function(d) { return d.x_axis; })
+		.attr("y", function(d) { return d.y_axis + 14; })
+		.text( function (d) { return d.text; })
+		.attr("font-family", "Nunito, sans-serif")
+		.attr("font-size", "40px")
+		.attr("text-anchor", "middle")
+		.attr("fill", "black");
 }
