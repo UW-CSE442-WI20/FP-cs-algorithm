@@ -13,8 +13,8 @@ var femColor = "#fFa6b1";
 var malColor = "#a6c2ff";
 
 var genderLabelData = [
-	{ "x_axis": 20, "y_axis": 120, "text": "♂️:" },
-	{ "x_axis": 20, "y_axis": 350, "text": "♀️:" }
+	{ "x_axis": 20, "y_axis": 60, "text": "♂️:" },
+	{ "x_axis": 20, "y_axis": 280, "text": "♀️:" }
 ];
 
 // user should be able to edit prefs
@@ -56,11 +56,8 @@ function shuffle(a) {
 	}
 }
 
-var svg = d3.select("#identify")
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height);
 
+// newPersonData(2)
 function newPersonData(numPairs) {
 	personData = [];
 	men = [];
@@ -108,10 +105,24 @@ function newPersonData(numPairs) {
 	}
 	assignPrefs();
 }
-newPersonData(2);
 
+// var svg = d3.select("#identify")
+//   .append("svg")
+//   .attr("width", width)
+//   .attr("height", height);
+
+var svg;
 init()
 function init() {
+	if (svg != null) {
+		svg.selectAll("*").remove();
+		svg.attr("width", width);
+	}
+	else {
+		svg = d3.select("#identify").append("svg")
+			.attr("width", width)
+			.attr("height", height);
+	}
   // person preference lists (2 prefs per person)
 	for (var i = 1; i <= numMen; i++) {
 		// display rectangles

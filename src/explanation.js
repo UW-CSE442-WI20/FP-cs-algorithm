@@ -143,7 +143,7 @@ function desc(numPairs) {
 	for (var i = 0; i < personData.length; i++) {
     // add name and img url
     personData[i].id = names[i]
-	personData[i].url = urls[i]
+		personData[i].url = urls[i]
 
 	// generate picture
 	//personData[i].url = generateAvatar(personData[i].gender);
