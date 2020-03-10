@@ -242,7 +242,6 @@ function init() {
 		});
 
 	// add text to person labels (circles)
-
 	var personText = svg.selectAll("personText")
 		.data(personData)
 		.enter()

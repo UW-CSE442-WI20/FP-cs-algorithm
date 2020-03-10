@@ -59,6 +59,13 @@ h2 {
 	padding-right: 75px;
 }
 
+#explanation {
+	border: 1px solid black;
+	margin-right: 750px;
+	margin-bottom: 30px;
+	padding: 1px 10px;
+}
+
 #user-interact {
 	border: 1px solid black;
 	padding-left: 25px;
