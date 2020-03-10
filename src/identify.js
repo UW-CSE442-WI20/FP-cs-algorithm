@@ -37,12 +37,81 @@ var skins = ["Pale", "Light", "Brown", "DarkBrown"]
 var femaleNames = ["Emily","Hannah","Madison","Ashley","Sarah","Alexis","Samantha","Jessica","Elizabeth","Taylor","Lauren","Alyssa","Kayla","Abigail","Brianna","Olivia","Emma","Megan","Grace","Victoria","Rachel","Anna","Sydney","Destiny","Morgan","Jennifer","Jasmine","Haley","Julia","Kaitlyn","Nicole","Amanda","Katherine","Natalie","Hailey","Alexandra","Savannah","Chloe","Rebecca","Stephanie","Maria","Sophia","Mackenzie","Allison","Isabella","Amber","Mary","Danielle","Gabrielle","Jordan","Brooke","Michelle","Sierra","Katelyn","Andrea","Madeline","Sara","Kimberly","Courtney","Erin","Brittany","Vanessa","Jenna","Jacqueline","Caroline","Faith","Makayla","Bailey","Paige","Shelby","Melissa","Kaylee","Christina","Trinity","Mariah","Caitlin","Autumn","Marissa","Breanna","Angela","Catherine","Zoe","Briana","Jada","Laura","Claire","Alexa","Kelsey","Kathryn","Leslie","Alexandria","Sabrina","Mia","Isabel","Molly","Leah","Katie","Gabriella","Cheyenne","Cassandra","Tiffany","Erica","Lindsey","Kylie","Amy","Diana","Cassidy","Mikayla","Ariana","Margaret","Kelly","Miranda","Maya","Melanie","Audrey","Jade","Gabriela","Caitlyn","Angel","Jillian","Alicia","Jocelyn","Erika","Lily","Heather","Madelyn","Adriana","Arianna","Lillian","Kiara","Riley","Crystal","Mckenzie","Meghan","Skylar","Ana","Britney","Angelica","Kennedy","Chelsea","Daisy","Kristen","Veronica","Isabelle","Summer","Hope","Brittney","Lydia","Hayley","Evelyn"];
 var maleNames = ["Jacob","Michael","Matthew","Joshua","Christopher","Nicholas","Andrew","Joseph","Daniel","Tyler","William","Brandon","Ryan","John","Zachary","David","Anthony","James","Justin","Alexander","Jonathan","Christian","Austin","Dylan","Ethan","Benjamin","Noah","Samuel","Robert","Nathan","Cameron","Kevin","Thomas","Jose","Hunter","Jordan","Kyle","Caleb","Jason","Logan","Aaron","Eric","Brian","Gabriel","Adam","Jack","Isaiah","Juan","Luis","Connor","Charles","Elijah","Isaac","Steven","Evan","Jared","Sean","Timothy","Luke","Cody","Nathaniel","Alex","Seth","Mason","Richard","Carlos","Angel","Patrick","Devin","Bryan","Cole","Jackson","Ian","Garrett","Trevor","Jesus","Chase","Adrian","Mark","Blake","Sebastian","Antonio","Lucas","Jeremy","Gavin","Miguel","Julian","Dakota","Alejandro","Jesse","Dalton","Bryce","Tanner","Kenneth","Stephen","Jake","Victor","Spencer","Marcus","Paul","Brendan","Jeremiah","Xavier","Jeffrey","Tristan","Jalen","Jorge","Edward","Riley","Wyatt","Colton","Joel","Maxwell","Aidan","Travis","Shane","Colin","Dominic","Carson","Vincent","Derek","Oscar","Grant","Eduardo","Peter","Henry","Parker","Hayden","Collin","George","Bradley","Mitchell","Devon","Ricardo","Shawn","Taylor","Nicolas","Francisco","Gregory","Liam","Kaleb","Preston","Erik","Owen","Omar","Diego","Dustin","Corey","Fernando","Clayton"];
 
-var svg = d3.select("#identify").append("svg")
-			.attr("width", width)
-			.attr("height", height);
+function assignPrefs() {
+	for (var i = 0; i < personData.length; i++) {
+		if (personData[i].gender == "m") {
+			personData[i].prefs = [...women]; // copy array
+
+		}
+		else {
+			personData[i].prefs = [...men];
+		}
+		shuffle(personData[i].prefs);
+	}
+}
+function shuffle(a) {
+	for (let i = a.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[a[i], a[j]] = [a[j], a[i]];
+	}
+}
+
+var svg = d3.select("#identify")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+function newPersonData(numPairs) {
+	personData = [];
+	men = [];
+	women = [];
+	// add men
+	for (var i = 0; i < numPairs; i++) {
+		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 });
+	}
+	// add women
+	for (var i = 0; i < numPairs; i++) {
+		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 350, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
+	}
+	numMen = personData.length / 2;
+
+	for (var i = 0; i < personData.length; i++) {
+		// generate picture
+		personData[i].url = generateAvatar(personData[i].gender);
+
+		// generate names
+		var men_initials = [];
+		var women_initials = [];
+		for (var a = 0; a < men.length; a++) {
+			men_initials.push(men[a].charAt(0));
+		}
+		for (var a = 0; a < women.length; a++) {
+			women_initials.push(women[a].charAt(0));
+		}
+
+		// the starting letter mustbe unique
+		do {
+			if (personData[i].gender == "m") {
+				personData[i].id = maleNames[Math.floor(Math.random() * maleNames.length)];
+			}
+			else {
+				personData[i].id = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+			}
+		} while (men_initials.includes(personData[i].id.charAt(0)) || women_initials.includes(personData[i].id.charAt(0)));
+
+		if (personData[i].gender == "m") {
+			men.push(personData[i].id);
+		}
+		else {
+			women.push(personData[i].id);
+		}
+	}
+	assignPrefs();
+}
+newPersonData(2);
+
 init()
 function init() {
-  
   // person preference lists (2 prefs per person)
 	for (var i = 1; i <= numMen; i++) {
 		// display rectangles
