@@ -104,11 +104,12 @@ function newPersonData(numPairs) {
 		}
 	}
 	assignPrefs();
+	var women_init = women.slice();
 	for (var i = 0; i < numMen; i++) {
 		var person = personData[i];
-		var name = women[Math.floor(Math.random() * women.length)];
-		var index = women.indexOf(name);
-		women.splice(index, 1);
+		var name = women_init[Math.floor(Math.random() * women_init.length)];
+		var index = women_init.indexOf(name);
+		women_init.splice(index, 1);
 
 		var woman = personData[personData.findIndex(p => p.id == name)];
 		woman.fiance = person.id;
