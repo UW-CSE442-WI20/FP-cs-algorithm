@@ -2,7 +2,7 @@
 const d3 = require('d3')
 
 // set the dimensions of the visualization
-var width = 1000;
+var width = 1200;
 var height = 480;
 
 // width not raidus... too lazy to change
@@ -270,13 +270,6 @@ function generateAvatar(gender) {
 	return avatar;
 }
 
-function checkUnstableYes() {
-
-}
-
-d3.select("#yes_button").on("click", checkUnstableYes);
-// d3.select("#no_button").on("click", checkUnstableNo);
-
 function updateVis() {
 	// update faces to reflect the quality of match
 	svg.selectAll(".person-circle")
@@ -384,3 +377,17 @@ function updateVis() {
 		}
 	}
 }
+
+// function checkUnstableYes() {
+//
+// }
+
+
+function generateNewProblem() {
+	newPersonData(3);
+	init()
+}
+
+// d3.select("#yes-button").on("click", checkUnstableYes);
+// d3.select("#no-button").on("click", checkUnstableNo);
+d3.select("#new-button").on("click", generateNewProblem);
