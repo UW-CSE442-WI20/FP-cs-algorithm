@@ -3,7 +3,7 @@ const d3 = require('d3')
 
 // set the dimensions of the visualization
 var width = 1200;
-var height = 480;
+var height = 560;
 
 // width not raidus... too lazy to change
 var personRadius = 100;
@@ -57,7 +57,7 @@ function shuffle(a) {
 }
 
 
-newPersonData(3);
+newPersonData(4);
 function newPersonData(numPairs) {
 	personData = [];
 	men = [];
@@ -378,16 +378,110 @@ function updateVis() {
 	}
 }
 
-// function checkUnstableYes() {
-//
-// }
+// for displaying alert texts
+var alertText = svg
+	.append("text")
+	.attr("x", 500)
+	.attr("y", 460)
+	.text( function () { return alertText; })
+	.attr("font-family", "Nunito, sans-serif")
+	.attr("font-size", "30px")
+	.attr("fill", "black")
+	.style("text-anchor", "middle")
+	.attr("class", "alertText");
+
+function updateAlert(alertText) {
+	svg.selectAll(".alertText")
+		.data(personData)
+		.each(function(d) {
+			d3.select(this).text(alertText);
+		});
+}
+var alertText2 = svg
+	.append("text")
+	.attr("x", 500)
+	.attr("y", 510)
+	.text( function () { return alertText2; })
+	.attr("font-family", "Nunito, sans-serif")
+	.attr("font-size", "30px")
+	.attr("fill", "black")
+	.style("text-anchor", "middle")
+	.attr("class", "alertText2");
+
+function updateAlert2(alertText2) {
+	svg.selectAll(".alertText2")
+		.data(personData)
+		.each(function(d) {
+			d3.select(this).text(alertText2);
+		});
+}
+
+// function to check if unstable pairs exist
+function checkUnstablity() {
+	unstable_pairs = [];
+	for (var i = 0; i < numMen; i++) {
+		var person = personData[i];
+		var currWifeIndex = women.findIndex(p => p == person.fiance);
+		for (var j = 0; j < numMen; j++) {
+			var woman = women[j];
+			var womanIndex = women.findIndex(p => p == woman);
+			if (woman != person.fiance && womanIndex < currWifeIndex) {
+				var womanData = personData[3 + j];
+				var currHusbandIndex = men.findIndex(p => p == womanData.fiance);
+				var personIndex = men.findIndex(p => p == men[i]);
+				if (personIndex < currHusbandIndex) {
+					unstable_pairs.push(men[i] + "-" + woman);
+				}
+			}
+		}
+	}
+	return unstable_pairs;
+}
+
+function checkUnstableYes() {
+	unstable_pairs = checkUnstablity();
+	if (unstable_pairs.length == 0) {
+		updateAlert("Oops! There does not exist any unstable pairs!");
+	} else if (unstable_pairs.length == 1) {
+		updateAlert("You are right! There is one unstable pair and that is " + unstable_pairs.shift());
+	} else {
+		var msg = "You are right! There are " + unstable_pairs.length + " unstable pairs.";
+		var msg2 = "They are : " + unstable_pairs.shift();
+		while (unstable_pairs.length > 1) {
+			msg2 += ", " + unstable_pairs.shift();
+		}
+		msg2 += " and " + unstable_pairs.shift();
+		updateAlert(msg);
+		updateAlert2(msg2);
+	}
+}
+
+function checkUnstableNo() {
+	unstable_pairs = checkUnstablity();
+	if (unstable_pairs.length == 0) {
+		updateAlert("You are right! There are no unstable pairs!");
+	} else if (unstable_pairs.length == 1) {
+		updateAlert("Oops! There is one unstable pair and that is " + unstable_pairs.shift());
+	} else {
+		var msg = "Oops! There are " + unstable_pairs.length + " unstable pairs.";
+		var msg2 = "They are : " + unstable_pairs.shift();
+		while (unstable_pairs.length > 1) {
+			msg2 += ", " + unstable_pairs.shift();
+		}
+		msg2 += " and " + unstable_pairs.shift();
+		updateAlert(msg);
+		updateAlert2(msg2);
+	}
+}
 
 
 function generateNewProblem() {
-	newPersonData(3);
-	init()
+	newPersonData(4);
+	init();
+	updateAlert();
+	updateAlert2();
 }
 
-// d3.select("#yes-button").on("click", checkUnstableYes);
-// d3.select("#no-button").on("click", checkUnstableNo);
+d3.select("#yes-button").on("click", checkUnstableYes);
+d3.select("#no-button").on("click", checkUnstableNo);
 d3.select("#new-button").on("click", generateNewProblem);
