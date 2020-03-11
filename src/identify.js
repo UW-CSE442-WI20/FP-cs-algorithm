@@ -240,6 +240,28 @@ function init() {
 		.attr("text-anchor", "middle")
 		.attr("fill", "black");
 
+	// for displaying alert texts
+	var alertText = svg
+		.append("text")
+		.attr("x", 500)
+		.attr("y", 460)
+		.text( function () { return alertText; })
+		.attr("font-family", "Nunito, sans-serif")
+		.attr("font-size", "30px")
+		.attr("fill", "black")
+		.style("text-anchor", "middle")
+		.attr("class", "alertText");
+	var alertText2 = svg
+		.append("text")
+		.attr("x", 500)
+		.attr("y", 510)
+		.text( function () { return alertText2; })
+		.attr("font-family", "Nunito, sans-serif")
+		.attr("font-size", "30px")
+		.attr("fill", "black")
+		.style("text-anchor", "middle")
+		.attr("class", "alertText2");
+
 	updateVis();
 }
 
@@ -378,18 +400,6 @@ function updateVis() {
 	}
 }
 
-// for displaying alert texts
-var alertText = svg
-	.append("text")
-	.attr("x", 500)
-	.attr("y", 460)
-	.text( function () { return alertText; })
-	.attr("font-family", "Nunito, sans-serif")
-	.attr("font-size", "30px")
-	.attr("fill", "black")
-	.style("text-anchor", "middle")
-	.attr("class", "alertText");
-
 function updateAlert(alertText) {
 	svg.selectAll(".alertText")
 		.data(personData)
@@ -397,16 +407,6 @@ function updateAlert(alertText) {
 			d3.select(this).text(alertText);
 		});
 }
-var alertText2 = svg
-	.append("text")
-	.attr("x", 500)
-	.attr("y", 510)
-	.text( function () { return alertText2; })
-	.attr("font-family", "Nunito, sans-serif")
-	.attr("font-size", "30px")
-	.attr("fill", "black")
-	.style("text-anchor", "middle")
-	.attr("class", "alertText2");
 
 function updateAlert2(alertText2) {
 	svg.selectAll(".alertText2")
@@ -478,8 +478,6 @@ function checkUnstableNo() {
 function generateNewProblem() {
 	newPersonData(4);
 	init();
-	updateAlert();
-	updateAlert2();
 }
 
 d3.select("#yes-button").on("click", checkUnstableYes);
