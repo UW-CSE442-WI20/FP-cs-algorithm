@@ -28901,7 +28901,8 @@ WebFont.load({
     families: ['Nunito']
   }
 });
-var started = false; // todo: width should be dynamic
+var started = false; // set the dimensions of the visualization
+// todo: width should be dynamic
 
 var widths = [1000, 1000, 1000, 1100, 1600];
 var height = 500; // width not raidus... too lazy to change
@@ -29000,7 +29001,6 @@ function newPersonData(numPairs) {
   }
 
   numMen = personData.length / 2;
-  console.log(personData);
 
   for (var i = 0; i < personData.length; i++) {
     // generate picture
@@ -29390,7 +29390,7 @@ function updateVis() {
         source: [d.x_axis, d.y_axis + personRadius / 2 - 5],
         target: [other.x_axis, other.y_axis - personRadius / 2 - 2]
       });
-      svg.append('path').attr('d', link).attr('stroke', 'red').attr('stroke-width', 2).attr('fill', 'none').attr("class", "engage-line");
+      svg.append('path').attr('d', link).attr('stroke', 'green').attr('stroke-width', 2).attr('fill', 'none').attr("class", "engage-line");
     }
   }
 }
@@ -29504,7 +29504,7 @@ d3.select("#shuffle-prefs").on("click", function () {
     updateAlert("Reset before you can set preferences!");
   }
 });
-d3.select('#pairs').on('change', function () {
+d3.select('#pairs1').on('change', function () {
   var value = d3.select(this).property('value');
   newPersonData(value);
   init();
@@ -29624,7 +29624,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55191" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63286" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

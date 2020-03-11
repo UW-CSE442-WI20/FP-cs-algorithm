@@ -1,5 +1,8 @@
 body {
 	font-family: 'Nunito', sans-serif;
+	opacity: 0;
+	transition: opacity 3s;
+	-webkit-transition: opacity 3s; /* Safari */
 }
 
 html {
@@ -56,6 +59,18 @@ h2 {
 	padding-right: 75px;
 }
 
+#explanation {
+	border: 1px solid black;
+	margin-right: 750px;
+	margin-bottom: 30px;
+	padding: 1px 10px;
+}
+
+#identify {
+	border: 1px solid black;
+	padding: 1px 10px;
+}
+
 #user-interact {
 	border: 1px solid black;
 	padding-left: 25px;
@@ -91,4 +106,5 @@ button:hover {
 	background-color: #b0e0e6;
 }
 
-/*# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.9ab65028.css.map */
+
+/*# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.1e7480e7.css.map */
