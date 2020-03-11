@@ -35,15 +35,15 @@ var numMen = 0;
 var fem_tops = ["LongHairBigHair", "LongHairBob", "LongHairBun", "LongHairCurly", "LongHairFro", "LongHairFroBand", "LongHairMiaWallace", "LongHairStraight", "LongHairStraight2", "LongHairStraightStrand"];
 var mal_tops = ["NoHair", "ShortHairDreads01", "ShortHairShortCurly", "ShortHairShortFlat", "ShortHairShortRound", "ShortHairShortWaved", "ShortHairSides", "ShortHairTheCaesar"];
 var opt_acc = ["Prescription02", "Round"];
-var all_hair_colors = ["Auburn", "Black", "BlondeGolden", "Brown", "BrownDark", "SilverGray"];	
-var dark_hair_colors = ["Black", "Brown", "BrownDark", "SilverGray"];	
+var all_hair_colors = ["Auburn", "Black", "BlondeGolden", "Brown", "BrownDark", "SilverGray"];
+var dark_hair_colors = ["Black", "Brown", "BrownDark", "SilverGray"];
 var facial_hairs = ["BeardLight", "BeardMajestic", "MoustacheMagnum"];
 var clothes = ["BlazerShirt", "BlazerSweater", "CollarSweater", "Hoodie", "Overall", "ShirtCrewNeck", "ShirtScoopNeck", "ShirtVNeck"];
 var clothes_color = ["Black", "Blue02", "Blue03", "Gray02", "Heather", "PastelBlue", "Pink", "Red", "White"];
 var skins = ["Pale", "Light", "Brown", "DarkBrown"];
 
-// 150 most common male and female names	
-var femaleNames = ["Emily","Hannah","Madison","Ashley","Sarah","Alexis","Samantha","Jessica","Elizabeth","Taylor","Lauren","Alyssa","Kayla","Abigail","Brianna","Olivia","Emma","Megan","Grace","Victoria","Rachel","Anna","Sydney","Destiny","Morgan","Jennifer","Jasmine","Haley","Julia","Kaitlyn","Nicole","Amanda","Katherine","Natalie","Hailey","Alexandra","Savannah","Chloe","Rebecca","Stephanie","Maria","Sophia","Mackenzie","Allison","Isabella","Amber","Mary","Danielle","Gabrielle","Jordan","Brooke","Michelle","Sierra","Katelyn","Andrea","Madeline","Sara","Kimberly","Courtney","Erin","Brittany","Vanessa","Jenna","Jacqueline","Caroline","Faith","Makayla","Bailey","Paige","Shelby","Melissa","Kaylee","Christina","Trinity","Mariah","Caitlin","Autumn","Marissa","Breanna","Angela","Catherine","Zoe","Briana","Jada","Laura","Claire","Alexa","Kelsey","Kathryn","Leslie","Alexandria","Sabrina","Mia","Isabel","Molly","Leah","Katie","Gabriella","Cheyenne","Cassandra","Tiffany","Erica","Lindsey","Kylie","Amy","Diana","Cassidy","Mikayla","Ariana","Margaret","Kelly","Miranda","Maya","Melanie","Audrey","Jade","Gabriela","Caitlyn","Angel","Jillian","Alicia","Jocelyn","Erika","Lily","Heather","Madelyn","Adriana","Arianna","Lillian","Kiara","Riley","Crystal","Mckenzie","Meghan","Skylar","Ana","Britney","Angelica","Kennedy","Chelsea","Daisy","Kristen","Veronica","Isabelle","Summer","Hope","Brittney","Lydia","Hayley","Evelyn"];	
+// 150 most common male and female names
+var femaleNames = ["Emily","Hannah","Madison","Ashley","Sarah","Alexis","Samantha","Jessica","Elizabeth","Taylor","Lauren","Alyssa","Kayla","Abigail","Brianna","Olivia","Emma","Megan","Grace","Victoria","Rachel","Anna","Sydney","Destiny","Morgan","Jennifer","Jasmine","Haley","Julia","Kaitlyn","Nicole","Amanda","Katherine","Natalie","Hailey","Alexandra","Savannah","Chloe","Rebecca","Stephanie","Maria","Sophia","Mackenzie","Allison","Isabella","Amber","Mary","Danielle","Gabrielle","Jordan","Brooke","Michelle","Sierra","Katelyn","Andrea","Madeline","Sara","Kimberly","Courtney","Erin","Brittany","Vanessa","Jenna","Jacqueline","Caroline","Faith","Makayla","Bailey","Paige","Shelby","Melissa","Kaylee","Christina","Trinity","Mariah","Caitlin","Autumn","Marissa","Breanna","Angela","Catherine","Zoe","Briana","Jada","Laura","Claire","Alexa","Kelsey","Kathryn","Leslie","Alexandria","Sabrina","Mia","Isabel","Molly","Leah","Katie","Gabriella","Cheyenne","Cassandra","Tiffany","Erica","Lindsey","Kylie","Amy","Diana","Cassidy","Mikayla","Ariana","Margaret","Kelly","Miranda","Maya","Melanie","Audrey","Jade","Gabriela","Caitlyn","Angel","Jillian","Alicia","Jocelyn","Erika","Lily","Heather","Madelyn","Adriana","Arianna","Lillian","Kiara","Riley","Crystal","Mckenzie","Meghan","Skylar","Ana","Britney","Angelica","Kennedy","Chelsea","Daisy","Kristen","Veronica","Isabelle","Summer","Hope","Brittney","Lydia","Hayley","Evelyn"];
 var maleNames = ["Jacob","Michael","Matthew","Joshua","Christopher","Nicholas","Andrew","Joseph","Daniel","Tyler","William","Brandon","Ryan","John","Zachary","David","Anthony","James","Justin","Alexander","Jonathan","Christian","Austin","Dylan","Ethan","Benjamin","Noah","Samuel","Robert","Nathan","Cameron","Kevin","Thomas","Jose","Hunter","Jordan","Kyle","Caleb","Jason","Logan","Aaron","Eric","Brian","Gabriel","Adam","Jack","Isaiah","Juan","Luis","Connor","Charles","Elijah","Isaac","Steven","Evan","Jared","Sean","Timothy","Luke","Cody","Nathaniel","Alex","Seth","Mason","Richard","Carlos","Angel","Patrick","Devin","Bryan","Cole","Jackson","Ian","Garrett","Trevor","Jesus","Chase","Adrian","Mark","Blake","Sebastian","Antonio","Lucas","Jeremy","Gavin","Miguel","Julian","Dakota","Alejandro","Jesse","Dalton","Bryce","Tanner","Kenneth","Stephen","Jake","Victor","Spencer","Marcus","Paul","Brendan","Jeremiah","Xavier","Jeffrey","Tristan","Jalen","Jorge","Edward","Riley","Wyatt","Colton","Joel","Maxwell","Aidan","Travis","Shane","Colin","Dominic","Carson","Vincent","Derek","Oscar","Grant","Eduardo","Peter","Henry","Parker","Hayden","Collin","George","Bradley","Mitchell","Devon","Ricardo","Shawn","Taylor","Nicolas","Francisco","Gregory","Liam","Kaleb","Preston","Erik","Owen","Omar","Diego","Dustin","Corey","Fernando","Clayton"];
 
 function assignPrefs() {
@@ -78,35 +78,35 @@ function newPersonData(numPairs) {
 		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 350, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
 	}
 	numMen = personData.length / 2;
-	
+
 	for (var i = 0; i < personData.length; i++) {
-		// generate picture	
-		personData[i].url = generateAvatar(personData[i].gender);	
-			
-		// generate names	
-		var men_initials = [];	
-		var women_initials = [];	
-		for (var a = 0; a < men.length; a++) {	
-			men_initials.push(men[a].charAt(0));	
-		}	
-		for (var a = 0; a < women.length; a++) {	
-			women_initials.push(women[a].charAt(0));	
-		}	
-		// the starting letter mustbe unique	
-		do {	
-			if (personData[i].gender == "m") {	
-				personData[i].id = maleNames[Math.floor(Math.random() * maleNames.length)];	
-			}	
-			else {	
-				personData[i].id = femaleNames[Math.floor(Math.random() * femaleNames.length)];	
-			}	
-		} while (men_initials.includes(personData[i].id.charAt(0)) || women_initials.includes(personData[i].id.charAt(0)));	
-			
-		if (personData[i].gender == "m") {	
-			men.push(personData[i].id);	
-		}	
-		else { 	
-			women.push(personData[i].id);	
+		// generate picture
+		personData[i].url = generateAvatar(personData[i].gender);
+
+		// generate names
+		var men_initials = [];
+		var women_initials = [];
+		for (var a = 0; a < men.length; a++) {
+			men_initials.push(men[a].charAt(0));
+		}
+		for (var a = 0; a < women.length; a++) {
+			women_initials.push(women[a].charAt(0));
+		}
+		// the starting letter mustbe unique
+		do {
+			if (personData[i].gender == "m") {
+				personData[i].id = maleNames[Math.floor(Math.random() * maleNames.length)];
+			}
+			else {
+				personData[i].id = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+			}
+		} while (men_initials.includes(personData[i].id.charAt(0)) || women_initials.includes(personData[i].id.charAt(0)));
+
+		if (personData[i].gender == "m") {
+			men.push(personData[i].id);
+		}
+		else {
+			women.push(personData[i].id);
 		}
 	}
 	assignPrefs();
@@ -124,7 +124,7 @@ function init() {
 			.attr("width", widths[numMen - 1])
 			.attr("height", height);
 	}
-	
+
 	// define image filters here
 	var bright = svg.append("defs")
 		.append("filter")
@@ -266,10 +266,10 @@ function init() {
 			return d.x_axis;
 		})
 		.attr("y", function (d) {
-			if (d.gender == "m") {	
-				return d.y_axis - 58; 	
-			} else {	
-				return d.y_axis + 70;	
+			if (d.gender == "m") {
+				return d.y_axis - 58;
+			} else {
+				return d.y_axis + 70;
 			}
 		})
 		.text(function (d) {
@@ -467,7 +467,7 @@ function updateVis() {
             svg
                 .append('path')
                 .attr('d', link)
-                .attr('stroke', 'red')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 2)
                 .attr('fill', 'none')
                 .attr("class", "engage-line");
@@ -535,26 +535,26 @@ d3.select('#pairs2')
 
 // generates a URL to the avatar (thanks to https://getavataaars.com/)
 function generateAvatar(gender) {
-    var skinColor = skins[Math.floor(Math.random() * skins.length)];	
-	if (skinColor == "Pale" || skinColor == "Light") {	
-		var hairColor = all_hair_colors[Math.floor(Math.random() * all_hair_colors.length)];	
-	}	
-	else {	
-		var hairColor = dark_hair_colors[Math.floor(Math.random() * dark_hair_colors.length)];	
+    var skinColor = skins[Math.floor(Math.random() * skins.length)];
+	if (skinColor == "Pale" || skinColor == "Light") {
+		var hairColor = all_hair_colors[Math.floor(Math.random() * all_hair_colors.length)];
+	}
+	else {
+		var hairColor = dark_hair_colors[Math.floor(Math.random() * dark_hair_colors.length)];
 	}
 	// 30% chance of facial hair for males only
 	var facialHair = "Blank";
 	if(Math.random() < .3 && gender == "m") {
 		facialHair = facial_hairs[Math.floor(Math.random() * facial_hairs.length)];
 	}
-	var avatar = "https://avataaars.io/" +	
-		"?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) +	
-		"&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) +	
-		"&hairColor=" + hairColor +	
-		"&facialHairType=" + facialHair +	
-		"&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +	
-		"&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +	
-		"&skinColor=" + skinColor;	
+	var avatar = "https://avataaars.io/" +
+		"?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) +
+		"&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) +
+		"&hairColor=" + hairColor +
+		"&facialHairType=" + facialHair +
+		"&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] +
+		"&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] +
+		"&skinColor=" + skinColor;
 	if (hairColor != "SilverGray") {
 		avatar += "&facialHairColor=" + hairColor;
 	}

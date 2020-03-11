@@ -529,7 +529,7 @@ function updateVis() {
 			svg
 				.append('path')
 				.attr('d', link)
-				.attr('stroke', 'red')
+				.attr('stroke', 'green')
 				.attr('stroke-width', 2)
 				.attr('fill', 'none')
 				.attr("class", "engage-line");

@@ -3,7 +3,7 @@ const d3 = require('d3')
 
 // set the dimensions of the visualization
 var width = 1000;
-var height = 400;
+var height = 480;
 
 // width not raidus... too lazy to change
 var personRadius = 100;
@@ -13,8 +13,8 @@ var femColor = "#fFa6b1";
 var malColor = "#a6c2ff";
 
 var genderLabelData = [
-	{ "x_axis": 20, "y_axis": 80, "text": "♂️:" },
-	{ "x_axis": 20, "y_axis": 280, "text": "♀️:" }
+	{ "x_axis": 20, "y_axis": 120, "text": "♂️:" },
+	{ "x_axis": 20, "y_axis": 330, "text": "♀️:" }
 ];
 
 // user should be able to edit prefs
@@ -57,18 +57,18 @@ function shuffle(a) {
 }
 
 
-newPersonData(2)
+newPersonData(3);
 function newPersonData(numPairs) {
 	personData = [];
 	men = [];
 	women = [];
 	// add men
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 80, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 });
+		personData.push({ "x_axis": 100 + i * (40 * numPairs + 120), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0, "taken": false });
 	}
 	// add women
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 280, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
+		personData.push({ "x_axis": 100 + i * (40 * numPairs + 120), "y_axis": 330, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0, "taken": false });
 	}
 	numMen = personData.length / 2;
 
@@ -104,6 +104,16 @@ function newPersonData(numPairs) {
 		}
 	}
 	assignPrefs();
+	for (var i = 0; i < numMen; i++) {
+		var person = personData[i];
+		var name = women[Math.floor(Math.random() * women.length)];
+		var index = women.indexOf(name);
+		women.splice(index, 1);
+
+		var woman = personData[personData.findIndex(p => p.id == name)];
+		woman.fiance = person.id;
+		person.fiance = name;
+	}
 }
 
 // var svg = d3.select("#identify")
@@ -112,7 +122,7 @@ function newPersonData(numPairs) {
 //   .attr("height", height);
 
 var svg;
-init()
+init();
 function init() {
 	if (svg != null) {
 		svg.selectAll("*").remove();
@@ -228,6 +238,8 @@ function init() {
 		.attr("font-size", "40px")
 		.attr("text-anchor", "middle")
 		.attr("fill", "black");
+
+	updateVis();
 }
 
 function generateAvatar(gender) {
@@ -255,4 +267,119 @@ function generateAvatar(gender) {
 		avatar += "&facialHairColor=" + hairColor;
 	}
 	return avatar;
+}
+
+function checkUnstableYes() {
+
+}
+
+d3.select("#yes_button").on("click", checkUnstableYes);
+// d3.select("#no_button").on("click", checkUnstableNo);
+
+function updateVis() {
+	// update faces to reflect the quality of match
+	svg.selectAll(".person-circle")
+		.data(personData)
+		.attr("xlink:href", function (d) {
+			var url = d.url + "&avatarStyle=Circle"
+			if (d.fiance == null) {
+				return url;
+			}
+			else {
+				var fianceIndex = d.prefs.indexOf(d.fiance);
+				if (fianceIndex == 0) {
+					return url + "&mouthType=Smile" + "&eyeType=Happy";
+				}
+				else if (fianceIndex == 1) {
+					return url + "&eyebrowType=RaisedExcited";
+				}
+				else if (fianceIndex == 2) {
+					return url + "&mouthType=Serious" + "&eyebrowType=SadConcerned";
+				}
+				else if (fianceIndex == 3) {
+					return url + "&mouthType=Sad" + "&eyebrowType=SadConcerned";
+				}
+				else {
+					return url + "&eyeType=Surprised" + "&eyebrowType=SadConcerned" + "&mouthType=Concerned"
+				}
+			}
+		});
+
+	// update prefs list
+	for (var i = 1; i <= numMen; i++) {
+		svg.selectAll(".pref-text" + i)
+			.data(personData)
+			.each(function(d) {
+				if(d.prefs[i-1] == null) {
+					d3.select(this).text("");
+				}
+				else {
+					d3.select(this).text(d.prefs[i-1].charAt(0));
+				}
+			});
+		svg.selectAll(".pref-x-text" + i)
+			.data(personData)
+			.each(function(d) {
+				if(d.exes.includes(d.prefs[i-1])) {
+					d3.select(this).text("X");
+				}
+				else {
+					d3.select(this).text("");
+				}
+			});
+		svg.selectAll(".pref-square" + i)
+			.data(personData)
+			.attr("fill", function(d) {
+				if (d.gender == "m") {
+					if(d.proposals == i) {
+						return "#70a0a6";
+					}
+					else {
+						return "#b0e0e6";
+					}
+				}
+				else {
+					if(d.prefs[i-1] != null && d.prefs[i-1] == d.fiance) {
+						return "#70a0a6";
+					}
+					else {
+						return "#b0e0e6";
+					}
+				}
+			});
+		svg.selectAll(".pref-img" + i)
+			.data(personData)
+			.attr("xlink:href", function (d) {
+				if(d.prefs[i-1] == null) {
+					return null;
+				}
+				else {
+					var person = personData[personData.findIndex(p => p.id == d.prefs[i-1])];
+					return person.url;
+				}
+			});
+	}
+
+	// add lines to engaged couples
+	// warning: the code you are about to see is very dumb. i dont know how to do it the right way
+	svg.selectAll(".engage-line").remove();
+	for (var i = 0; i < numMen; i++)
+	{
+		d = personData[i];
+		if (d.fiance != null) {
+			var other = personData[personData.findIndex(p => p.id == d.fiance)];
+			var link = d3.linkVertical()({
+				source: [d.x_axis, d.y_axis + personRadius / 2 - 5],
+				target: [other.x_axis, other.y_axis - personRadius / 2 - 2]
+			});
+
+			svg
+				.append('path')
+				.attr('d', link)
+				.attr('stroke', 'green')
+				.attr('stroke-width', 2)
+				.attr('fill', 'none')
+				.attr("class", "engage-line");
+		}
+	}
 }

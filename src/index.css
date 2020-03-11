@@ -66,6 +66,13 @@ h2 {
 	padding: 1px 10px;
 }
 
+#identify {
+	border: 1px solid black;
+	margin-right: 500px;
+	margin-bottom: 3px;
+	padding: 1px 10px;
+}
+
 #user-interact {
 	border: 1px solid black;
 	padding-left: 25px;
