@@ -404,14 +404,14 @@ function checkUnstablity() {
 	unstable_pairs = [];
 	for (var i = 0; i < numMen; i++) {
 		var person = personData[i];
-		var currWifeIndex = women.findIndex(p => p == person.fiance);
+		var currWifeIndex = person.prefs.findIndex(p => p == person.fiance);
 		for (var j = 0; j < numMen; j++) {
 			var woman = women[j];
-			var womanIndex = women.findIndex(p => p == woman);
+			var womanIndex = person.prefs.findIndex(p => p == woman);
 			if (woman != person.fiance && womanIndex < currWifeIndex) {
 				var womanData = personData[3 + j];
-				var currHusbandIndex = men.findIndex(p => p == womanData.fiance);
-				var personIndex = men.findIndex(p => p == men[i]);
+				var currHusbandIndex = womanData.prefs.findIndex(p => p == womanData.fiance);
+				var personIndex = womanData.prefs.findIndex(p => p == men[i]);
 				if (personIndex < currHusbandIndex) {
 					unstable_pairs.push(men[i] + "-" + woman);
 				}
