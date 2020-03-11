@@ -57,7 +57,7 @@ function shuffle(a) {
 }
 
 
-newPersonData(4);
+newPersonData(3);
 function newPersonData(numPairs) {
 	personData = [];
 	men = [];
@@ -476,7 +476,7 @@ function checkUnstableNo() {
 
 
 function generateNewProblem() {
-	newPersonData(4);
+	newPersonData(3);
 	init();
 }
 
