@@ -146,14 +146,7 @@ function init() {
 			.attr("y", function (d) { return d.y_axis - 20; })
 			.attr("width", function (d) { return 40; })
 			.attr("height", function (d) { return 40; })
-			.attr("fill", function(d) {
-				if(d.proposals > i - 1) {
-					return "#70a0a6";
-				}
-				else {
-					return "#b0e0e6";
-				}
-			})
+			.attr("fill", function(d) {	return "#b0e0e6"; })
 			.attr("stroke-width", 1)
 			.attr("stroke", "#003366")
 			.attr("class", "pref-square" + i)
@@ -346,21 +339,11 @@ function updateVis() {
 		svg.selectAll(".pref-square" + i)
 			.data(personData)
 			.attr("fill", function(d) {
-				if (d.gender == "m") {
-					if(d.proposals == i) {
-						return "#70a0a6";
-					}
-					else {
-						return "#b0e0e6";
-					}
+				if(d.prefs[i-1] != null && d.prefs[i-1] == d.fiance) {
+					return "#70a0a6";
 				}
 				else {
-					if(d.prefs[i-1] != null && d.prefs[i-1] == d.fiance) {
-						return "#70a0a6";
-					}
-					else {
-						return "#b0e0e6";
-					}
+					return "#b0e0e6";
 				}
 			});
 		svg.selectAll(".pref-img" + i)
