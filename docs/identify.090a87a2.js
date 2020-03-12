@@ -29272,22 +29272,22 @@ function checkUnstablity() {
 
   for (var i = 0; i < numMen; i++) {
     var person = personData[i];
-    var currWifeIndex = women.findIndex(function (p) {
+    var currWifeIndex = person.prefs.findIndex(function (p) {
       return p == person.fiance;
     });
 
     for (var j = 0; j < numMen; j++) {
       var woman = women[j];
-      var womanIndex = women.findIndex(function (p) {
+      var womanIndex = person.prefs.findIndex(function (p) {
         return p == woman;
       });
 
       if (woman != person.fiance && womanIndex < currWifeIndex) {
         var womanData = personData[3 + j];
-        var currHusbandIndex = men.findIndex(function (p) {
+        var currHusbandIndex = womanData.prefs.findIndex(function (p) {
           return p == womanData.fiance;
         });
-        var personIndex = men.findIndex(function (p) {
+        var personIndex = womanData.prefs.findIndex(function (p) {
           return p == men[i];
         });
 
@@ -29379,7 +29379,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63286" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52848" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

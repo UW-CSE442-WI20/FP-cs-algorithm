@@ -413,6 +413,10 @@ function checkUnstablity() {
 				var currHusbandIndex = womanData.prefs.findIndex(p => p == womanData.fiance);
 				var personIndex = womanData.prefs.findIndex(p => p == men[i]);
 				if (personIndex < currHusbandIndex) {
+					console.log(personIndex);
+					console.log(currHusbandIndex);
+					console.log(womanIndex);
+					console.log(currWifeIndex);
 					unstable_pairs.push(men[i] + "-" + woman);
 				}
 			}
