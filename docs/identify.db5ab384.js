@@ -29038,10 +29038,6 @@ function checkUnstablity() {
         });
 
         if (personIndex < currHusbandIndex) {
-          console.log(personIndex);
-          console.log(currHusbandIndex);
-          console.log(womanIndex);
-          console.log(currWifeIndex);
           unstable_pairs.push(men[i] + "-" + woman);
         }
       }
@@ -29102,4 +29098,4 @@ d3.select("#yes-button").on("click", checkUnstableYes);
 d3.select("#no-button").on("click", checkUnstableNo);
 d3.select("#new-button").on("click", generateNewProblem);
 },{"d3":"UzF0"}]},{},["DzQ2"], null)
-//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/identify.6b1d0748.js.map
+//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/identify.db5ab384.js.map

@@ -56,8 +56,8 @@ function shuffle(a) {
 	}
 }
 
-
-newPersonData(3);
+var value = 3;
+newPersonData(value);
 function newPersonData(numPairs) {
 	personData = [];
 	men = [];
@@ -458,11 +458,18 @@ function checkUnstableNo() {
 }
 
 
-function generateNewProblem() {
-	newPersonData(3);
+function generateNewProblem(v) {
+	newPersonData(v);
 	init();
 }
 
 d3.select("#yes-button").on("click", checkUnstableYes);
 d3.select("#no-button").on("click", checkUnstableNo);
-d3.select("#new-button").on("click", generateNewProblem);
+d3.select("#new-button").on("click", function() {
+	generateNewProblem(value);
+});
+d3.select('#pairs3')
+  .on('change', function() {
+	  value = d3.select(this).property('value');
+    generateNewProblem(value);
+});

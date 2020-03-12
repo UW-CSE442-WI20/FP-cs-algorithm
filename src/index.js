@@ -646,7 +646,7 @@ d3.select("#shuffle-prefs").on("click", function() {
 d3.select('#pairs1')
   .on('change', function() {
 	  var value = d3.select(this).property('value');
-      newPersonData(value);
+    newPersonData(value);
 	  init();
 	  reset();
 });
