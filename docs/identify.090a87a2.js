@@ -29292,6 +29292,10 @@ function checkUnstablity() {
         });
 
         if (personIndex < currHusbandIndex) {
+          console.log(personIndex);
+          console.log(currHusbandIndex);
+          console.log(womanIndex);
+          console.log(currWifeIndex);
           unstable_pairs.push(men[i] + "-" + woman);
         }
       }
@@ -29379,7 +29383,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52848" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56611" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
