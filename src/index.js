@@ -23,6 +23,7 @@ var femColor = "#fFa6b1";
 var malColor = "#a6c2ff";
 
 var speed = 50;
+var finished = false;
 
 var genderLabelData = [
 	{ "x_axis": 20, "y_axis": 120, "text": "♂️:" },
@@ -390,6 +391,7 @@ function solutionNextStep() {
 			updateAlert("Everyone now has a match. Matching is complete!");
 			clearInterval(interval);
 			d3.select("#play-button").text("Play Algorithm");
+			finished = true;
 		}
 	}
 }
@@ -608,6 +610,7 @@ function reset() {
 	stepClicked = false;
 	checkClicked = false;
 	playing = false;
+	finished = false;
 	d3.select("#play-button").text("Play Algorithm");
 	clearInterval(interval);
 	updateAlert();
@@ -618,6 +621,9 @@ var interval;
 var playing = false;
 var checkClicked = false;
 function playSolution() {
+	if (finished) {
+		reset();
+	}
 	if ((started && !stepClicked) || (stepClicked && playing)) {
 		d3.select(this).text("Play Algorithm");
 		clearInterval(interval);
