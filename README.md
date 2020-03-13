@@ -1,4 +1,6 @@
+# Link to final project
 
+https://uw-cse442-wi20.github.io/FP-cs-algorithm/
 
 # Final Project Starter template
 
