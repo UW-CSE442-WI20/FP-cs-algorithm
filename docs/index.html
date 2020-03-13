@@ -49,7 +49,7 @@
                 <option value="2">2</option>
                 <option value="3" selected="">3</option>
                 <option value="4">4</option>
-                <option value="5">5</option>
+                <!--<option value="5">5</option>-->
             </select>
 
 			<br><span id="pairswarning1" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
@@ -87,7 +87,7 @@
             </ul>
             This algorithm is guaranteed to produce a stable marriage for all participants in time \(O(n^2)\) where \(n\) is the number of men or women.
 
-            <br> Among all possible different stable matchings, it always yields the one that is best for all men among all stable matchings, and worst for all women. No man can get a better matching for himself by misrepresenting his preferences, and no group of men can coordinate a misrepresentation of their preferences such that all men in the group are strictly better-off. However, it is possible for some group of men to misrepresent their preferences such that some men are better-off and the other men retain the same partner.
+            <br> Among all possible different stable matchings, it always yields the one that is best for all men among all stable matchings, and worst for all women. No man can get a better matching for himself by misrepresenting his preferences.
 			However, each woman may be able to misrepresent her preferences and get a better match.
         </div>
         <h2>Algorithm Pseudocode</h2>
@@ -120,7 +120,7 @@
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4" selected="">4</option>
-            <option value="5">5</option>
+            <!--<option value="5">5</option>-->
         </select>
 
 		<br><span id="pairswarning2" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
@@ -136,7 +136,7 @@
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4" selected="">4</option>
-            <option value="5">5</option>
+            <!--<option value="5">5</option>-->
         </select>
 
 		<br><span id="pairswarning3" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
@@ -151,7 +151,8 @@
             <br> Another important and large-scale application of stable marriage is in the problem of assigning users to web servers.
              of users access web pages, videos, and other services on the Internet, requiring each user to be matched to one of potentially hundreds of thousands of servers around the world. A user prefers servers that are closer to them, resulting in a (partial) preferential ordering of the servers for each user. Each server prefers to serve users that it can with a lower cost, resulting in a (partial) preferential ordering of users for each server.
              Content delivery networks that distribute much of the world's content and services solve this large and complex stable marriage problem between users and servers every several seconds to enable billions of users to be matched up with their respective servers.
-
+			
+			<!--
             <h2>Related Algorithms:</h2>
             <ul type="circle">
                 <li><b>Stable Matching with Indifference:</b> In this problem some men might be indifferent between two or more women and vice versa.</li>
@@ -161,6 +162,7 @@
                 <li><b>Assignment Problem:</b> This problem seeks to find a matching in a weighted bipartite graph that has maximum weight. Maximum weighted matchings do not have to be stable, but in some applications a maximum weighted matching is better than a stable one.</li>
                 <li><b>Matching with Contracts Problem:</b> This problem is a generalization of matching problem, in which participants can be matched with different terms of contracts. An important special case of contracts is matching with flexible wages</li>
             </ul>
+			-->
 
             <h2>Sources:</h2>
             <ul type="circle">
