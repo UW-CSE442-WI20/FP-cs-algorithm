@@ -46,10 +46,14 @@
             <br /> <button type="button" id="new-button">New Problem</button>
             <label for="pairs3">Number of Pairs:</label>
             <select id="pairs3">
+				<option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3" selected>3</option>
                 <option value="4">4</option>
+                <option value="5">5</option>
             </select>
+			
+			<br /><span id="pairswarning1" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
             <!-- svg appended in identify.js -->
 
             <h2>Stable Matching:</h2>
@@ -116,12 +120,15 @@
             <option value="4" selected>4</option>
             <option value="5">5</option>
         </select>
+		
+		<br /><span id="pairswarning2" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
 
         <h2>Try it yourself</h2>
 		<div>Pair up men and women by clicking on them. Check your work when you're finished!</div>
         <div id="user-interact"></div>
         <button type="button" id="check-work">Check My Work</button>
         <button type="button" id="try-reset">Reset</button>
+		<br /> <button type="button" id="try-new">New Problem</button>
 		<label for="pairs2">Number of Pairs:</label>
         <select id="pairs2">
             <option value="1">1</option>
@@ -130,6 +137,8 @@
             <option value="4" selected>4</option>
             <option value="5">5</option>
         </select>
+		
+		<br /><span id="pairswarning3" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
 
         <h1>Further Reading</h1>
         <h2>Applications:</h2>

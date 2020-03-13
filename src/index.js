@@ -12,7 +12,7 @@ var started = false;
 
 // set the dimensions of the visualization
 // todo: width should be dynamic
-var widths = [1000,1000,1000,1100,1600];
+var width = 1650;
 var height = 500;
 
 // width not raidus... too lazy to change
@@ -71,13 +71,26 @@ function newPersonData(numPairs) {
 	personData = [];
 	men = [];
 	women = [];
+	var x_offset = 100;
+	if (numPairs == 1) {
+		x_offset = 590;
+	}
+	else if (numPairs == 2) {
+		x_offset = 470;
+	}
+	else if (numPairs == 3) {
+		x_offset = 310;
+	}
+	else if (numPairs == 4) {
+		x_offset = 100;
+	}
 	// add men
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 });
+		personData.push({ "x_axis": x_offset + i * (40 * numPairs + 120), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0 });
 	}
 	// add women
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 100), "y_axis": 350, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
+		personData.push({ "x_axis": x_offset + i * (40 * numPairs + 120), "y_axis": 350, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0 });
 	}
 	numMen = personData.length / 2;
 
@@ -120,11 +133,11 @@ init();
 function init() {
 	if (svg != null) {
 		svg.selectAll("*").remove();
-		svg.attr("width", widths[numMen - 1]);
+		svg.attr("width", width);
 	}
 	else {
 		svg = d3.select("#solution").append("svg")
-			.attr("width", widths[numMen - 1])
+			.attr("width", width)
 			.attr("height", height);
 	}
 
@@ -278,7 +291,7 @@ function init() {
 
 	var alertText = svg
 		.append("text")
-		.attr("x", 550)
+		.attr("x", 610)
 		.attr("y", 480)
 		.text( function () { return alertText; })
 		.attr("font-family", "Nunito, sans-serif")
@@ -644,11 +657,17 @@ d3.select("#shuffle-prefs").on("click", function() {
 	}
 });
 d3.select('#pairs1')
-  .on('change', function() {
-	  var value = d3.select(this).property('value');
-    newPersonData(value);
-	  init();
-	  reset();
+    .on('change', function() {
+		var value = d3.select(this).property('value');
+		newPersonData(value);
+		init();
+		reset();
+		if (value == 5) {
+			d3.select('#pairswarning2').style("display", "block");
+		}
+		else {
+			d3.select('#pairswarning2').style("display", "none");
+		}
 });
 
 // generates a URL to the avatar (thanks to https://getavataaars.com/)

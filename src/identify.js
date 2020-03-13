@@ -2,7 +2,7 @@
 const d3 = require('d3')
 
 // set the dimensions of the visualization
-var width = 1200;
+var width = 1650;
 var height = 560;
 
 // width not raidus... too lazy to change
@@ -62,13 +62,26 @@ function newPersonData(numPairs) {
 	personData = [];
 	men = [];
 	women = [];
+	var x_offset = 100;
+	if (numPairs == 1) {
+		x_offset = 590;
+	}
+	else if (numPairs == 2) {
+		x_offset = 470;
+	}
+	else if (numPairs == 3) {
+		x_offset = 310;
+	}
+	else if (numPairs == 4) {
+		x_offset = 100;
+	}
 	// add men
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 120), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0, "taken": false });
+		personData.push({ "x_axis": x_offset + i * (40 * numPairs + 120), "y_axis": 120, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "m", "fiance": null, "url": "https://avataaars.io/?topType=ShortHairShortRound", "exes": [], "proposals": 0, "taken": false });
 	}
 	// add women
 	for (var i = 0; i < numPairs; i++) {
-		personData.push({ "x_axis": 100 + i * (40 * numPairs + 120), "y_axis": 330, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0, "taken": false });
+		personData.push({ "x_axis": x_offset + i * (40 * numPairs + 120), "y_axis": 330, "radius": personRadius, "id": i, "prefs": [], "free": true, "gender": "f", "fiance": null, "url": "https://avataaars.io/", "exes": [], "proposals": 0, "taken": false });
 	}
 	numMen = personData.length / 2;
 
@@ -236,7 +249,7 @@ function init() {
 	// for displaying alert texts
 	var alertText = svg
 		.append("text")
-		.attr("x", 500)
+		.attr("x", 610)
 		.attr("y", 460)
 		.text( function () { return alertText; })
 		.attr("font-family", "Nunito, sans-serif")
@@ -246,7 +259,7 @@ function init() {
 		.attr("class", "alertText");
 	var alertText2 = svg
 		.append("text")
-		.attr("x", 500)
+		.attr("x", 610)
 		.attr("y", 510)
 		.text( function () { return alertText2; })
 		.attr("font-family", "Nunito, sans-serif")
@@ -409,7 +422,7 @@ function checkUnstablity() {
 			var woman = women[j];
 			var womanIndex = person.prefs.findIndex(p => p == woman);
 			if (woman != person.fiance && womanIndex < currWifeIndex) {
-				var womanData = personData[3 + j];
+				var womanData = personData[numMen + j];
 				var currHusbandIndex = womanData.prefs.findIndex(p => p == womanData.fiance);
 				var personIndex = womanData.prefs.findIndex(p => p == men[i]);
 				if (personIndex < currHusbandIndex) {
@@ -424,12 +437,12 @@ function checkUnstablity() {
 function checkUnstableYes() {
 	unstable_pairs = checkUnstablity();
 	if (unstable_pairs.length == 0) {
-		updateAlert("Oops! There does not exist any unstable pairs!");
+		updateAlert("Oops! There are no unstable pairs!");
 	} else if (unstable_pairs.length == 1) {
-		updateAlert("You are right! There is one unstable pair and that is " + unstable_pairs.shift());
+		updateAlert("Correct! There is one unstable pair: " + unstable_pairs.shift());
 	} else {
-		var msg = "You are right! There are " + unstable_pairs.length + " unstable pairs.";
-		var msg2 = "They are : " + unstable_pairs.shift();
+		var msg = "Correct! There are " + unstable_pairs.length + " unstable pairs.";
+		var msg2 = "They are: " + unstable_pairs.shift();
 		while (unstable_pairs.length > 1) {
 			msg2 += ", " + unstable_pairs.shift();
 		}
@@ -442,12 +455,12 @@ function checkUnstableYes() {
 function checkUnstableNo() {
 	unstable_pairs = checkUnstablity();
 	if (unstable_pairs.length == 0) {
-		updateAlert("You are right! There are no unstable pairs!");
+		updateAlert("Correct! There are no unstable pairs!");
 	} else if (unstable_pairs.length == 1) {
-		updateAlert("Oops! There is one unstable pair and that is " + unstable_pairs.shift());
+		updateAlert("Oops! There is one unstable pair: " + unstable_pairs.shift());
 	} else {
 		var msg = "Oops! There are " + unstable_pairs.length + " unstable pairs.";
-		var msg2 = "They are : " + unstable_pairs.shift();
+		var msg2 = "They are: " + unstable_pairs.shift();
 		while (unstable_pairs.length > 1) {
 			msg2 += ", " + unstable_pairs.shift();
 		}
@@ -466,10 +479,15 @@ function generateNewProblem(v) {
 d3.select("#yes-button").on("click", checkUnstableYes);
 d3.select("#no-button").on("click", checkUnstableNo);
 d3.select("#new-button").on("click", function() {
-	generateNewProblem(value);
+	generateNewProblem(numMen);
 });
-d3.select('#pairs3')
-  .on('change', function() {
-	  value = d3.select(this).property('value');
+d3.select('#pairs3').on('change', function() {
+	var value = d3.select(this).property('value');
     generateNewProblem(value);
+	if (value == 5) {
+		d3.select('#pairswarning1').style("display", "block");
+	}
+	else {
+		d3.select('#pairswarning1').style("display", "none");
+	}
 });
