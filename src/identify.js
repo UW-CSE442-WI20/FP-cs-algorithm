@@ -3,7 +3,7 @@ const d3 = require('d3')
 
 // set the dimensions of the visualization
 var width = 1650;
-var height = 560;
+var height = 530;
 
 // width not raidus... too lazy to change
 var personRadius = 100;
