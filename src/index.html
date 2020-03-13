@@ -36,7 +36,7 @@
                 <br> Suppose:
                 <br> 1) Jim prefers Pam over Angela and
                 <br> 2) Pam prefers Jim over Dwight
-                <br> Then the pair Jim-Pam (represented by the green line above) is an unstable pair because both Jim and Pam prefer each other over their current partners.</div>
+                <br> Then the pair Jim-Pam (represented by the red line above) is an unstable pair because both Jim and Pam prefer each other over their current partners.</div>
 
             <h2>Identify Unstable Pairs:</h2>
             <div id="identify"></div>
@@ -51,7 +51,7 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-			
+
 			<br /><span id="pairswarning1" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
             <!-- svg appended in identify.js -->
 
@@ -87,7 +87,7 @@
             </ul>
             This algorithm is guaranteed to produce a stable marriage for all participants in time \(O(n^2)\) where \(n\) is the number of men or women.
 
-            <br /> Among all possible different stable matchings, it always yields the one that is best for all men among all stable matchings, and worst for all women. No man can get a better matching for himself by misrepresenting his preferences, and no group of men can coordinate a misrepresentation of their preferences such that all men in the group are strictly better-off. However, it is possible for some group of men to misrepresent their preferences such that some men are better-off and the other men retain the same partner. 
+            <br /> Among all possible different stable matchings, it always yields the one that is best for all men among all stable matchings, and worst for all women. No man can get a better matching for himself by misrepresenting his preferences, and no group of men can coordinate a misrepresentation of their preferences such that all men in the group are strictly better-off. However, it is possible for some group of men to misrepresent their preferences such that some men are better-off and the other men retain the same partner.
 			However, each woman may be able to misrepresent her preferences and get a better match.
         </div>
         <h2>Algorithm pseudocode</h2>
@@ -119,7 +119,7 @@
             <option value="4" selected>4</option>
             <option value="5">5</option>
         </select>
-		
+
 		<br /><span id="pairswarning2" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
 
         <h2>Try it yourself</h2>
@@ -135,7 +135,7 @@
             <option value="4" selected>4</option>
             <option value="5">5</option>
         </select>
-		
+
 		<br /><span id="pairswarning3" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
 
         <h1>Further Reading</h1>
@@ -148,8 +148,8 @@
             <br /> Another important and large-scale application of stable marriage is in the problem of assigning users to web servers.
              of users access web pages, videos, and other services on the Internet, requiring each user to be matched to one of potentially hundreds of thousands of servers around the world. A user prefers servers that are closer to them, resulting in a (partial) preferential ordering of the servers for each user. Each server prefers to serve users that it can with a lower cost, resulting in a (partial) preferential ordering of users for each server.
              Content delivery networks that distribute much of the world's content and services solve this large and complex stable marriage problem between users and servers every several seconds to enable billions of users to be matched up with their respective servers.
-            
-			
+
+
 
             <h2>Related Algorithms:</h2>
             <ul type="circle">
@@ -167,7 +167,7 @@
                     <a href="https://en.wikipedia.org/wiki/Stable_marriage_problem">https://en.wikipedia.org/wiki/Stable_marriage_problem</a></li>
                 <li>Algorithms Class (CSE 421):
                 <a href="https://homes.cs.washington.edu/~anuprao/pubs/CSE421Wi2020/01stable-matching.pdf">https://homes.cs.washington.edu/~anuprao/pubs/CSE421Wi2020/01stable-matching.pdf</a></li>
-			    <li>University of California: 
+			    <li>University of California:
 			    <a href="https://medium.com/@UofCalifornia/how-a-matchmaking-algorithm-saved-lives-2a65ac448698">https://medium.com/@UofCalifornia/how-a-matchmaking-algorithm-saved-lives-2a65ac448698</a></li>
 			    <li>New York Times:
 			    <a href="http://www.nytimes.com/2014/12/07/nyregion/how-game-theory-helped-improve-new-york-city-high-school-application-process.html">http://www.nytimes.com/2014/12/07/nyregion/how-game-theory-helped-improve-new-york-city-high-school-application-process.html</a></li>
