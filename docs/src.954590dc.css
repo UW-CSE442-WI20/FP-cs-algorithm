@@ -64,21 +64,26 @@ h2 {
 	margin-right: 750px;
 	margin-bottom: 30px;
 	padding: 1px 10px;
+	width: 450px;
 }
 
 #identify {
 	border: 1px solid black;
 	padding-left: 25px;
+	margin-bottom: 10px;
+	width: 1200px;
 }
 
 #user-interact {
 	border: 1px solid black;
 	padding-left: 25px;
+	width: 1200px;
 }
 
 #solution {
 	border: 1px solid black;
 	padding-left: 25px;
+	width: 1200px;
 }
 
 #solution-pseudocode {
@@ -86,7 +91,8 @@ h2 {
 	margin-right: 250px;
 	margin-bottom: 30px;
 	padding: 1px 10px;
-	background: #F3F3F3
+	background: #F3F3F3;
+	width: 900px;
 }
 
 button {
@@ -107,4 +113,4 @@ button:hover {
 }
 
 
-/*# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.b0d248a8.css.map */
+/*# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.954590dc.css.map */
