@@ -28630,7 +28630,7 @@ Object.keys(_d3Zoom).forEach(function (key) {
     }
   });
 });
-},{"./dist/package.js":"pT13","d3-array":"K0bd","d3-axis":"mp0m","d3-brush":"tkh5","d3-chord":"Iy8J","d3-collection":"S3hn","d3-color":"Peej","d3-contour":"SiBy","d3-dispatch":"D3zY","d3-drag":"kkdU","d3-dsv":"EC2w","d3-ease":"pJ11","d3-fetch":"grWT","d3-force":"oYRE","d3-format":"VuZR","d3-geo":"Ah6W","d3-hierarchy":"Kps6","d3-interpolate":"k9aH","d3-path":"OTyq","d3-polygon":"H15P","d3-quadtree":"lUbg","d3-random":"Gz2j","d3-scale":"zL2z","d3-scale-chromatic":"ado2","d3-selection":"ysDv","d3-shape":"maww","d3-time":"hQYG","d3-time-format":"UYpZ","d3-timer":"rdzS","d3-transition":"UqVV","d3-voronoi":"rLIC","d3-zoom":"MHdZ"}],"viwQ":[function(require,module,exports) {
+},{"./dist/package.js":"pT13","d3-array":"K0bd","d3-axis":"mp0m","d3-brush":"tkh5","d3-chord":"Iy8J","d3-collection":"S3hn","d3-color":"Peej","d3-contour":"SiBy","d3-dispatch":"D3zY","d3-drag":"kkdU","d3-dsv":"EC2w","d3-ease":"pJ11","d3-fetch":"grWT","d3-force":"oYRE","d3-format":"VuZR","d3-geo":"Ah6W","d3-hierarchy":"Kps6","d3-interpolate":"k9aH","d3-path":"OTyq","d3-polygon":"H15P","d3-quadtree":"lUbg","d3-random":"Gz2j","d3-scale":"zL2z","d3-scale-chromatic":"ado2","d3-selection":"ysDv","d3-shape":"maww","d3-time":"hQYG","d3-time-format":"UYpZ","d3-timer":"rdzS","d3-transition":"UqVV","d3-voronoi":"rLIC","d3-zoom":"MHdZ"}],"Focm":[function(require,module,exports) {
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -28650,7 +28650,7 @@ WebFont.load({
 var started = false; // set the dimensions of the visualization
 // todo: width should be dynamic
 
-var widths = [1000, 1000, 1000, 1100, 1600];
+var width = 1650;
 var height = 500; // width not raidus... too lazy to change
 
 var personRadius = 100;
@@ -28711,11 +28711,23 @@ newPersonData(4);
 function newPersonData(numPairs) {
   personData = [];
   men = [];
-  women = []; // add men
+  women = [];
+  var x_offset = 100;
+
+  if (numPairs == 1) {
+    x_offset = 590;
+  } else if (numPairs == 2) {
+    x_offset = 470;
+  } else if (numPairs == 3) {
+    x_offset = 310;
+  } else if (numPairs == 4) {
+    x_offset = 100;
+  } // add men
+
 
   for (var i = 0; i < numPairs; i++) {
     personData.push({
-      "x_axis": 100 + i * (40 * numPairs + 100),
+      "x_axis": x_offset + i * (40 * numPairs + 120),
       "y_axis": 120,
       "radius": personRadius,
       "id": i,
@@ -28732,7 +28744,7 @@ function newPersonData(numPairs) {
 
   for (var i = 0; i < numPairs; i++) {
     personData.push({
-      "x_axis": 100 + i * (40 * numPairs + 100),
+      "x_axis": x_offset + i * (40 * numPairs + 120),
       "y_axis": 350,
       "radius": personRadius,
       "id": i,
@@ -28788,9 +28800,9 @@ init();
 function init() {
   if (svg != null) {
     svg.selectAll("*").remove();
-    svg.attr("width", widths[numMen - 1]);
+    svg.attr("width", width);
   } else {
-    svg = d3.select("#user-interact").append("svg").attr("width", widths[numMen - 1]).attr("height", height);
+    svg = d3.select("#solution").append("svg").attr("width", width).attr("height", height);
   } // define image filters here
 
 
@@ -28860,7 +28872,8 @@ function init() {
   }).attr("xlink:href", function (d) {
     return d.url + "&avatarStyle=Circle";
   }).attr("class", "person-circle").on("click", function (d) {
-    if (started) {// no need
+    if (checkClicked) {
+      updateAlert("Reset to set your own preferences!");
     } else {
       if (!selecting) {// should indicate selection somehow
       }
@@ -28868,7 +28881,12 @@ function init() {
       onCircleClick(d);
     }
   }).on("mouseover", function (d, i) {
-    d3.select(this).transition().duration('200').attr('filter', 'url(#brightness)');
+    // highlight only when interactable
+    if (!started && (!selecting || d.gender != selectPerson.gender && !selectPerson.prefs.includes(d.id))) {
+      d3.select(this).transition().duration('200').attr('filter', 'url(#brightness)');
+    } else {
+      d3.select(this).transition().duration('200').attr('filter', 'null');
+    }
   }).on("mouseout", function (d, i) {
     d3.select(this).transition().duration('200').attr('filter', 'null');
   }); // add text to person labels (circles)
@@ -28896,49 +28914,101 @@ function init() {
   }).text(function (d) {
     return d.text;
   }).attr("font-family", "Nunito, sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "black");
-  var alertText = svg.append("text").attr("x", 550).attr("y", 480).text(function () {
+  var alertText = svg.append("text").attr("x", 610).attr("y", 480).text(function () {
     return alertText;
-  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "35px").attr("fill", "black").attr("stroke", "none").style("text-anchor", "middle").attr("class", "alertText");
+  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "35px").attr("fill", "black").style("text-anchor", "middle").attr("class", "alertText");
+
+  for (var i = 1; i <= numMen; i++) {
+    var prefXText = svg.selectAll("prefXTexts").data(personData).enter().append("text");
+    var prefLabels = prefXText.attr("x", function (d) {
+      return d.x_axis + 40 * i + 18;
+    }).attr("y", function (d) {
+      return d.y_axis;
+    }).text(function (d) {
+      // get pref from personData
+      return "";
+    }).attr("font-family", "Nunito, sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "red").attr("class", "pref-x-text" + i);
+  }
 }
 
 var curManIndex = null;
-var currentAlert = "";
+/*
+algo:
+w := first woman on m's list to whom m has not yet proposed
+	if w is free then
+		(m, w) become engaged
+	else some pair (m', w) already exists
+		if w prefers m to m' then
+			m' becomes free
+			(m, w) become engaged
+		else
+			(m', w) remain engaged
+		end if
+	end if
+*/
+
+var alertQueue = [];
 
 function solutionNextStep() {
-  if (!getMatches()) {
-    currentAlert = "Incomplete number of matches. Please finish matching first.";
-    updateAlert(currentAlert);
+  if (!started && selecting) {
+    updateAlert("You must select preferences first!");
+    return;
+  }
+
+  if (alertQueue.length > 0) {
+    updateAlert(alertQueue.shift());
+    return;
+  }
+
+  started = true; //document.getElementById("pcode3").style.backgroundColor = "yellow";
+
+  if (curManIndex == null) {
+    curManIndex = 0;
   } else {
-    for (var i = 0; i < numMen; i++) {
-      var woman = personData[personData.length - 1 - i];
-      var higher = woman.prefs.slice(0, woman.prefs.indexOf(woman.fiance));
+    curManIndex++;
 
-      for (var j = 0; j < higher.length; j++) {
-        var man = personData[personData.findIndex(function (p) {
-          return p.id == higher[j];
-        })];
+    if (curManIndex >= numMen) {
+      curManIndex = 0;
+    }
+  } // use to catch repeats
 
-        if (man.prefs.indexOf(woman.id) < man.prefs.indexOf(man.fiance)) {
-          currentAlert = "Matching failed. Try again.";
-          updateAlert(currentAlert);
-          return;
-        }
+
+  var lastManIndex = curManIndex; // do first check
+
+  if (personData[curManIndex].proposals < numMen && personData[curManIndex].free) {
+    var curMan = personData[curManIndex];
+    var curWoman = personData[personData.findIndex(function (p) {
+      return p.id == curMan.prefs[curMan.proposals];
+    })];
+    propose(curMan.id, curWoman.id);
+  } else {
+    curManIndex++;
+
+    if (curManIndex >= numMen) {
+      curManIndex = 0;
+    } // while there exists a free man who still has a proposal to make
+
+
+    while (!(personData[curManIndex].proposals < numMen && personData[curManIndex].free) && curManIndex != lastManIndex) {
+      curManIndex++;
+
+      if (curManIndex >= numMen) {
+        curManIndex = 0;
       }
     }
 
-    currentAlert = "Matching successful. Everyone now has a match.";
-    updateAlert(currentAlert);
-  }
-}
-
-function getMatches() {
-  for (var i = 0; i < personData.length; i++) {
-    if (personData[i].free) {
-      return false;
+    if (curManIndex != lastManIndex) {
+      var curMan = personData[curManIndex];
+      var curWoman = personData[personData.findIndex(function (p) {
+        return p.id == curMan.prefs[curMan.proposals];
+      })];
+      propose(curMan.id, curWoman.id);
+    } else {
+      updateAlert("Everyone now has a match. Matching is complete!");
+      clearInterval(interval);
+      d3.select("#play-button").text("Play Algorithm");
     }
   }
-
-  return true;
 }
 
 function propose(manId, womanId) {
@@ -28948,30 +29018,37 @@ function propose(manId, womanId) {
   var woman = personData[personData.findIndex(function (p) {
     return p.id == womanId;
   })];
+  updateAlert(man.id + " is proposing to " + woman.id);
 
-  if (woman.id == man.fiance) {
-    return;
+  if (woman.free) {
+    alertQueue.push(woman.id + " is free.");
+    man.proposals++;
+    makeEngaged(man, woman);
+  } else {
+    alertQueue.push(woman.id + " is not free."); // new guy is better than old guy (sorry bro)
+
+    if (woman.prefs.indexOf(man.id) < woman.prefs.indexOf(woman.fiance)) {
+      alertQueue.push(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + "."); // set old guy to free
+
+      var oldGuy = personData[personData.findIndex(function (p) {
+        return p.id == woman.fiance;
+      })];
+      oldGuy.free = true;
+      oldGuy.fiance = null;
+      oldGuy.exes.push(woman.id);
+      woman.exes.push(oldGuy.id);
+      man.proposals++;
+      makeEngaged(man, woman);
+    } else {
+      alertQueue.push(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
+      man.proposals++; // exes is a bit of a misnomer. we still want to label failed proposals
+
+      man.exes.push(woman.id);
+      woman.exes.push(man.id); // but should we label failed woman proposal? use different markings for former relationship?
+
+      updateVis();
+    }
   }
-
-  if (!man.free) {
-    var prevGf = personData[personData.findIndex(function (p) {
-      return p.id == man.fiance;
-    })];
-    prevGf.free = true;
-    prevGf.fiance = null;
-    prevGf.proposals = 0;
-  }
-
-  if (!woman.free) {
-    var oldGuy = personData[personData.findIndex(function (p) {
-      return p.id == woman.fiance;
-    })];
-    oldGuy.free = true;
-    oldGuy.fiance = null;
-    oldGuy.proposals = 0;
-  }
-
-  makeEngaged(man, woman);
 }
 
 function makeEngaged(man, woman) {
@@ -28980,9 +29057,8 @@ function makeEngaged(man, woman) {
   woman.free = false;
   man.fiance = woman.id;
   woman.fiance = man.id;
-  man.proposals = man.prefs.indexOf(woman.id) + 1;
-  woman.proposals = woman.prefs.indexOf(man.id) + 1;
   updateVis();
+  alertQueue.push(man.id + " is now engaged to " + woman.id);
 }
 
 function updateAlert(alertText) {
@@ -29023,11 +29099,26 @@ function updateVis() {
         d3.select(this).text(d.prefs[i - 1].charAt(0));
       }
     });
-    svg.selectAll(".pref-square" + i).data(personData).attr("fill", function (d) {
-      if (d.proposals == i) {
-        return "#70a0a6";
+    svg.selectAll(".pref-x-text" + i).data(personData).each(function (d) {
+      if (d.exes.includes(d.prefs[i - 1])) {
+        d3.select(this).text("X");
       } else {
-        return "#b0e0e6";
+        d3.select(this).text("");
+      }
+    });
+    svg.selectAll(".pref-square" + i).data(personData).attr("fill", function (d) {
+      if (d.gender == "m") {
+        if (d.proposals == i) {
+          return "#70a0a6";
+        } else {
+          return "#b0e0e6";
+        }
+      } else {
+        if (d.prefs[i - 1] != null && d.prefs[i - 1] == d.fiance) {
+          return "#70a0a6";
+        } else {
+          return "#b0e0e6";
+        }
       }
     });
     svg.selectAll(".pref-img" + i).data(personData).attr("xlink:href", function (d) {
@@ -29062,40 +29153,34 @@ function updateVis() {
   }
 }
 
-function displayText(txt, time) {
-  setInterval(function () {
-    alert("Hello");
-  }, time);
-}
-
 var selecting = false;
 var selectPerson = null;
+var selectIndex = 0;
+var prevState = null;
 
 function onCircleClick(d) {
-  var temp;
-
   if (selecting) {
     if (d.gender != selectPerson.gender) {
-      if (selectPerson.gender != 'm') {
-        temp = d;
-        d = selectPerson;
-        selectPerson = temp;
+      if (!selectPerson.prefs.includes(d.id)) {
+        selectPerson.prefs[selectIndex] = d.id;
+        selectIndex++;
+        updateVis();
+
+        if (selectIndex >= numMen) {
+          selecting = false;
+        }
       }
-
-      propose(selectPerson.id, d.id);
-
-      if (currentAlert != "") {
-        currentAlert = "";
-        updateAlert(currentAlert);
-      }
-
+    } else if (d.id == selectPerson.id) {
+      selectPerson.prefs = prevState;
       selecting = false;
-    } else {
-      selectPerson = d;
+      updateVis();
     }
   } else {
     selecting = true;
     selectPerson = d;
+    prevState = d.prefs;
+    d.prefs = [null, null, null, null];
+    selectIndex = 0;
     updateVis();
   }
 } // on reset button click
@@ -29106,22 +29191,88 @@ function reset() {
   for (var i = 0; i < personData.length; i++) {
     personData[i].fiance = null;
     personData[i].free = true;
-    personData[i].proposals = 0;
+    personData[i].exes = [];
+    alertQueue = [];
+
+    if (personData[i].gender == "m") {
+      personData[i].proposals = 0;
+    }
+
+    if (personData[i] == selectPerson) {
+      personData[i].prefs = prevState;
+    }
   }
 
+  selecting = false;
+  selectPerson = null;
+  selectIndex = 0;
+  prevState = null;
   curManIndex = null;
   started = false;
+  stepClicked = false;
+  checkClicked = false;
+  playing = false;
+  d3.select("#play-button").text("Play Algorithm");
+  clearInterval(interval);
   updateAlert();
   updateVis();
 }
 
-d3.select("#check-work").on("click", solutionNextStep);
-d3.select("#try-reset").on("click", reset);
-d3.select('#pairs2').on('change', function () {
+var interval;
+var playing = false;
+var checkClicked = false;
+
+function playSolution() {
+  if (started && !stepClicked || stepClicked && playing) {
+    d3.select(this).text("Play Algorithm");
+    clearInterval(interval);
+    started = false;
+    playing = false;
+  } else {
+    clearInterval(interval);
+    solutionNextStep();
+    interval = setInterval(function () {
+      solutionNextStep();
+    }, 1000);
+    d3.select(this).text("Pause Algorithm");
+    playing = true;
+  }
+
+  stepClicked = false;
+  checkClicked = true;
+}
+
+var stepClicked = false;
+
+function nexStep() {
+  checkClicked = true;
+  stepClicked = true;
+  solutionNextStep();
+}
+
+d3.select("#play-button").on("click", playSolution);
+d3.select("#solution-next").on("click", nexStep);
+d3.select("#solution-reset").on("click", reset);
+d3.select("#shuffle-prefs").on("click", function () {
+  if (!checkClicked) {
+    assignPrefs();
+    selecting = false;
+    updateVis();
+  } else {
+    updateAlert("Reset before you can set preferences!");
+  }
+});
+d3.select('#pairs1').on('change', function () {
   var value = d3.select(this).property('value');
   newPersonData(value);
   init();
   reset();
+
+  if (value == 5) {
+    d3.select('#pairswarning2').style("display", "block");
+  } else {
+    d3.select('#pairswarning2').style("display", "none");
+  }
 }); // generates a URL to the avatar (thanks to https://getavataaars.com/)
 
 function generateAvatar(gender) {
@@ -29209,5 +29360,5 @@ function onCircleClick2(d) {
 // .then((data) => {
 // console.log('Dynamically loaded CSV data', data);
 // })
-},{"d3":"UzF0"}]},{},["viwQ"], null)
-//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/user-interact.06a1c56c.js.map
+},{"d3":"UzF0"}]},{},["Focm"], null)
+//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.2a527597.js.map
