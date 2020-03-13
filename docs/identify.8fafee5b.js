@@ -28630,7 +28630,7 @@ Object.keys(_d3Zoom).forEach(function (key) {
     }
   });
 });
-},{"./dist/package.js":"pT13","d3-array":"K0bd","d3-axis":"mp0m","d3-brush":"tkh5","d3-chord":"Iy8J","d3-collection":"S3hn","d3-color":"Peej","d3-contour":"SiBy","d3-dispatch":"D3zY","d3-drag":"kkdU","d3-dsv":"EC2w","d3-ease":"pJ11","d3-fetch":"grWT","d3-force":"oYRE","d3-format":"VuZR","d3-geo":"Ah6W","d3-hierarchy":"Kps6","d3-interpolate":"k9aH","d3-path":"OTyq","d3-polygon":"H15P","d3-quadtree":"lUbg","d3-random":"Gz2j","d3-scale":"zL2z","d3-scale-chromatic":"ado2","d3-selection":"ysDv","d3-shape":"maww","d3-time":"hQYG","d3-time-format":"UYpZ","d3-timer":"rdzS","d3-transition":"UqVV","d3-voronoi":"rLIC","d3-zoom":"MHdZ"}],"Focm":[function(require,module,exports) {
+},{"./dist/package.js":"pT13","d3-array":"K0bd","d3-axis":"mp0m","d3-brush":"tkh5","d3-chord":"Iy8J","d3-collection":"S3hn","d3-color":"Peej","d3-contour":"SiBy","d3-dispatch":"D3zY","d3-drag":"kkdU","d3-dsv":"EC2w","d3-ease":"pJ11","d3-fetch":"grWT","d3-force":"oYRE","d3-format":"VuZR","d3-geo":"Ah6W","d3-hierarchy":"Kps6","d3-interpolate":"k9aH","d3-path":"OTyq","d3-polygon":"H15P","d3-quadtree":"lUbg","d3-random":"Gz2j","d3-scale":"zL2z","d3-scale-chromatic":"ado2","d3-selection":"ysDv","d3-shape":"maww","d3-time":"hQYG","d3-time-format":"UYpZ","d3-timer":"rdzS","d3-transition":"UqVV","d3-voronoi":"rLIC","d3-zoom":"MHdZ"}],"DzQ2":[function(require,module,exports) {
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -28640,18 +28640,11 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // You can require libraries
-var d3 = require('d3');
+var d3 = require('d3'); // set the dimensions of the visualization
 
-WebFont.load({
-  google: {
-    families: ['Nunito']
-  }
-});
-var started = false; // set the dimensions of the visualization
-// todo: width should be dynamic
 
-var widths = [1000, 1000, 1000, 1100, 1600];
-var height = 500; // width not raidus... too lazy to change
+var width = 1650;
+var height = 560; // width not raidus... too lazy to change
 
 var personRadius = 100;
 var femColor2 = "#F7347A";
@@ -28664,7 +28657,7 @@ var genderLabelData = [{
   "text": "♂️:"
 }, {
   "x_axis": 20,
-  "y_axis": 350,
+  "y_axis": 330,
   "text": "♀️:"
 }]; // user should be able to edit prefs
 
@@ -28706,16 +28699,29 @@ function shuffle(a) {
   }
 }
 
-newPersonData(4);
+var value = 3;
+newPersonData(value);
 
 function newPersonData(numPairs) {
   personData = [];
   men = [];
-  women = []; // add men
+  women = [];
+  var x_offset = 100;
+
+  if (numPairs == 1) {
+    x_offset = 590;
+  } else if (numPairs == 2) {
+    x_offset = 470;
+  } else if (numPairs == 3) {
+    x_offset = 310;
+  } else if (numPairs == 4) {
+    x_offset = 100;
+  } // add men
+
 
   for (var i = 0; i < numPairs; i++) {
     personData.push({
-      "x_axis": 100 + i * (40 * numPairs + 100),
+      "x_axis": x_offset + i * (40 * numPairs + 120),
       "y_axis": 120,
       "radius": personRadius,
       "id": i,
@@ -28725,15 +28731,16 @@ function newPersonData(numPairs) {
       "fiance": null,
       "url": "https://avataaars.io/?topType=ShortHairShortRound",
       "exes": [],
-      "proposals": 0
+      "proposals": 0,
+      "taken": false
     });
   } // add women
 
 
   for (var i = 0; i < numPairs; i++) {
     personData.push({
-      "x_axis": 100 + i * (40 * numPairs + 100),
-      "y_axis": 350,
+      "x_axis": x_offset + i * (40 * numPairs + 120),
+      "y_axis": 330,
       "radius": personRadius,
       "id": i,
       "prefs": [],
@@ -28742,7 +28749,8 @@ function newPersonData(numPairs) {
       "fiance": null,
       "url": "https://avataaars.io/",
       "exes": [],
-      "proposals": 0
+      "proposals": 0,
+      "taken": false
     });
   }
 
@@ -28780,7 +28788,24 @@ function newPersonData(numPairs) {
   }
 
   assignPrefs();
-}
+  var women_init = women.slice();
+
+  for (var i = 0; i < numMen; i++) {
+    var person = personData[i];
+    var name = women_init[Math.floor(Math.random() * women_init.length)];
+    var index = women_init.indexOf(name);
+    women_init.splice(index, 1);
+    var woman = personData[personData.findIndex(function (p) {
+      return p.id == name;
+    })];
+    woman.fiance = person.id;
+    person.fiance = name;
+  }
+} // var svg = d3.select("#identify")
+//   .append("svg")
+//   .attr("width", width)
+//   .attr("height", height);
+
 
 var svg;
 init();
@@ -28788,16 +28813,11 @@ init();
 function init() {
   if (svg != null) {
     svg.selectAll("*").remove();
-    svg.attr("width", widths[numMen - 1]);
+    svg.attr("width", width);
   } else {
-    svg = d3.select("#solution").append("svg").attr("width", widths[numMen - 1]).attr("height", height);
-  } // define image filters here
+    svg = d3.select("#identify").append("svg").attr("width", width).attr("height", height);
+  } // person preference lists (2 prefs per person)
 
-
-  var bright = svg.append("defs").append("filter").attr("id", "brightness").append("feComponentTransfer");
-  bright.append("feFuncR").attr("type", "linear").attr("slope", "1.2");
-  bright.append("feFuncG").attr("type", "linear").attr("slope", "1.2");
-  bright.append("feFuncB").attr("type", "linear").attr("slope", "1.2"); // person preference lists (4 prefs per person)
 
   for (var i = 1; i <= numMen; i++) {
     // display rectangles
@@ -28811,11 +28831,7 @@ function init() {
     }).attr("height", function (d) {
       return 40;
     }).attr("fill", function (d) {
-      if (d.proposals > i - 1) {
-        return "#70a0a6";
-      } else {
-        return "#b0e0e6";
-      }
+      return "#b0e0e6";
     }).attr("stroke-width", 1).attr("stroke", "#003366").attr("class", "pref-square" + i); // add text to person preference list
 
     var prefText = svg.selectAll("prefTexts").data(personData).enter().append("text");
@@ -28859,25 +28875,7 @@ function init() {
     return d.radius;
   }).attr("xlink:href", function (d) {
     return d.url + "&avatarStyle=Circle";
-  }).attr("class", "person-circle").on("click", function (d) {
-    if (checkClicked) {
-      updateAlert("Reset to set your own preferences!");
-    } else {
-      if (!selecting) {// should indicate selection somehow
-      }
-
-      onCircleClick(d);
-    }
-  }).on("mouseover", function (d, i) {
-    // highlight only when interactable
-    if (!started && (!selecting || d.gender != selectPerson.gender && !selectPerson.prefs.includes(d.id))) {
-      d3.select(this).transition().duration('200').attr('filter', 'url(#brightness)');
-    } else {
-      d3.select(this).transition().duration('200').attr('filter', 'null');
-    }
-  }).on("mouseout", function (d, i) {
-    d3.select(this).transition().duration('200').attr('filter', 'null');
-  }); // add text to person labels (circles)
+  }).attr("class", "person-circle"); // add text to person labels (circles)
 
   var personText = svg.selectAll("personText").data(personData).enter().append("text");
   var personLabels = personText.attr("x", function (d) {
@@ -28901,158 +28899,40 @@ function init() {
     return d.y_axis + 14;
   }).text(function (d) {
     return d.text;
-  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "black");
-  var alertText = svg.append("text").attr("x", 550).attr("y", 480).text(function () {
+  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "black"); // for displaying alert texts
+
+  var alertText = svg.append("text").attr("x", 610).attr("y", 460).text(function () {
     return alertText;
-  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "35px").attr("fill", "black").style("text-anchor", "middle").attr("class", "alertText");
-
-  for (var i = 1; i <= numMen; i++) {
-    var prefXText = svg.selectAll("prefXTexts").data(personData).enter().append("text");
-    var prefLabels = prefXText.attr("x", function (d) {
-      return d.x_axis + 40 * i + 18;
-    }).attr("y", function (d) {
-      return d.y_axis;
-    }).text(function (d) {
-      // get pref from personData
-      return "";
-    }).attr("font-family", "Nunito, sans-serif").attr("font-size", "40px").attr("text-anchor", "middle").attr("fill", "red").attr("class", "pref-x-text" + i);
-  }
-}
-
-var curManIndex = null;
-/*
-algo:
-w := first woman on m's list to whom m has not yet proposed
-	if w is free then
-		(m, w) become engaged
-	else some pair (m', w) already exists
-		if w prefers m to m' then
-			m' becomes free
-			(m, w) become engaged
-		else
-			(m', w) remain engaged
-		end if
-	end if
-*/
-
-var alertQueue = [];
-
-function solutionNextStep() {
-  if (!started && selecting) {
-    updateAlert("You must select preferences first!");
-    return;
-  }
-
-  if (alertQueue.length > 0) {
-    updateAlert(alertQueue.shift());
-    return;
-  }
-
-  started = true; //document.getElementById("pcode3").style.backgroundColor = "yellow";
-
-  if (curManIndex == null) {
-    curManIndex = 0;
-  } else {
-    curManIndex++;
-
-    if (curManIndex >= numMen) {
-      curManIndex = 0;
-    }
-  } // use to catch repeats
-
-
-  var lastManIndex = curManIndex; // do first check
-
-  if (personData[curManIndex].proposals < numMen && personData[curManIndex].free) {
-    var curMan = personData[curManIndex];
-    var curWoman = personData[personData.findIndex(function (p) {
-      return p.id == curMan.prefs[curMan.proposals];
-    })];
-    propose(curMan.id, curWoman.id);
-  } else {
-    curManIndex++;
-
-    if (curManIndex >= numMen) {
-      curManIndex = 0;
-    } // while there exists a free man who still has a proposal to make
-
-
-    while (!(personData[curManIndex].proposals < numMen && personData[curManIndex].free) && curManIndex != lastManIndex) {
-      curManIndex++;
-
-      if (curManIndex >= numMen) {
-        curManIndex = 0;
-      }
-    }
-
-    if (curManIndex != lastManIndex) {
-      var curMan = personData[curManIndex];
-      var curWoman = personData[personData.findIndex(function (p) {
-        return p.id == curMan.prefs[curMan.proposals];
-      })];
-      propose(curMan.id, curWoman.id);
-    } else {
-      updateAlert("Everyone now has a match. Matching is complete!");
-      clearInterval(interval);
-      d3.select("#play-button").text("Play Algorithm");
-    }
-  }
-}
-
-function propose(manId, womanId) {
-  var man = personData[personData.findIndex(function (p) {
-    return p.id == manId;
-  })];
-  var woman = personData[personData.findIndex(function (p) {
-    return p.id == womanId;
-  })];
-  updateAlert(man.id + " is proposing to " + woman.id);
-
-  if (woman.free) {
-    alertQueue.push(woman.id + " is free.");
-    man.proposals++;
-    makeEngaged(man, woman);
-  } else {
-    alertQueue.push(woman.id + " is not free."); // new guy is better than old guy (sorry bro)
-
-    if (woman.prefs.indexOf(man.id) < woman.prefs.indexOf(woman.fiance)) {
-      alertQueue.push(woman.id + " prefers " + man.id + " over her current fiance, " + woman.fiance + "."); // set old guy to free
-
-      var oldGuy = personData[personData.findIndex(function (p) {
-        return p.id == woman.fiance;
-      })];
-      oldGuy.free = true;
-      oldGuy.fiance = null;
-      oldGuy.exes.push(woman.id);
-      woman.exes.push(oldGuy.id);
-      man.proposals++;
-      makeEngaged(man, woman);
-    } else {
-      alertQueue.push(woman.id + " still prefers her current fiance, " + woman.fiance + ". Tough luck, pal!");
-      man.proposals++; // exes is a bit of a misnomer. we still want to label failed proposals
-
-      man.exes.push(woman.id);
-      woman.exes.push(man.id); // but should we label failed woman proposal? use different markings for former relationship?
-
-      updateVis();
-    }
-  }
-}
-
-function makeEngaged(man, woman) {
-  // update data
-  man.free = false;
-  woman.free = false;
-  man.fiance = woman.id;
-  woman.fiance = man.id;
+  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "30px").attr("fill", "black").style("text-anchor", "middle").attr("class", "alertText");
+  var alertText2 = svg.append("text").attr("x", 610).attr("y", 510).text(function () {
+    return alertText2;
+  }).attr("font-family", "Nunito, sans-serif").attr("font-size", "30px").attr("fill", "black").style("text-anchor", "middle").attr("class", "alertText2");
   updateVis();
-  alertQueue.push(man.id + " is now engaged to " + woman.id);
 }
 
-function updateAlert(alertText) {
-  svg.selectAll(".alertText").data(personData).each(function (d) {
-    d3.select(this).text(alertText);
-  });
+function generateAvatar(gender) {
+  var skinColor = skins[Math.floor(Math.random() * skins.length)];
+
+  if (skinColor == "Pale" || skinColor == "Light") {
+    var hairColor = all_hair_colors[Math.floor(Math.random() * all_hair_colors.length)];
+  } else {
+    var hairColor = dark_hair_colors[Math.floor(Math.random() * dark_hair_colors.length)];
+  } // 30% chance of facial hair for males only
+
+
+  var facialHair = "Blank";
+
+  if (Math.random() < .3 && gender == "m") {
+    facialHair = facial_hairs[Math.floor(Math.random() * facial_hairs.length)];
+  }
+
+  var avatar = "https://avataaars.io/" + "?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) + "&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) + "&hairColor=" + hairColor + "&facialHairType=" + facialHair + "&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] + "&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] + "&skinColor=" + skinColor;
+
+  if (hairColor != "SilverGray") {
+    avatar += "&facialHairColor=" + hairColor;
+  }
+
+  return avatar;
 }
 
 function updateVis() {
@@ -29095,18 +28975,10 @@ function updateVis() {
       }
     });
     svg.selectAll(".pref-square" + i).data(personData).attr("fill", function (d) {
-      if (d.gender == "m") {
-        if (d.proposals == i) {
-          return "#70a0a6";
-        } else {
-          return "#b0e0e6";
-        }
+      if (d.prefs[i - 1] != null && d.prefs[i - 1] == d.fiance) {
+        return "#70a0a6";
       } else {
-        if (d.prefs[i - 1] != null && d.prefs[i - 1] == d.fiance) {
-          return "#70a0a6";
-        } else {
-          return "#b0e0e6";
-        }
+        return "#b0e0e6";
       }
     });
     svg.selectAll(".pref-img" + i).data(personData).attr("xlink:href", function (d) {
@@ -29141,206 +29013,114 @@ function updateVis() {
   }
 }
 
-var selecting = false;
-var selectPerson = null;
-var selectIndex = 0;
-var prevState = null;
+function updateAlert(alertText) {
+  svg.selectAll(".alertText").data(personData).each(function (d) {
+    d3.select(this).text(alertText);
+  });
+}
 
-function onCircleClick(d) {
-  if (selecting) {
-    if (d.gender != selectPerson.gender) {
-      if (!selectPerson.prefs.includes(d.id)) {
-        selectPerson.prefs[selectIndex] = d.id;
-        selectIndex++;
-        updateVis();
+function updateAlert2(alertText2) {
+  svg.selectAll(".alertText2").data(personData).each(function (d) {
+    d3.select(this).text(alertText2);
+  });
+} // function to check if unstable pairs exist
 
-        if (selectIndex >= numMen) {
-          selecting = false;
+
+function checkUnstablity() {
+  unstable_pairs = [];
+
+  for (var i = 0; i < numMen; i++) {
+    var person = personData[i];
+    var currWifeIndex = person.prefs.findIndex(function (p) {
+      return p == person.fiance;
+    });
+
+    for (var j = 0; j < numMen; j++) {
+      var woman = women[j];
+      var womanIndex = person.prefs.findIndex(function (p) {
+        return p == woman;
+      });
+
+      if (woman != person.fiance && womanIndex < currWifeIndex) {
+        var womanData = personData[numMen + j];
+        var currHusbandIndex = womanData.prefs.findIndex(function (p) {
+          return p == womanData.fiance;
+        });
+        var personIndex = womanData.prefs.findIndex(function (p) {
+          return p == men[i];
+        });
+
+        if (personIndex < currHusbandIndex) {
+          unstable_pairs.push(men[i] + "-" + woman);
         }
       }
-    } else if (d.id == selectPerson.id) {
-      selectPerson.prefs = prevState;
-      selecting = false;
-      updateVis();
-    }
-  } else {
-    selecting = true;
-    selectPerson = d;
-    prevState = d.prefs;
-    d.prefs = [null, null, null, null];
-    selectIndex = 0;
-    updateVis();
-  }
-} // on reset button click
-
-
-function reset() {
-  // reset proposals/partners
-  for (var i = 0; i < personData.length; i++) {
-    personData[i].fiance = null;
-    personData[i].free = true;
-    personData[i].exes = [];
-    alertQueue = [];
-
-    if (personData[i].gender == "m") {
-      personData[i].proposals = 0;
-    }
-
-    if (personData[i] == selectPerson) {
-      personData[i].prefs = prevState;
     }
   }
 
-  selecting = false;
-  selectPerson = null;
-  selectIndex = 0;
-  prevState = null;
-  curManIndex = null;
-  started = false;
-  stepClicked = false;
-  checkClicked = false;
-  playing = false;
-  d3.select("#play-button").text("Play Algorithm");
-  clearInterval(interval);
-  updateAlert();
-  updateVis();
+  return unstable_pairs;
 }
 
-var interval;
-var playing = false;
-var checkClicked = false;
+function checkUnstableYes() {
+  unstable_pairs = checkUnstablity();
 
-function playSolution() {
-  if (started && !stepClicked || stepClicked && playing) {
-    d3.select(this).text("Play Algorithm");
-    clearInterval(interval);
-    started = false;
-    playing = false;
+  if (unstable_pairs.length == 0) {
+    updateAlert("Oops! There are no unstable pairs!");
+  } else if (unstable_pairs.length == 1) {
+    updateAlert("Correct! There is one unstable pair: " + unstable_pairs.shift());
   } else {
-    clearInterval(interval);
-    solutionNextStep();
-    interval = setInterval(function () {
-      solutionNextStep();
-    }, 1000);
-    d3.select(this).text("Pause Algorithm");
-    playing = true;
+    var msg = "Correct! There are " + unstable_pairs.length + " unstable pairs.";
+    var msg2 = "They are: " + unstable_pairs.shift();
+
+    while (unstable_pairs.length > 1) {
+      msg2 += ", " + unstable_pairs.shift();
+    }
+
+    msg2 += " and " + unstable_pairs.shift();
+    updateAlert(msg);
+    updateAlert2(msg2);
   }
-
-  stepClicked = false;
-  checkClicked = true;
 }
 
-var stepClicked = false;
+function checkUnstableNo() {
+  unstable_pairs = checkUnstablity();
 
-function nexStep() {
-  checkClicked = true;
-  stepClicked = true;
-  solutionNextStep();
-}
-
-d3.select("#play-button").on("click", playSolution);
-d3.select("#solution-next").on("click", nexStep);
-d3.select("#solution-reset").on("click", reset);
-d3.select("#shuffle-prefs").on("click", function () {
-  if (!checkClicked) {
-    assignPrefs();
-    selecting = false;
-    updateVis();
+  if (unstable_pairs.length == 0) {
+    updateAlert("Correct! There are no unstable pairs!");
+  } else if (unstable_pairs.length == 1) {
+    updateAlert("Oops! There is one unstable pair: " + unstable_pairs.shift());
   } else {
-    updateAlert("Reset before you can set preferences!");
+    var msg = "Oops! There are " + unstable_pairs.length + " unstable pairs.";
+    var msg2 = "They are: " + unstable_pairs.shift();
+
+    while (unstable_pairs.length > 1) {
+      msg2 += ", " + unstable_pairs.shift();
+    }
+
+    msg2 += " and " + unstable_pairs.shift();
+    updateAlert(msg);
+    updateAlert2(msg2);
+  }
+}
+
+function generateNewProblem(v) {
+  newPersonData(v);
+  init();
+}
+
+d3.select("#yes-button").on("click", checkUnstableYes);
+d3.select("#no-button").on("click", checkUnstableNo);
+d3.select("#new-button").on("click", function () {
+  generateNewProblem(numMen);
+});
+d3.select('#pairs3').on('change', function () {
+  var value = d3.select(this).property('value');
+  generateNewProblem(value);
+
+  if (value == 5) {
+    d3.select('#pairswarning1').style("display", "block");
+  } else {
+    d3.select('#pairswarning1').style("display", "none");
   }
 });
-d3.select('#pairs1').on('change', function () {
-  var value = d3.select(this).property('value');
-  newPersonData(value);
-  init();
-  reset();
-}); // generates a URL to the avatar (thanks to https://getavataaars.com/)
-
-function generateAvatar(gender) {
-  var skinColor = skins[Math.floor(Math.random() * skins.length)];
-
-  if (skinColor == "Pale" || skinColor == "Light") {
-    var hairColor = all_hair_colors[Math.floor(Math.random() * all_hair_colors.length)];
-  } else {
-    var hairColor = dark_hair_colors[Math.floor(Math.random() * dark_hair_colors.length)];
-  } // 30% chance of facial hair for males only
-
-
-  var facialHair = "Blank";
-
-  if (Math.random() < .3 && gender == "m") {
-    facialHair = facial_hairs[Math.floor(Math.random() * facial_hairs.length)];
-  }
-
-  var avatar = "https://avataaars.io/" + "?topType=" + (gender == "m" ? mal_tops[Math.floor(Math.random() * mal_tops.length)] : fem_tops[Math.floor(Math.random() * fem_tops.length)]) + "&accessoriesType=" + (Math.random() > .3 ? "Blank" : opt_acc[Math.floor(Math.random() * opt_acc.length)]) + "&hairColor=" + hairColor + "&facialHairType=" + facialHair + "&clotheType=" + clothes[Math.floor(Math.random() * clothes.length)] + "&clotheColor=" + clothes_color[Math.floor(Math.random() * clothes_color.length)] + "&skinColor=" + skinColor;
-
-  if (hairColor != "SilverGray") {
-    avatar += "&facialHairColor=" + hairColor;
-  }
-
-  return avatar;
-} // useless
-
-
-function onCircleClick2(d) {
-  var prefStr = "";
-  var successfulInput = false;
-
-  if (d.gender == "m") {
-    var womenNames = "";
-
-    for (var i = numMen; i < numMen * 2; i++) {
-      womenNames += personData[i].id;
-    }
-
-    prefStr = prompt("Input the preference list for " + d.id + " like so: " + womenNames + "\nEach letter represents a different woman. You cannot repeat or exclude a name.").toUpperCase();
-
-    if (prefStr.length != numMen) {
-      alert("Error. You must have " + numMen + " names in your input.");
-    } else if (prefStr.split('').sort().join('') != womenNames.split('').sort().join('')) {
-      alert("Error. Make sure you are including the correct names, and that each name appears once.");
-    } else {
-      successfulInput = true;
-    }
-  } else {
-    var menNames = "";
-
-    for (var i = 0; i < numMen; i++) {
-      menNames += personData[i].id;
-    }
-
-    prefStr = prompt("Input the preference list for " + d.id + " like so: " + menNames + "\nEach letter represents a different man. You cannot repeat or exclude a name.").toUpperCase();
-
-    if (prefStr.length != numMen) {
-      alert("Error. You must have " + numMen + " names in your input.");
-    } else if (prefStr.split('').sort().join('') != menNames.split('').sort().join('')) {
-      alert("Error. Make sure you are including the correct names, and that each name appears once.");
-    } else {
-      successfulInput = true;
-    }
-  }
-
-  if (successfulInput) {
-    for (var i = 0; i < prefStr.length; i++) {
-      d.prefs[i] = prefStr[i];
-    }
-
-    updateVis();
-  }
-} // You can include local JS files:
-// const MyClass = require('./my-class');
-// const myClassInstance = new MyClass();
-// myClassInstance.sayHi();
-// You can load JSON files directly via require.
-// Note this does not add a network request, it adds
-// the data directly to your JavaScript bundle.
-//const exampleData = require('./example-data.json');
-// Anything you put in the static folder will be available
-// over the network, e.g.
-// d3.csv('carbon-emissions.csv')
-// .then((data) => {
-// console.log('Dynamically loaded CSV data', data);
-// })
-},{"d3":"UzF0"}]},{},["Focm"], null)
-//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/src.5f7f92bb.js.map
+},{"d3":"UzF0"}]},{},["DzQ2"], null)
+//# sourceMappingURL=https://uw-cse442-wi20.github.io/FP-cs-algorithm/identify.8fafee5b.js.map
