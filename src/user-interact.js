@@ -545,9 +545,11 @@ d3.select('#pairs2').on('change', function() {
 	reset();
 	if (value == 5) {
 		d3.select('#pairswarning3').style("display", "block");
+		d3.select("#user-interact").style("width", "1650px");
 	}
 	else {
 		d3.select('#pairswarning3').style("display", "none");
+		d3.select("#user-interact").style("width", "1200px");
 	}
 });
 d3.select("#try-new").on("click", function() {

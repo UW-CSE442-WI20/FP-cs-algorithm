@@ -664,9 +664,11 @@ d3.select('#pairs1')
 		reset();
 		if (value == 5) {
 			d3.select('#pairswarning2').style("display", "block");
+			d3.select("#solution").style("width", "1650px");
 		}
 		else {
 			d3.select('#pairswarning2').style("display", "none");
+			d3.select("#solution").style("width", "1200px");
 		}
 });
 

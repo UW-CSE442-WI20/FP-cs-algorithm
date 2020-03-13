@@ -486,8 +486,10 @@ d3.select('#pairs3').on('change', function() {
     generateNewProblem(value);
 	if (value == 5) {
 		d3.select('#pairswarning1').style("display", "block");
+		d3.select("#identify").style("width", "1650px");
 	}
 	else {
 		d3.select('#pairswarning1').style("display", "none");
+		d3.select("#identify").style("width", "1200px");
 	}
 });

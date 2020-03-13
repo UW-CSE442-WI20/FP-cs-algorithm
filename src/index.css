@@ -64,22 +64,26 @@ h2 {
 	margin-right: 750px;
 	margin-bottom: 30px;
 	padding: 1px 10px;
+	width: 450px;
 }
 
 #identify {
 	border: 1px solid black;
 	padding-left: 25px;
 	margin-bottom: 10px;
+	width: 1200px;
 }
 
 #user-interact {
 	border: 1px solid black;
 	padding-left: 25px;
+	width: 1200px;
 }
 
 #solution {
 	border: 1px solid black;
 	padding-left: 25px;
+	width: 1200px;
 }
 
 #solution-pseudocode {
