@@ -22,6 +22,8 @@ var malColor2 = "#4ca3dd"
 var femColor = "#fFa6b1";
 var malColor = "#a6c2ff";
 
+var speed = 50;
+
 var genderLabelData = [
 	{ "x_axis": 20, "y_axis": 120, "text": "♂️:" },
 	{ "x_axis": 20, "y_axis": 350, "text": "♀️:" }
@@ -627,7 +629,7 @@ function playSolution() {
 		solutionNextStep();
 		interval = setInterval(function(){
 			solutionNextStep();
-		}, 1000);
+		}, 80000 / speed);
 		d3.select(this).text("Pause Algorithm");
 		playing = true;
 	}
@@ -655,6 +657,11 @@ d3.select("#shuffle-prefs").on("click", function() {
 	else {
 		updateAlert("Reset before you can set preferences!");
 	}
+});
+d3.select('#new-solution').on("click", function() {
+	newPersonData(numMen);
+	init();
+	reset();
 });
 d3.select('#pairs1')
     .on('change', function() {
@@ -749,6 +756,19 @@ function onCircleClick2(d) {
 		updateVis();
 	}
 }
+
+
+document.getElementById('speed-slider').addEventListener("input", function() {
+	var slider = document.getElementById('speed-slider');
+
+	speed = slider.value;
+	if (playing) {
+		clearInterval(interval);
+		interval = setInterval(function(){
+			solutionNextStep();
+		}, 80000 / speed);
+	}
+}, false);
 
 
 

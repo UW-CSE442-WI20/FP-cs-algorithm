@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "d3": "^5.15.0",
-    "d3-graphviz": "^3.0.0"
+    "d3-graphviz": "^3.0.0",
+    "d3-simple-slider": "^1.5.4"
   }
 }

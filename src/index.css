@@ -111,3 +111,9 @@ button {
 button:hover {
 	background-color: #b0e0e6;
 }
+
+#speed-slider {
+    position: absolute;
+    padding: 10px 0px;
+    margin: 10px 3px;
+}
