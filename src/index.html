@@ -25,10 +25,10 @@
             <h1>The Problem</h1></div>
         <div>
             <h2>Perfect Matching:</h2>
-            <div>A perfect matching is a matching of men and women in which everyone is matched monogamously. Each man gets exactly one woman and each woman gets exactly one man.</div>
+            <div>A perfect matching is a matching of men and women in which everyone is matched monogamously. Each man gets exactly one woman, and each woman gets exactly one man.</div>
 
             <h2>Unstable Pairs:</h2>
-            <div>In a matching A, an unmatched pair M-W is unstable if man M and woman W prefer each other to their current partners. <br /> For example consider the following matching with the pairs Jim-Angela and Dwight-Pam:</div>
+            <div>In a matching A, an unmatched pair M-W is unstable if man M and woman W prefer each other to their current partners. <br /> For example, consider the following matching with the pairs Jim-Angela and Dwight-Pam:</div>
             <div id="explanation"></div>
             <!-- svg appended in explanation.js -->
 
@@ -36,7 +36,7 @@
                 <br> Suppose:
                 <br> 1) Jim prefers Pam over Angela and
                 <br> 2) Pam prefers Jim over Dwight
-                <br> Then the pair Jim-Pam (represented by the red line above) is an unstable pair because both Jim and Pam prefer each other over their current partners.</div>
+                <br> Then, the pair Jim-Pam (represented by the red line above) is an unstable pair because both Jim and Pam prefer each other over their current partners.</div>
 
             <h2>Identify Unstable Pairs:</h2>
             <div id="identify"></div>
@@ -90,7 +90,7 @@
             <br /> Among all possible different stable matchings, it always yields the one that is best for all men among all stable matchings, and worst for all women. No man can get a better matching for himself by misrepresenting his preferences, and no group of men can coordinate a misrepresentation of their preferences such that all men in the group are strictly better-off. However, it is possible for some group of men to misrepresent their preferences such that some men are better-off and the other men retain the same partner.
 			However, each woman may be able to misrepresent her preferences and get a better match.
         </div>
-        <h2>Algorithm pseudocode</h2>
+        <h2>Algorithm Pseudocode</h2>
         <div id="solution-pseudocode">
             <pre>algorithm <b>stable_matching</b>:
 		Initialize all <i>men</i> and <i>women</i> to <i>free</i> (unengaged)
@@ -106,7 +106,7 @@
 				<b>else</b>:
 					(m', w) remain <i>engaged</i></pre>
         </div>
-        <div>Click next to walk through the solution. Click circles to edit their preference lists.</div>
+        <div>Click next step to walk through the solution. Click circles to edit their preference lists.</div>
         <div id="solution"></div>
         <button type="button" id="play-button">Play Algorithm</button>
         <button type="button" id="solution-next">Next Step</button>
@@ -122,7 +122,7 @@
 
 		<br /><span id="pairswarning2" style="color:red; display:none;">Warning! Selecting 5 pairs can cause display issues. It's just there for fun.</span>
 
-        <h2>Try it yourself</h2>
+        <h2>Try It Yourself</h2>
 		<div>Pair up men and women by clicking on them. Check your work when you're finished!</div>
         <div id="user-interact"></div>
         <button type="button" id="check-work">Check My Work</button>
@@ -148,8 +148,6 @@
             <br /> Another important and large-scale application of stable marriage is in the problem of assigning users to web servers.
              of users access web pages, videos, and other services on the Internet, requiring each user to be matched to one of potentially hundreds of thousands of servers around the world. A user prefers servers that are closer to them, resulting in a (partial) preferential ordering of the servers for each user. Each server prefers to serve users that it can with a lower cost, resulting in a (partial) preferential ordering of users for each server.
              Content delivery networks that distribute much of the world's content and services solve this large and complex stable marriage problem between users and servers every several seconds to enable billions of users to be matched up with their respective servers.
-
-
 
             <h2>Related Algorithms:</h2>
             <ul type="circle">
